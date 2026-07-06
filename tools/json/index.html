@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>JSON 格式化｜我的个人站</title><link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="/">我的个人站</a>
+    <nav>
+      <a href="/blog/">博客</a>
+      <a href="/tools/">工具</a>
+      <a href="/about/">关于</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page"><div class="container">
+  <div class="eyebrow">TOOLS / JSON</div><h1>JSON 格式化</h1>
+  <p class="lead">内容只在浏览器本地处理，不会上传到服务器。</p>
+  <textarea id="input" placeholder='请输入 JSON，例如：{"name":"demo","items":[1,2,3]}'></textarea>
+  <div class="tool-actions">
+    <button onclick="formatJSON()">格式化</button>
+    <button class="secondary" onclick="minifyJSON()">压缩</button>
+    <button class="secondary" onclick="clearText()">清空</button>
+  </div>
+  <div class="status" id="status"></div>
+</div></main>
+<footer>
+  <div class="container">© 2026 我的个人站 · 纯静态部署</div>
+</footer>
+
+<script>
+const input = document.getElementById('input');
+const statusBox = document.getElementById('status');
+function parseValue() {
+  return JSON.parse(input.value);
+}
+function formatJSON() {
+  try {
+    input.value = JSON.stringify(parseValue(), null, 2);
+    statusBox.textContent = 'JSON 格式正确，已完成格式化。';
+  } catch (e) {
+    statusBox.textContent = '格式错误：' + e.message;
+  }
+}
+function minifyJSON() {
+  try {
+    input.value = JSON.stringify(parseValue());
+    statusBox.textContent = 'JSON 格式正确，已完成压缩。';
+  } catch (e) {
+    statusBox.textContent = '格式错误：' + e.message;
+  }
+}
+function clearText() {
+  input.value = '';
+  statusBox.textContent = '';
+  input.focus();
+}
+</script>
+</body></html>
