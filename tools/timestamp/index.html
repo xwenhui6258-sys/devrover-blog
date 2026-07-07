@@ -1,0 +1,1247 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="时间戳转换工具，支持秒级、毫秒级、日期时间、时区和批量转换。">
+  <title>时间戳转换｜我的个人站</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <style>
+    :root {
+      --chrono-bg: #f8f9fc;
+      --chrono-panel: #fff;
+      --chrono-soft: #f3f3f8;
+      --chrono-text: #171722;
+      --chrono-muted: #717182;
+      --chrono-line: rgba(0,0,0,.08);
+      --chrono-primary: #5b5bd6;
+      --chrono-success: #10b981;
+      --chrono-danger: #dc2626;
+      --chrono-purple: #7c3aed;
+    }
+    body.chrono-dark {
+      --chrono-bg: #0f0f14;
+      --chrono-panel: #18181f;
+      --chrono-soft: rgba(255,255,255,.06);
+      --chrono-text: #f8fafc;
+      --chrono-muted: #a1a1aa;
+      --chrono-line: rgba(255,255,255,.1);
+      --chrono-primary: #7b7bff;
+      background: var(--chrono-bg);
+      color: var(--chrono-text);
+    }
+    .chrono-page {
+      min-height: calc(100vh - 130px);
+      background:
+        radial-gradient(circle at 12% 0, rgba(91,91,214,.13), transparent 34rem),
+        linear-gradient(135deg, var(--chrono-bg), var(--chrono-bg) 72%, rgba(91,91,214,.07));
+      padding: 0 0 56px;
+    }
+    .chrono-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding-top: 28px;
+    }
+    .chrono-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .chrono-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+    .chrono-logo {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(91,91,214,.9), var(--chrono-primary));
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(91,91,214,.24);
+    }
+    .chrono-title h1 {
+      margin: 0;
+      color: var(--chrono-text);
+      font-size: 20px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    .chrono-title span {
+      color: var(--chrono-muted);
+      font-size: 14px;
+    }
+    .chrono-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .chrono-select,
+    .chrono-input,
+    .chrono-textarea {
+      width: 100%;
+      border: 1px solid var(--chrono-line);
+      border-radius: 12px;
+      background: var(--chrono-soft);
+      color: var(--chrono-text);
+      outline: none;
+      transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .chrono-select,
+    .chrono-input {
+      height: 46px;
+      padding: 0 13px;
+    }
+    .chrono-select:focus,
+    .chrono-input:focus,
+    .chrono-textarea:focus {
+      border-color: rgba(91,91,214,.55);
+      box-shadow: 0 0 0 4px rgba(91,91,214,.12);
+    }
+    .chrono-controls .chrono-select {
+      width: 190px;
+      height: 38px;
+      font-size: 14px;
+      background: rgba(255,255,255,.6);
+    }
+    body.chrono-dark .chrono-controls .chrono-select {
+      background: rgba(255,255,255,.06);
+    }
+    .chrono-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--chrono-line);
+      border-radius: 18px;
+      background: var(--chrono-panel);
+      box-shadow: 0 14px 36px rgba(20,20,40,.06);
+    }
+    .chrono-hero {
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    .chrono-hero:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(91,91,214,.08), transparent 42%);
+    }
+    .chrono-hero-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .chrono-kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      color: var(--chrono-muted);
+      font-size: 14px;
+      font-weight: 650;
+    }
+    .chrono-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: rgba(16,185,129,.1);
+      color: #059669;
+      font-size: 12px;
+      font-weight: 650;
+    }
+    .chrono-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--chrono-success);
+      animation: chronoPulse 1.6s ease-in-out infinite;
+    }
+    .chrono-paused .chrono-dot {
+      animation: none;
+      background: var(--chrono-muted);
+    }
+    .chrono-number {
+      max-width: 100%;
+      margin: 0 0 12px;
+      color: var(--chrono-text);
+      font: 650 clamp(34px, 6vw, 56px)/1.06 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-wrap: anywhere;
+      letter-spacing: 0;
+    }
+    .chrono-subtime {
+      color: var(--chrono-text);
+      font-size: 17px;
+    }
+    .chrono-zone {
+      color: var(--chrono-muted);
+      font-size: 14px;
+    }
+    .chrono-hero-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+    .chrono-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .chrono-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 38px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 9px 14px;
+      background: var(--chrono-primary);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 650;
+      line-height: 1.2;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .chrono-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(91,91,214,.18);
+    }
+    .chrono-btn.secondary,
+    .chrono-icon-btn {
+      border-color: var(--chrono-line);
+      background: transparent;
+      color: var(--chrono-text);
+    }
+    .chrono-icon-btn {
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border-color: rgba(17,24,39,.1);
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 2px 8px rgba(17,24,39,.04);
+    }
+    body.chrono-dark .chrono-icon-btn {
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.12);
+    }
+    .chrono-icon-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 2.3;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .chrono-topbar .chrono-icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+    }
+    .chrono-topbar .chrono-icon-btn:hover {
+      background: var(--chrono-soft);
+      box-shadow: none;
+    }
+    .chrono-btn.ghost {
+      border-color: transparent;
+      background: transparent;
+      color: var(--chrono-muted);
+    }
+    .chrono-btn.small {
+      min-height: 32px;
+      padding: 7px 10px;
+      border-radius: 10px;
+      font-size: 13px;
+    }
+    .chrono-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .chrono-segment {
+      display: inline-grid;
+      grid-auto-flow: column;
+      gap: 3px;
+      padding: 3px;
+      border-radius: 13px;
+      background: var(--chrono-soft);
+      border: 1px solid var(--chrono-line);
+    }
+    .chrono-segment button {
+      min-width: 58px;
+      height: 32px;
+      border-radius: 10px;
+      border: 0;
+      background: transparent;
+      color: var(--chrono-muted);
+      padding: 0 10px;
+      font-size: 14px;
+      font-weight: 650;
+      cursor: pointer;
+    }
+    .chrono-segment button.active {
+      background: var(--chrono-panel);
+      color: var(--chrono-text);
+      box-shadow: 0 5px 14px rgba(0,0,0,.06);
+    }
+    .chrono-tool .chrono-segment {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+    .chrono-tool .chrono-segment button {
+      min-width: 0;
+      height: 38px;
+      padding: 0 8px;
+      color: var(--chrono-text);
+      border-radius: 8px;
+      box-shadow: none;
+      font-size: 15px;
+    }
+    .chrono-tool .chrono-segment button.active {
+      background: #eef0f6;
+      box-shadow: none;
+    }
+    body.chrono-dark .chrono-tool .chrono-segment button.active {
+      background: rgba(255,255,255,.1);
+    }
+    .chrono-workbench {
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .chrono-tabs {
+      display: inline-grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3px;
+      min-width: min(420px, 100%);
+      padding: 3px;
+      border-radius: 14px;
+      background: var(--chrono-soft);
+      margin-bottom: 22px;
+    }
+    .chrono-tabs button {
+      height: 38px;
+      border-radius: 11px;
+      border: 0;
+      background: transparent;
+      color: var(--chrono-muted);
+      cursor: pointer;
+      font-weight: 650;
+    }
+    .chrono-tabs button.active {
+      background: var(--chrono-panel);
+      color: var(--chrono-text);
+      box-shadow: 0 5px 14px rgba(0,0,0,.06);
+    }
+    .chrono-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+    .chrono-tool {
+      padding: 22px;
+    }
+    .chrono-tool h2,
+    .chrono-history h2 {
+      margin: 0 0 4px;
+      color: var(--chrono-text);
+      font-size: 18px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+    .chrono-tool p {
+      margin: 0 0 18px;
+      color: var(--chrono-muted);
+      font-size: 14px;
+    }
+    .chrono-stack {
+      display: grid;
+      gap: 14px;
+    }
+    .chrono-result {
+      display: none;
+      gap: 12px;
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid rgba(91,91,214,.15);
+      border-radius: 14px;
+      background: rgba(91,91,214,.06);
+    }
+    .chrono-result.show {
+      display: grid;
+    }
+    .result-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .result-label {
+      color: var(--chrono-muted);
+      font-size: 12px;
+    }
+    .result-value {
+      color: var(--chrono-text);
+      font: 650 15px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      overflow-wrap: anywhere;
+    }
+    .result-line .chrono-icon-btn,
+    .history-item .chrono-icon-btn,
+    .chrono-table .chrono-icon-btn {
+      width: 36px;
+      height: 36px;
+      flex: 0 0 auto;
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+    }
+    .result-line .chrono-icon-btn:hover,
+    .history-item .chrono-icon-btn:hover,
+    .chrono-table .chrono-icon-btn:hover {
+      background: rgba(91,91,214,.08);
+      box-shadow: none;
+    }
+    .chrono-textarea {
+      min-height: 210px;
+      padding: 14px;
+      resize: vertical;
+      font: 14px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .chrono-batch-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .batch-panel {
+      margin-top: 20px;
+      display: none;
+    }
+    .batch-panel.show {
+      display: block;
+    }
+    .batch-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .batch-head h3 {
+      margin: 0;
+      color: var(--chrono-text);
+      font-size: 15px;
+      letter-spacing: 0;
+    }
+    .table-wrap {
+      border: 1px solid var(--chrono-line);
+      border-radius: 14px;
+      overflow: auto;
+      max-height: 520px;
+    }
+    .chrono-table {
+      width: 100%;
+      min-width: 680px;
+      border-collapse: collapse;
+      background: var(--chrono-panel);
+    }
+    .chrono-table th,
+    .chrono-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--chrono-line);
+      text-align: left;
+      vertical-align: middle;
+      font-size: 14px;
+    }
+    .chrono-table th {
+      background: var(--chrono-soft);
+      color: var(--chrono-muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .chrono-table tr:last-child td {
+      border-bottom: 0;
+    }
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 7px;
+      padding: 3px 8px;
+      font-size: 12px;
+      font-weight: 650;
+    }
+    .tag-blue {
+      background: rgba(37,99,235,.1);
+      color: #2563eb;
+    }
+    .tag-purple {
+      background: rgba(124,58,237,.1);
+      color: var(--chrono-purple);
+    }
+    .tag-red {
+      background: rgba(220,38,38,.1);
+      color: var(--chrono-danger);
+    }
+    .status-ok {
+      color: #059669;
+      font-weight: 650;
+    }
+    .status-error {
+      color: var(--chrono-danger);
+      font-weight: 650;
+    }
+    .chrono-history {
+      display: none;
+      padding: 20px;
+    }
+    .chrono-history.show {
+      display: block;
+    }
+    .history-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .history-list {
+      display: grid;
+      gap: 10px;
+    }
+    .history-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 13px;
+      border: 1px solid var(--chrono-line);
+      border-radius: 12px;
+      background: rgba(255,255,255,.4);
+    }
+    body.chrono-dark .history-item {
+      background: rgba(255,255,255,.03);
+    }
+    .history-main {
+      min-width: 0;
+      display: grid;
+      gap: 5px;
+    }
+    .history-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .history-flow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--chrono-muted);
+      font-size: 14px;
+      min-width: 0;
+    }
+    .history-flow strong,
+    .history-flow span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 30;
+      max-width: min(360px, calc(100vw - 36px));
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      border: 1px solid var(--chrono-line);
+      border-radius: 12px;
+      background: var(--chrono-panel);
+      color: var(--chrono-text);
+      box-shadow: 0 20px 50px rgba(0,0,0,.16);
+      padding: 12px 14px;
+      font-size: 14px;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .chrono-hidden {
+      display: none;
+    }
+    @keyframes chronoPulse {
+      50% { opacity: .45; }
+    }
+    @media (max-width: 860px) {
+      .chrono-topbar,
+      .chrono-hero-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .chrono-controls,
+      .chrono-hero-actions {
+        align-items: stretch;
+        width: 100%;
+      }
+      .chrono-controls .chrono-select {
+        width: 100%;
+      }
+      .chrono-grid {
+        grid-template-columns: 1fr;
+      }
+      .chrono-row {
+        width: 100%;
+      }
+      .chrono-segment {
+        width: 100%;
+      }
+      .chrono-segment button {
+        min-width: 0;
+      }
+    }
+    @media (max-width: 560px) {
+      .chrono-shell {
+        width: min(100% - 24px, 1180px);
+        padding-top: 20px;
+      }
+      .chrono-hero,
+      .chrono-tool,
+      .chrono-workbench,
+      .chrono-history {
+        padding: 16px;
+      }
+      .chrono-number {
+        font-size: 32px;
+      }
+      .chrono-batch-actions,
+      .result-line,
+      .history-item {
+        align-items: stretch;
+        flex-direction: column;
+      }
+      .chrono-btn {
+        width: 100%;
+      }
+      .chrono-tabs {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="/">我的个人站</a>
+    <nav>
+      <a href="/blog/">博客</a>
+      <a href="/tools/">工具</a>
+      <a href="/about/">关于</a>
+    </nav>
+  </div>
+</header>
+
+<main class="chrono-page">
+  <div class="chrono-shell">
+    <section class="chrono-topbar" aria-label="时间戳工具设置">
+      <div class="chrono-title">
+        <div class="chrono-logo" aria-hidden="true">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"></circle>
+            <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <div>
+          <h1>Chrono</h1>
+          <span>时间戳转换工具</span>
+        </div>
+      </div>
+      <div class="chrono-controls">
+        <select class="chrono-select" id="timezoneSelect" aria-label="选择时区"></select>
+        <button class="chrono-icon-btn" type="button" id="themeToggle" aria-label="切换深浅色"></button>
+      </div>
+    </section>
+
+    <section class="chrono-card chrono-hero" aria-label="当前时间戳">
+      <div class="chrono-hero-inner">
+        <div>
+          <div class="chrono-kicker">
+            当前时间戳
+            <span class="chrono-live" id="liveState"><span class="chrono-dot"></span><span id="liveText">实时更新中</span></span>
+          </div>
+          <div class="chrono-number" id="currentTimestamp">0</div>
+          <div class="chrono-subtime" id="currentDateTime">-</div>
+          <div class="chrono-zone" id="currentZone">Asia/Shanghai</div>
+        </div>
+        <div class="chrono-hero-actions">
+          <div class="chrono-segment" aria-label="当前时间戳单位">
+            <button type="button" class="active" data-current-unit="seconds">秒</button>
+            <button type="button" data-current-unit="milliseconds">毫秒</button>
+          </div>
+          <div class="chrono-row">
+            <button class="chrono-icon-btn" type="button" id="copyNow" aria-label="复制当前时间戳"></button>
+            <button class="chrono-icon-btn" type="button" id="toggleLive" aria-label="暂停或恢复实时更新"></button>
+            <button class="chrono-icon-btn" type="button" id="refreshNow" aria-label="刷新当前时间戳"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chrono-card chrono-workbench" aria-label="转换工作区">
+      <div class="chrono-tabs" role="tablist">
+        <button type="button" class="active" data-tab="single">单个转换</button>
+        <button type="button" data-tab="batch">批量转换</button>
+      </div>
+
+      <div id="singlePanel">
+        <div class="chrono-grid">
+          <section class="chrono-card chrono-tool" aria-label="时间戳转日期时间">
+            <h2>时间戳 → 日期时间</h2>
+            <p>输入秒级或毫秒级时间戳，可自动识别单位。</p>
+            <div class="chrono-stack">
+              <input class="chrono-input mono" id="timestampInput" type="text" inputmode="numeric" placeholder="例如：1783343035">
+              <div class="chrono-segment" aria-label="输入时间戳单位">
+                <button type="button" data-ts-unit="seconds">秒</button>
+                <button type="button" data-ts-unit="milliseconds">毫秒</button>
+                <button type="button" class="active" data-ts-unit="auto">自动识别</button>
+              </div>
+              <button class="chrono-btn" type="button" id="convertTimestamp">立即转换</button>
+            </div>
+            <div class="chrono-result" id="timestampResult"></div>
+          </section>
+
+          <section class="chrono-card chrono-tool" aria-label="日期时间转时间戳">
+            <h2>日期时间 → 时间戳</h2>
+            <p>选择日期、时间和时区，生成秒级与毫秒级时间戳。</p>
+            <div class="chrono-stack">
+              <input class="chrono-input" id="dateInput" type="date">
+              <input class="chrono-input mono" id="timeInput" type="time" step="1">
+              <select class="chrono-select" id="dateTimezoneSelect" aria-label="日期时间转换时区"></select>
+              <button class="chrono-btn" type="button" id="convertDateTime">立即转换</button>
+            </div>
+            <div class="chrono-result" id="dateResult"></div>
+          </section>
+        </div>
+      </div>
+
+      <div id="batchPanel" class="chrono-hidden">
+        <textarea class="chrono-textarea" id="batchInput" placeholder="每行输入一个时间戳或日期时间&#10;例如：&#10;1783343035&#10;1783343035000&#10;2026-07-06 21:03:55&#10;2026-07-06T21:03:55Z"></textarea>
+        <div class="chrono-batch-actions">
+          <button class="chrono-btn" type="button" id="runBatch">开始转换</button>
+          <button class="chrono-btn secondary" type="button" id="clearBatch">清空</button>
+        </div>
+
+        <section class="batch-panel" id="batchResults">
+          <div class="batch-head">
+            <h3 id="batchTitle">转换结果</h3>
+            <div class="chrono-row">
+              <button class="chrono-btn secondary small" type="button" id="copyBatch"><span data-icon="copy"></span>复制全部</button>
+              <button class="chrono-btn secondary small" type="button" id="exportBatch"><span data-icon="download"></span>导出 CSV</button>
+              <button class="chrono-btn secondary small" type="button" id="clearBatchResult">清空结果</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="chrono-table">
+              <thead>
+                <tr>
+                  <th>原始内容</th>
+                  <th>识别类型</th>
+                  <th>转换结果</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody id="batchBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="chrono-card chrono-history" id="historySection" aria-label="最近转换">
+      <div class="history-head">
+        <h2>最近转换</h2>
+        <button class="chrono-btn ghost small" type="button" id="clearHistory">清空记录</button>
+      </div>
+      <div class="history-list" id="historyList"></div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="container">© 2026 我的个人站 · 纯静态部署</div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const zones = [
+  'Asia/Shanghai',
+  'Asia/Tokyo',
+  'Asia/Seoul',
+  'America/New_York',
+  'America/Los_Angeles',
+  'Europe/London',
+  'Europe/Paris',
+  'UTC'
+];
+const state = {
+  timezone: localStorage.getItem('chrono-timezone') || 'Asia/Shanghai',
+  dateTimezone: localStorage.getItem('chrono-timezone') || 'Asia/Shanghai',
+  currentUnit: 'seconds',
+  tsUnit: 'auto',
+  live: true,
+  now: Date.now(),
+  batchRows: [],
+  history: []
+};
+const icons = {
+  copy: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>',
+  pause: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="14" y="4" width="4" height="16" rx="1"></rect><rect x="6" y="4" width="4" height="16" rx="1"></rect></svg>',
+  play: '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg>',
+  refresh: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.3-6.3L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-15.3 6.3L3 16"></path><path d="M3 21v-5h5"></path></svg>',
+  moon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.2 2.2a6.4 6.4 0 0 0 8.6 8.6 8.7 8.7 0 1 1-8.6-8.6Z"></path></svg>',
+  sun: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>',
+  download: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>'
+};
+const el = (id) => document.getElementById(id);
+const timezoneSelect = el('timezoneSelect');
+const dateTimezoneSelect = el('dateTimezoneSelect');
+const toast = el('toast');
+let toastTimer;
+
+function pad(value) {
+  return String(value).padStart(2, '0');
+}
+function showToast(message) {
+  clearTimeout(toastTimer);
+  toast.textContent = message;
+  toast.classList.add('show');
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+function copyText(text) {
+  if (!text && text !== 0) return;
+  const value = String(text);
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(value).then(() => showToast('已复制')).catch(() => fallbackCopy(value));
+    return;
+  }
+  fallbackCopy(value);
+}
+function fallbackCopy(value) {
+  const input = document.createElement('textarea');
+  input.value = value;
+  input.setAttribute('readonly', '');
+  input.style.position = 'fixed';
+  input.style.opacity = '0';
+  document.body.appendChild(input);
+  input.select();
+  document.execCommand('copy');
+  document.body.removeChild(input);
+  showToast('已复制');
+}
+function fillSelect(select, value) {
+  select.innerHTML = zones.map((zone) => '<option value="' + zone + '">' + zone + '</option>').join('');
+  select.value = value;
+}
+function formatParts(date, timezone) {
+  const formatter = new Intl.DateTimeFormat('zh-CN', {
+    timeZone: timezone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h23'
+  });
+  const parts = {};
+  formatter.formatToParts(date).forEach((part) => {
+    if (part.type !== 'literal') parts[part.type] = part.value;
+  });
+  return parts;
+}
+function formatInZone(date, timezone) {
+  const parts = formatParts(date, timezone);
+  return parts.year + '-' + parts.month + '-' + parts.day + ' ' + parts.hour + ':' + parts.minute + ':' + parts.second;
+}
+function zoneName(timezone) {
+  try {
+    const part = new Intl.DateTimeFormat('zh-CN', {
+      timeZone: timezone,
+      timeZoneName: 'short'
+    }).formatToParts(new Date()).find((item) => item.type === 'timeZoneName');
+    return part ? part.value : '';
+  } catch (error) {
+    return '';
+  }
+}
+function offsetMs(date, timezone) {
+  const parts = formatParts(date, timezone);
+  const asUtc = Date.UTC(
+    Number(parts.year),
+    Number(parts.month) - 1,
+    Number(parts.day),
+    Number(parts.hour),
+    Number(parts.minute),
+    Number(parts.second)
+  );
+  return asUtc - Math.floor(date.getTime() / 1000) * 1000;
+}
+function zonedTimeToTimestamp(dateValue, timeValue, timezone) {
+  const dateMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateValue);
+  const timeMatch = /^(\d{2}):(\d{2})(?::(\d{2}))?$/.exec(timeValue);
+  if (!dateMatch || !timeMatch) return NaN;
+  const y = Number(dateMatch[1]);
+  const mo = Number(dateMatch[2]);
+  const d = Number(dateMatch[3]);
+  const h = Number(timeMatch[1]);
+  const mi = Number(timeMatch[2]);
+  const s = Number(timeMatch[3] || 0);
+  const wallUtc = Date.UTC(y, mo - 1, d, h, mi, s);
+  let ts = wallUtc - offsetMs(new Date(wallUtc), timezone);
+  ts = wallUtc - offsetMs(new Date(ts), timezone);
+  return ts;
+}
+function parseDateText(text, timezone) {
+  const trimmed = text.trim();
+  const simple = /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?:[ T](\d{1,2}):(\d{1,2})(?::(\d{1,2}))?)?$/.exec(trimmed);
+  if (simple) {
+    const dateValue = simple[1] + '-' + pad(simple[2]) + '-' + pad(simple[3]);
+    const timeValue = pad(simple[4] || 0) + ':' + pad(simple[5] || 0) + ':' + pad(simple[6] || 0);
+    const ts = zonedTimeToTimestamp(dateValue, timeValue, timezone);
+    return Number.isNaN(ts) ? null : new Date(ts);
+  }
+  const parsed = new Date(trimmed);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+function relativeTime(date) {
+  const diffSeconds = Math.round((date.getTime() - Date.now()) / 1000);
+  const abs = Math.abs(diffSeconds);
+  const units = [
+    ['年', 31536000],
+    ['个月', 2592000],
+    ['天', 86400],
+    ['小时', 3600],
+    ['分钟', 60],
+    ['秒', 1]
+  ];
+  const unit = units.find((item) => abs >= item[1]) || units[units.length - 1];
+  const value = Math.max(1, Math.round(abs / unit[1]));
+  return diffSeconds >= 0 ? value + unit[0] + '后' : value + unit[0] + '前';
+}
+function updateNow() {
+  const stamp = state.currentUnit === 'seconds' ? Math.floor(state.now / 1000) : state.now;
+  el('currentTimestamp').textContent = stamp.toLocaleString();
+  el('currentDateTime').textContent = formatInZone(new Date(state.now), state.timezone);
+  el('currentZone').textContent = state.timezone + (zoneName(state.timezone) ? ' · ' + zoneName(state.timezone) : '');
+  el('liveState').classList.toggle('chrono-paused', !state.live);
+  el('liveText').textContent = state.live ? '实时更新中' : '已暂停';
+  el('toggleLive').innerHTML = state.live ? icons.pause : icons.play;
+}
+function setCurrentUnit(unit) {
+  state.currentUnit = unit;
+  document.querySelectorAll('[data-current-unit]').forEach((button) => {
+    button.classList.toggle('active', button.dataset.currentUnit === unit);
+  });
+  updateNow();
+}
+function setTimestampUnit(unit) {
+  state.tsUnit = unit;
+  document.querySelectorAll('[data-ts-unit]').forEach((button) => {
+    button.classList.toggle('active', button.dataset.tsUnit === unit);
+  });
+}
+function resultLine(label, value) {
+  return '<div class="result-line"><div><div class="result-label">' + label + '</div><div class="result-value">' + value + '</div></div><button class="chrono-icon-btn" type="button" data-copy="' + encodeURIComponent(value) + '" aria-label="复制' + label + '">' + icons.copy + '</button></div>';
+}
+function showResult(container, lines) {
+  container.innerHTML = lines.map((item) => resultLine(item.label, item.value)).join('');
+  container.classList.add('show');
+}
+function normalizeTimestamp(raw, unit) {
+  if (!/^-?\d+$/.test(raw.trim())) return NaN;
+  const number = Number(raw.trim());
+  if (!Number.isFinite(number)) return NaN;
+  const resolved = unit === 'auto' ? (Math.abs(number) > 1e10 ? 'milliseconds' : 'seconds') : unit;
+  return resolved === 'seconds' ? number * 1000 : number;
+}
+function convertTimestamp() {
+  const raw = el('timestampInput').value.trim();
+  if (!raw) {
+    showToast('请输入时间戳');
+    return;
+  }
+  const ts = normalizeTimestamp(raw, state.tsUnit);
+  const date = new Date(ts);
+  if (Number.isNaN(date.getTime())) {
+    showToast('无效的时间戳');
+    return;
+  }
+  const standard = formatInZone(date, state.timezone);
+  const lines = [
+    { label: '标准格式', value: standard },
+    { label: 'ISO 8601', value: date.toISOString() },
+    { label: 'UTC', value: formatInZone(date, 'UTC') + ' UTC' },
+    { label: '相对时间', value: relativeTime(date) }
+  ];
+  showResult(el('timestampResult'), lines);
+  addHistory(raw, standard, 'timestamp-to-date');
+  showToast('转换成功');
+}
+function convertDateTime() {
+  const dateValue = el('dateInput').value;
+  const timeValue = el('timeInput').value;
+  const timezone = el('dateTimezoneSelect').value;
+  if (!dateValue || !timeValue) {
+    showToast('请选择日期和时间');
+    return;
+  }
+  const ts = zonedTimeToTimestamp(dateValue, timeValue, timezone);
+  if (Number.isNaN(ts)) {
+    showToast('转换失败');
+    return;
+  }
+  const seconds = Math.floor(ts / 1000);
+  const lines = [
+    { label: '秒级时间戳', value: String(seconds) },
+    { label: '毫秒级时间戳', value: String(ts) }
+  ];
+  showResult(el('dateResult'), lines);
+  addHistory(dateValue + ' ' + timeValue + ' ' + timezone, String(seconds), 'date-to-timestamp');
+  showToast('转换成功');
+}
+function convertOneLine(line) {
+  const original = line;
+  const value = line.trim();
+  if (!value) {
+    return { original, type: 'error', result: '', error: '空行' };
+  }
+  if (/^-?\d+$/.test(value)) {
+    const ts = normalizeTimestamp(value, 'auto');
+    const date = new Date(ts);
+    if (Number.isNaN(date.getTime())) return { original, type: 'error', result: '', error: '无效的时间戳' };
+    return { original, type: 'timestamp', result: formatInZone(date, state.timezone) };
+  }
+  const date = parseDateText(value, state.timezone);
+  if (date) {
+    return { original, type: 'date', result: String(Math.floor(date.getTime() / 1000)) };
+  }
+  return { original, type: 'error', result: '', error: '无法识别的格式' };
+}
+function renderBatch() {
+  const rows = state.batchRows;
+  const okCount = rows.filter((row) => row.type !== 'error').length;
+  el('batchTitle').textContent = '转换结果 (' + okCount + '/' + rows.length + ')';
+  el('batchBody').innerHTML = rows.map((row, index) => {
+    const typeText = row.type === 'timestamp' ? '时间戳' : row.type === 'date' ? '日期' : '错误';
+    const tagClass = row.type === 'timestamp' ? 'tag-blue' : row.type === 'date' ? 'tag-purple' : 'tag-red';
+    const result = row.result || row.error || '-';
+    const copy = row.type === 'error' ? '' : '<button class="chrono-icon-btn" type="button" data-batch-copy="' + index + '" aria-label="复制转换结果">' + icons.copy + '</button>';
+    return '<tr><td class="mono">' + escapeHtml(row.original) + '</td><td><span class="tag ' + tagClass + '">' + typeText + '</span></td><td class="mono">' + escapeHtml(result) + '</td><td class="' + (row.type === 'error' ? 'status-error' : 'status-ok') + '">' + (row.type === 'error' ? '失败' : '成功') + '</td><td>' + copy + '</td></tr>';
+  }).join('');
+  el('batchResults').classList.toggle('show', rows.length > 0);
+}
+function runBatch() {
+  const value = el('batchInput').value;
+  if (!value.trim()) {
+    showToast('请输入要转换的内容');
+    return;
+  }
+  state.batchRows = value.split(/\r?\n/).map(convertOneLine);
+  renderBatch();
+  const okCount = state.batchRows.filter((row) => row.type !== 'error').length;
+  const failCount = state.batchRows.length - okCount;
+  showToast(failCount ? '成功 ' + okCount + ' 条，失败 ' + failCount + ' 条' : '成功转换 ' + okCount + ' 条记录');
+}
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[char]);
+}
+function exportCsv() {
+  const header = ['原始内容', '识别类型', '转换结果', '状态'];
+  const rows = state.batchRows.map((row) => [
+    row.original,
+    row.type === 'timestamp' ? '时间戳' : row.type === 'date' ? '日期' : '错误',
+    row.result || row.error || '',
+    row.type === 'error' ? '失败' : '成功'
+  ]);
+  const csv = [header].concat(rows).map((row) => row.map(csvCell).join(',')).join('\n');
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'batch-convert-' + Date.now() + '.csv';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(link.href);
+  showToast('已导出 CSV');
+}
+function csvCell(value) {
+  return '"' + String(value).replace(/"/g, '""') + '"';
+}
+function loadHistory() {
+  try {
+    state.history = JSON.parse(localStorage.getItem('chrono-history') || '[]');
+  } catch (error) {
+    state.history = [];
+  }
+  renderHistory();
+}
+function addHistory(original, result, type) {
+  const next = [{ id: Date.now() + '-' + Math.random(), original, result, type, timestamp: Date.now() }]
+    .concat(state.history)
+    .slice(0, 20);
+  state.history = next;
+  localStorage.setItem('chrono-history', JSON.stringify(next));
+  renderHistory();
+}
+function renderHistory() {
+  const section = el('historySection');
+  const list = el('historyList');
+  section.classList.toggle('show', state.history.length > 0);
+  list.innerHTML = state.history.slice(0, 5).map((item, index) => {
+    const label = item.type === 'timestamp-to-date' ? '时间戳→日期' : '日期→时间戳';
+    const tagClass = item.type === 'timestamp-to-date' ? 'tag-blue' : 'tag-purple';
+    return '<article class="history-item"><div class="history-main"><div class="history-meta"><span class="tag ' + tagClass + '">' + label + '</span><span class="chrono-zone">' + relativeTime(new Date(item.timestamp)) + '</span></div><div class="history-flow"><span class="mono">' + escapeHtml(item.original) + '</span><span>→</span><strong class="mono">' + escapeHtml(item.result) + '</strong></div></div><button class="chrono-icon-btn" type="button" data-history-copy="' + index + '" aria-label="复制历史结果">' + icons.copy + '</button></article>';
+  }).join('');
+}
+function initDateInputs() {
+  const now = new Date();
+  el('dateInput').value = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+  el('timeInput').value = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+}
+function setTheme(theme) {
+  const dark = theme === 'dark';
+  document.body.classList.toggle('chrono-dark', dark);
+  el('themeToggle').innerHTML = dark ? icons.sun : icons.moon;
+  localStorage.setItem('chrono-theme', theme);
+}
+function initIcons() {
+  el('copyNow').innerHTML = icons.copy;
+  el('refreshNow').innerHTML = icons.refresh;
+  document.querySelectorAll('[data-icon="copy"]').forEach((node) => node.innerHTML = icons.copy);
+  document.querySelectorAll('[data-icon="download"]').forEach((node) => node.innerHTML = icons.download);
+}
+function bindEvents() {
+  timezoneSelect.addEventListener('change', () => {
+    state.timezone = timezoneSelect.value;
+    state.dateTimezone = timezoneSelect.value;
+    dateTimezoneSelect.value = timezoneSelect.value;
+    localStorage.setItem('chrono-timezone', state.timezone);
+    updateNow();
+  });
+  dateTimezoneSelect.addEventListener('change', () => {
+    state.dateTimezone = dateTimezoneSelect.value;
+  });
+  document.querySelectorAll('[data-current-unit]').forEach((button) => {
+    button.addEventListener('click', () => setCurrentUnit(button.dataset.currentUnit));
+  });
+  document.querySelectorAll('[data-ts-unit]').forEach((button) => {
+    button.addEventListener('click', () => setTimestampUnit(button.dataset.tsUnit));
+  });
+  document.querySelectorAll('[data-tab]').forEach((button) => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll('[data-tab]').forEach((tab) => tab.classList.toggle('active', tab === button));
+      const batch = button.dataset.tab === 'batch';
+      el('singlePanel').classList.toggle('chrono-hidden', batch);
+      el('batchPanel').classList.toggle('chrono-hidden', !batch);
+    });
+  });
+  el('themeToggle').addEventListener('click', () => {
+    setTheme(document.body.classList.contains('chrono-dark') ? 'light' : 'dark');
+  });
+  el('copyNow').addEventListener('click', () => {
+    const stamp = state.currentUnit === 'seconds' ? Math.floor(state.now / 1000) : state.now;
+    copyText(stamp);
+  });
+  el('toggleLive').addEventListener('click', () => {
+    state.live = !state.live;
+    updateNow();
+  });
+  el('refreshNow').addEventListener('click', () => {
+    state.now = Date.now();
+    updateNow();
+    showToast('已刷新');
+  });
+  el('convertTimestamp').addEventListener('click', convertTimestamp);
+  el('timestampInput').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') convertTimestamp();
+  });
+  el('convertDateTime').addEventListener('click', convertDateTime);
+  document.body.addEventListener('click', (event) => {
+    const copyButton = event.target.closest('[data-copy]');
+    if (copyButton) copyText(decodeURIComponent(copyButton.dataset.copy));
+    const batchButton = event.target.closest('[data-batch-copy]');
+    if (batchButton) copyText(state.batchRows[Number(batchButton.dataset.batchCopy)].result);
+    const historyButton = event.target.closest('[data-history-copy]');
+    if (historyButton) copyText(state.history[Number(historyButton.dataset.historyCopy)].result);
+  });
+  el('runBatch').addEventListener('click', runBatch);
+  el('clearBatch').addEventListener('click', () => {
+    el('batchInput').value = '';
+    state.batchRows = [];
+    renderBatch();
+  });
+  el('clearBatchResult').addEventListener('click', () => {
+    state.batchRows = [];
+    renderBatch();
+  });
+  el('copyBatch').addEventListener('click', () => {
+    const text = state.batchRows.filter((row) => row.type !== 'error').map((row) => row.original + ' → ' + row.result).join('\n');
+    copyText(text);
+  });
+  el('exportBatch').addEventListener('click', exportCsv);
+  el('clearHistory').addEventListener('click', () => {
+    state.history = [];
+    localStorage.removeItem('chrono-history');
+    renderHistory();
+  });
+}
+fillSelect(timezoneSelect, state.timezone);
+fillSelect(dateTimezoneSelect, state.dateTimezone);
+initIcons();
+initDateInputs();
+loadHistory();
+bindEvents();
+setTheme(localStorage.getItem('chrono-theme') || 'light');
+updateNow();
+setInterval(() => {
+  if (!state.live) return;
+  state.now = Date.now();
+  updateNow();
+}, 250);
+</script>
+</body>
+</html>
