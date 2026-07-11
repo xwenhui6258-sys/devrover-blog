@@ -30,7 +30,20 @@ header {
   border-bottom: 1px solid var(--line);
 }
 .nav { display: flex; align-items: center; justify-content: space-between; min-height: 64px; }
-.brand { font-weight: 750; letter-spacing: -.02em; }
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 750;
+  letter-spacing: -.02em;
+}
+.brand-icon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  border-radius: 9px;
+  box-shadow: 0 6px 18px rgba(25, 42, 70, .13);
+}
 nav { display: flex; gap: 22px; color: var(--muted); font-size: 15px; }
 nav a:hover { color: var(--text); }
 .hero { padding: 96px 0 54px; }

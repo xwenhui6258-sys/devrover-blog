@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">DevRover icon</title>
+  <desc id="desc">A compact DR monogram with a forward orbit mark for DevRover.</desc>
+  <defs>
+    <linearGradient id="markGradient" x1="10" y1="54" x2="54" y2="10" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1d4ed8"/>
+      <stop offset=".52" stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#22c55e"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#172033" flood-opacity=".18"/>
+    </filter>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#f8fbff"/>
+  <path d="M17 47c7-22 18-32 34-36-8 9-12 21-13 36H17Z" fill="url(#markGradient)" filter="url(#softShadow)"/>
+  <path d="M18 18h13c9 0 15 6 15 14s-6 14-15 14H18V18Zm9 8v12h4c4 0 7-2 7-6s-3-6-7-6h-4Z" fill="#ffffff"/>
+  <path d="M39 18h8l-5 9h-7l4-9Z" fill="#172033" opacity=".92"/>
+  <path d="M15 49c10-2 22-2 35 2" fill="none" stroke="#172033" stroke-width="4" stroke-linecap="round" opacity=".2"/>
+</svg>
