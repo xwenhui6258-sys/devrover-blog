@@ -1,13 +1,19 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>博客｜我的个人站</title><link rel="stylesheet" href="/assets/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="DevRover 的海外投资与数字生活笔记，记录美股账户、海外银行卡、跨境工具和真实踩坑经验。">
+  <title>博客｜DevRover的个人站</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
 <header>
   <div class="container nav">
-    <a class="brand" href="/">我的个人站</a>
+    <a class="brand" href="/"><img class="brand-icon" src="/assets/devrover-icon.png" width="36" height="36" alt="" aria-hidden="true">DevRover的个人站</a>
     <nav>
       <a href="/blog/">博客</a>
       <a href="/tools/">工具</a>
@@ -16,14 +22,257 @@
   </div>
 </header>
 
-<main class="page"><div class="container">
-  <div class="eyebrow">BLOG</div><h1>博客</h1>
-  <p class="lead">后续可以把每篇文章放在独立目录中，例如 <code>/blog/first-post/</code>。</p>
-  <div class="list">
-    <a class="item" href="#"><strong>第一篇文章：网站正式上线</strong><br><small>2026-07-05 · 示例文章</small></a>
-  </div>
-</div></main>
+<main class="blog-shell">
+  <section class="blog-hero">
+    <div class="container blog-hero-grid">
+      <div>
+        <div class="eyebrow">BLOG</div>
+        <h1>海外投资与数字生活笔记</h1>
+        <p class="lead">美股账户、海外银行卡、跨境工具和真实踩坑经验。按分类浏览，也可以用标签快速筛选。</p>
+        <p class="blog-notice">内容仅为个人经验记录，不构成投资、税务或法律建议。</p>
+      </div>
+      <aside class="blog-guide" aria-label="内容导航">
+        <h2>内容导航</h2>
+        <p>先用分类承接短期 10-20 篇文章，后续沉淀成系列。</p>
+        <div class="blog-guide-tags" id="heroCategories"></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="container blog-filters" aria-label="博客筛选">
+    <div class="filter-row">
+      <h2>分类</h2>
+      <div class="filter-chips" id="categoryFilters"></div>
+    </div>
+    <div class="filter-row">
+      <h2>标签</h2>
+      <div class="filter-chips" id="tagFilters"></div>
+    </div>
+  </section>
+
+  <section class="container blog-content-grid">
+    <div class="blog-main-list">
+      <div class="section-heading">
+        <div>
+          <h2>最近更新</h2>
+          <p id="resultSummary">按更新时间倒序展示，保证新内容最先被看到。</p>
+        </div>
+        <a class="clear-filter" href="/blog/" id="clearFilter" data-filter-type="category" data-filter-value="全部" hidden>清除筛选</a>
+      </div>
+      <div class="post-list" id="postList"></div>
+    </div>
+
+    <aside class="series-panel" aria-label="系列关联">
+      <div class="section-heading compact">
+        <h2>系列关联</h2>
+        <p>让相关文章互相连接。</p>
+      </div>
+      <div class="series-list" id="seriesList"></div>
+      <div class="meta-note">
+        <h3>新增标签如何出现？</h3>
+        <p>文章元数据里添加 <code>tags</code> 后，页面会自动汇总并显示在标签区。</p>
+      </div>
+    </aside>
+  </section>
+</main>
+
 <footer>
-  <div class="container">© 2026 我的个人站 · 纯静态部署</div>
+  <div class="container">© 2026 DevRover的个人站 · 纯静态部署</div>
 </footer>
+<script>
+const fallbackPosts = [
+  {
+    title: '大陆身份开嘉信理财 Charles Schwab 全流程',
+    slug: 'charles-schwab-open-account',
+    url: '#',
+    date: '2026-07-11',
+    updated: '2026-07-11',
+    category: '美股账户',
+    series: '大陆用户海外券商开户',
+    tags: ['Charles Schwab', 'W-8BEN', '地址证明', '开户'],
+    summary: '准备材料、W-8BEN、地址证明、开户后设置和常见卡点，一篇走完。',
+    readingTime: '8 分钟'
+  },
+  {
+    title: 'Charles Schwab 入金路径整理：电汇、ACH 与到账时间',
+    slug: 'schwab-funding-routes',
+    url: '#',
+    date: '2026-07-12',
+    updated: '2026-07-12',
+    category: '券商入金',
+    series: '大陆用户海外券商开户',
+    tags: ['Charles Schwab', '入金', 'ACH', '电汇'],
+    summary: '从入金路径选择、手续费、到账时间到失败处理，整理成可执行清单。',
+    readingTime: '6 分钟'
+  },
+  {
+    title: 'Wise 与海外银行卡：资金流转路径和风控注意事项',
+    slug: 'wise-overseas-card-routes',
+    url: '#',
+    date: '2026-07-12',
+    updated: '2026-07-12',
+    category: '海外银行卡',
+    series: '海外银行卡与资金流转',
+    tags: ['Wise', '海外银行卡', '风控', '入金'],
+    summary: '什么时候用 Wise，什么时候需要实体银行卡，以及长期维护要避开的坑。',
+    readingTime: '7 分钟'
+  }
+];
+
+const categoryTone = {
+  '美股账户': 'blue',
+  '海外银行卡': 'green',
+  '券商入金': 'gold',
+  '跨境投资': 'purple',
+  '工具效率': 'purple'
+};
+const seriesIntro = {
+  '大陆用户海外券商开户': '嘉信、IBKR、W-8BEN、地址证明',
+  '海外银行卡与资金流转': 'Wise、实体卡、入金出金路径',
+  '美股新手基础设施': '账户安全、数据源、税务基础'
+};
+
+const state = {
+  posts: [],
+  category: new URLSearchParams(location.search).get('category') || '全部',
+  tag: new URLSearchParams(location.search).get('tag') || ''
+};
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[char]);
+}
+
+function formatDate(value) {
+  if (!value) return '';
+  return value.replaceAll('-', '.');
+}
+
+function unique(values) {
+  return [...new Set(values.filter(Boolean))];
+}
+
+function getSortedPosts(posts) {
+  return [...posts].sort((a, b) => String(b.updated || b.date).localeCompare(String(a.updated || a.date)));
+}
+
+function getFilteredPosts() {
+  return getSortedPosts(state.posts).filter((post) => {
+    const categoryMatch = state.category === '全部' || post.category === state.category;
+    const tagMatch = !state.tag || (post.tags || []).includes(state.tag);
+    return categoryMatch && tagMatch;
+  });
+}
+
+function buildUrl(next) {
+  const params = new URLSearchParams();
+  const category = next.category ?? state.category;
+  const tag = next.tag ?? state.tag;
+  if (category && category !== '全部') params.set('category', category);
+  if (tag) params.set('tag', tag);
+  const query = params.toString();
+  return query ? `/blog/?${query}` : '/blog/';
+}
+
+function renderChips() {
+  const baseCategories = ['全部', '跨境投资', '券商入金', '海外银行卡', '美股账户'];
+  const extraCategories = unique(state.posts.map((post) => post.category)).filter((category) => !baseCategories.includes(category));
+  const categories = [...baseCategories, ...extraCategories];
+  const tags = ['全部', ...unique(state.posts.flatMap((post) => post.tags || [])).sort((a, b) => a.localeCompare(b, 'zh-CN'))];
+  const categoryHtml = categories.map((category) => {
+    const active = state.category === category;
+    const tone = categoryTone[category] || 'neutral';
+    return `<a class="filter-chip ${active ? 'active' : ''} ${tone}" href="${buildUrl({ category })}" data-filter-type="category" data-filter-value="${escapeHtml(category)}">${escapeHtml(category)}</a>`;
+  }).join('');
+  const tagHtml = tags.map((tag) => {
+    const value = tag === '全部' ? '' : tag;
+    const active = state.tag === value;
+    return `<a class="filter-chip ${active ? 'active' : ''}" href="${buildUrl({ tag: value })}" data-filter-type="tag" data-filter-value="${escapeHtml(value)}">${escapeHtml(tag)}</a>`;
+  }).join('');
+  document.getElementById('categoryFilters').innerHTML = categoryHtml;
+  document.getElementById('tagFilters').innerHTML = tagHtml;
+  document.getElementById('heroCategories').innerHTML = categories.filter((category) => category !== '全部').slice(0, 4).map((category) => {
+    const tone = categoryTone[category] || 'neutral';
+    return `<a class="mini-chip ${tone}" href="${buildUrl({ category, tag: '' })}" data-filter-type="category" data-filter-value="${escapeHtml(category)}">${escapeHtml(category)}</a>`;
+  }).join('');
+}
+
+function renderPosts() {
+  const posts = getFilteredPosts();
+  const summary = document.getElementById('resultSummary');
+  const filters = [];
+  if (state.category !== '全部') filters.push(state.category);
+  if (state.tag) filters.push(state.tag);
+  summary.textContent = filters.length
+    ? `已筛选：${filters.join(' / ')} · 找到 ${posts.length} 篇文章`
+    : '按更新时间倒序展示，保证新内容最先被看到。';
+  document.getElementById('clearFilter').hidden = !filters.length;
+  document.getElementById('postList').innerHTML = posts.length ? posts.map((post) => {
+    const tone = categoryTone[post.category] || 'neutral';
+    const tags = (post.tags || []).slice(0, 5).map((tag) => `<a href="${buildUrl({ tag })}" data-filter-type="tag" data-filter-value="${escapeHtml(tag)}">${escapeHtml(tag)}</a>`).join('');
+    return `<article class="post-card">
+      <a class="category-pill ${tone}" href="${buildUrl({ category: post.category, tag: '' })}" data-filter-type="category" data-filter-value="${escapeHtml(post.category)}">${escapeHtml(post.category)}</a>
+      <h3><a href="${escapeHtml(post.url || `/blog/${post.slug}/`)}">${escapeHtml(post.title)}</a></h3>
+      <p>${escapeHtml(post.summary)}</p>
+      <div class="post-meta">${formatDate(post.updated || post.date)} · ${escapeHtml(post.readingTime || '5 分钟')}读完${post.series ? ` · ${escapeHtml(post.series)}` : ''}</div>
+      <div class="post-tags">${tags}</div>
+    </article>`;
+  }).join('') : '<div class="empty-state">没有找到匹配文章。可以清除筛选，或检查文章元数据里的 category/tags。</div>';
+}
+
+function renderSeries() {
+  const seriesNames = unique(state.posts.map((post) => post.series));
+  document.getElementById('seriesList').innerHTML = seriesNames.map((series) => {
+    const posts = state.posts.filter((post) => post.series === series);
+    const matched = getFilteredPosts().filter((post) => post.series === series).length;
+    const note = matched && matched !== posts.length ? `当前筛选匹配 ${matched} 篇` : `已发布 ${posts.length} 篇`;
+    return `<a class="series-card" href="${buildUrl({ tag: state.tag })}">
+      <h3>${escapeHtml(series)}</h3>
+      <p>${escapeHtml(seriesIntro[series] || '相关文章会自动归档到这个系列。')}</p>
+      <span>${note}</span>
+    </a>`;
+  }).join('');
+}
+
+function render() {
+  renderChips();
+  renderPosts();
+  renderSeries();
+}
+
+function updateFilter(type, value) {
+  if (type === 'category') {
+    state.category = value || '全部';
+    state.tag = '';
+  }
+  if (type === 'tag') {
+    state.tag = value || '';
+  }
+  history.pushState({}, '', buildUrl({}));
+  render();
+}
+
+document.addEventListener('click', (event) => {
+  const link = event.target.closest('[data-filter-type]');
+  if (!link) return;
+  event.preventDefault();
+  updateFilter(link.dataset.filterType, link.dataset.filterValue || '');
+});
+
+window.addEventListener('popstate', () => {
+  const params = new URLSearchParams(location.search);
+  state.category = params.get('category') || '全部';
+  state.tag = params.get('tag') || '';
+  render();
+});
+
+fetch('/blog/posts.json', { cache: 'no-store' })
+  .then((res) => res.ok ? res.json() : fallbackPosts)
+  .catch(() => fallbackPosts)
+  .then((posts) => {
+    state.posts = Array.isArray(posts) ? posts : fallbackPosts;
+    render();
+  });
+</script>
 </body></html>

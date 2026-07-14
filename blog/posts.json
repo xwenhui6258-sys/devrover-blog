@@ -1,0 +1,126 @@
+[
+  {
+    "title": "赴港办银行卡前准备什么：材料、预约、面谈和手机漫游清单",
+    "slug": "hong-kong-bank-account-preparation",
+    "url": "/blog/hong-kong-bank-account-preparation/",
+    "date": "2026-07-13",
+    "updated": "2026-07-14",
+    "category": "海外银行卡",
+    "series": "海外银行卡与资金流转",
+    "tags": [
+      "开户",
+      "地址证明",
+      "海外银行卡",
+      "入金",
+      "风控"
+    ],
+    "summary": "面向内地访港申请人的实操清单：怎样整理开户材料、预约分行、准备面谈、配置手机漫游，并在离开香港前完成账户验收。",
+    "readingTime": "13 分钟"
+  },
+  {
+    "title": "美港股券商怎么选：先看安全、入金、功能，再看佣金",
+    "slug": "how-to-choose-hk-us-broker",
+    "url": "/blog/how-to-choose-hk-us-broker/",
+    "date": "2026-07-13",
+    "updated": "2026-07-14",
+    "category": "美股账户",
+    "series": "美股新手基础设施",
+    "tags": [
+      "开户",
+      "入金",
+      "出金",
+      "风控"
+    ],
+    "summary": "选择美港股券商时，不先做佣金排名，而是依次核验签约实体与监管、入出金闭环、实际需要的交易功能，再比较全年总成本。",
+    "readingTime": "11 分钟"
+  },
+  {
+    "title": "Charles Schwab 入金路径整理：电汇、ACH 与到账时间",
+    "slug": "schwab-funding-routes",
+    "url": "/blog/schwab-funding-routes/",
+    "date": "2026-07-13",
+    "updated": "2026-07-14",
+    "category": "券商入金",
+    "series": "大陆用户海外券商开户",
+    "tags": [
+      "Charles Schwab",
+      "入金",
+      "出金",
+      "美国银行卡",
+      "风控"
+    ],
+    "summary": "嘉信入金不要只看到账速度，要区分 ACH、wire、电汇凭证、可交易时间和可转出限制。",
+    "readingTime": "8 分钟"
+  },
+  {
+    "title": "Wise 与海外银行卡：资金流转路径和风控注意事项",
+    "slug": "wise-overseas-card-routes",
+    "url": "/blog/wise-overseas-card-routes/",
+    "date": "2026-07-13",
+    "updated": "2026-07-14",
+    "category": "海外银行卡",
+    "series": "海外银行卡与资金流转",
+    "tags": [
+      "Wise",
+      "海外银行卡",
+      "入金",
+      "出金",
+      "风控"
+    ],
+    "summary": "Wise 和海外银行卡都能处理跨境资金，但角色不同。用之前要分清收款详情、换汇、转出、券商入金和风控审核。",
+    "readingTime": "8 分钟"
+  },
+  {
+    "title": "新手第一张图：从人民币到第一笔港美股资产，中间到底经过哪些账户",
+    "slug": "rmb-to-first-hk-us-asset-account-flow",
+    "url": "/blog/rmb-to-first-hk-us-asset-account-flow/",
+    "date": "2026-07-12",
+    "updated": "2026-07-13",
+    "category": "美股账户",
+    "series": "美股新手基础设施",
+    "tags": [
+      "入金",
+      "出金",
+      "海外银行卡",
+      "风控"
+    ],
+    "summary": "从人民币余额到第一笔港美股资产，中间至少经过银行账户、换汇/跨境支付环节、境外银行或多币种账户、券商现金账和证券结算托管。",
+    "readingTime": "7 分钟"
+  },
+  {
+    "title": "从本地货币到第一笔海外资产：我会检查哪些环节",
+    "slug": "local-currency-to-first-overseas-asset",
+    "url": "/blog/local-currency-to-first-overseas-asset/",
+    "date": "2026-07-12",
+    "updated": "2026-07-13",
+    "category": "券商入金",
+    "series": "美股新手基础设施",
+    "tags": [
+      "开户",
+      "入金",
+      "出金",
+      "W-8BEN",
+      "风控",
+      "海外银行卡"
+    ],
+    "summary": "第一次买海外资产，不要从代码开始，而要先把目标、账户、资金路径、换汇、下单、税务和记录串起来。",
+    "readingTime": "11 分钟"
+  },
+  {
+    "title": "大陆身份开嘉信理财 Charles Schwab 全流程",
+    "slug": "charles-schwab-mainland-account-guide",
+    "url": "/blog/charles-schwab-mainland-account-guide/",
+    "date": "2026-07-11",
+    "updated": "2026-07-11",
+    "category": "美股账户",
+    "series": "大陆用户海外券商开户",
+    "tags": [
+      "Charles Schwab",
+      "W-8BEN",
+      "地址证明",
+      "开户"
+    ],
+    "summary": "准备材料、W-8BEN、地址证明、开户后设置和常见卡点，一篇走完。",
+    "readingTime": "8 分钟"
+  }
+]
