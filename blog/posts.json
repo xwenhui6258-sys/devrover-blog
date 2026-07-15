@@ -123,6 +123,24 @@
     "readingTime": "9 分钟"
   },
   {
+    "title": "同样叫 IBKR，账户归属为什么不同：如何确认开户主体和监管地区",
+    "slug": "ibkr-account-entity-and-regulation",
+    "url": "/blog/ibkr-account-entity-and-regulation/",
+    "date": "2026-07-15",
+    "updated": "2026-07-15",
+    "category": "跨境投资",
+    "series": "海外资产入门",
+    "tags": [
+      "IBKR",
+      "盈透证券",
+      "账户归属",
+      "券商监管",
+      "投资者保护"
+    ],
+    "summary": "同一个 IBKR App 背后可能是不同法律实体、监管机构和客户保护安排。本文用客户协议、结单、监管登记和安全消息确认自己的账户归属。",
+    "readingTime": "12 分钟"
+  },
+  {
     "title": "券商账户里的钱怎么看：现金、净资产、购买力和保证金一次讲清",
     "slug": "brokerage-account-balances",
     "url": "/blog/brokerage-account-balances/",
