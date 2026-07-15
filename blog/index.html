@@ -9,6 +9,8 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3874391842550034"
+     crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -135,6 +137,7 @@ const seriesIntro = {
 const state = {
   posts: [],
   category: new URLSearchParams(location.search).get('category') || '全部',
+  series: new URLSearchParams(location.search).get('series') || '',
   tag: new URLSearchParams(location.search).get('tag') || ''
 };
 
@@ -160,16 +163,19 @@ function getSortedPosts(posts) {
 function getFilteredPosts() {
   return getSortedPosts(state.posts).filter((post) => {
     const categoryMatch = state.category === '全部' || post.category === state.category;
+    const seriesMatch = !state.series || post.series === state.series;
     const tagMatch = !state.tag || (post.tags || []).includes(state.tag);
-    return categoryMatch && tagMatch;
+    return categoryMatch && seriesMatch && tagMatch;
   });
 }
 
 function buildUrl(next) {
   const params = new URLSearchParams();
   const category = next.category ?? state.category;
+  const series = next.series ?? state.series;
   const tag = next.tag ?? state.tag;
   if (category && category !== '全部') params.set('category', category);
+  if (series) params.set('series', series);
   if (tag) params.set('tag', tag);
   const query = params.toString();
   return query ? `/blog/?${query}` : '/blog/';
@@ -183,7 +189,7 @@ function renderChips() {
   const categoryHtml = categories.map((category) => {
     const active = state.category === category;
     const tone = categoryTone[category] || 'neutral';
-    return `<a class="filter-chip ${active ? 'active' : ''} ${tone}" href="${buildUrl({ category })}" data-filter-type="category" data-filter-value="${escapeHtml(category)}">${escapeHtml(category)}</a>`;
+    return `<a class="filter-chip ${active ? 'active' : ''} ${tone}" href="${buildUrl({ category, series: '' })}" data-filter-type="category" data-filter-value="${escapeHtml(category)}">${escapeHtml(category)}</a>`;
   }).join('');
   const tagHtml = tags.map((tag) => {
     const value = tag === '全部' ? '' : tag;
@@ -194,7 +200,7 @@ function renderChips() {
   document.getElementById('tagFilters').innerHTML = tagHtml;
   document.getElementById('heroCategories').innerHTML = categories.filter((category) => category !== '全部').slice(0, 4).map((category) => {
     const tone = categoryTone[category] || 'neutral';
-    return `<a class="mini-chip ${tone}" href="${buildUrl({ category, tag: '' })}" data-filter-type="category" data-filter-value="${escapeHtml(category)}">${escapeHtml(category)}</a>`;
+    return `<a class="mini-chip ${tone}" href="${buildUrl({ category, series: '', tag: '' })}" data-filter-type="category" data-filter-value="${escapeHtml(category)}">${escapeHtml(category)}</a>`;
   }).join('');
 }
 
@@ -203,6 +209,7 @@ function renderPosts() {
   const summary = document.getElementById('resultSummary');
   const filters = [];
   if (state.category !== '全部') filters.push(state.category);
+  if (state.series) filters.push(state.series);
   if (state.tag) filters.push(state.tag);
   summary.textContent = filters.length
     ? `已筛选：${filters.join(' / ')} · 找到 ${posts.length} 篇文章`
@@ -212,13 +219,13 @@ function renderPosts() {
     const tone = categoryTone[post.category] || 'neutral';
     const tags = (post.tags || []).slice(0, 5).map((tag) => `<a href="${buildUrl({ tag })}" data-filter-type="tag" data-filter-value="${escapeHtml(tag)}">${escapeHtml(tag)}</a>`).join('');
     return `<article class="post-card">
-      <a class="category-pill ${tone}" href="${buildUrl({ category: post.category, tag: '' })}" data-filter-type="category" data-filter-value="${escapeHtml(post.category)}">${escapeHtml(post.category)}</a>
+      <a class="category-pill ${tone}" href="${buildUrl({ category: post.category, series: '', tag: '' })}" data-filter-type="category" data-filter-value="${escapeHtml(post.category)}">${escapeHtml(post.category)}</a>
       <h3><a href="${escapeHtml(post.url || `/blog/${post.slug}/`)}">${escapeHtml(post.title)}</a></h3>
       <p>${escapeHtml(post.summary)}</p>
       <div class="post-meta">${formatDate(post.updated || post.date)} · ${escapeHtml(post.readingTime || '5 分钟')}读完${post.series ? ` · ${escapeHtml(post.series)}` : ''}</div>
       <div class="post-tags">${tags}</div>
     </article>`;
-  }).join('') : '<div class="empty-state">没有找到匹配文章。可以清除筛选，或检查文章元数据里的 category/tags。</div>';
+  }).join('') : '<div class="empty-state">没有找到匹配文章。可以清除筛选，或检查文章元数据里的 category/series/tags。</div>';
 }
 
 function renderSeries() {
@@ -227,7 +234,9 @@ function renderSeries() {
     const posts = state.posts.filter((post) => post.series === series);
     const matched = getFilteredPosts().filter((post) => post.series === series).length;
     const note = matched && matched !== posts.length ? `当前筛选匹配 ${matched} 篇` : `已发布 ${posts.length} 篇`;
-    return `<a class="series-card" href="${buildUrl({ tag: state.tag })}">
+    const active = state.series === series;
+    const nextSeries = active ? '' : series;
+    return `<a class="series-card ${active ? 'active' : ''}" href="${buildUrl({ category: '全部', series: nextSeries, tag: '' })}" data-filter-type="series" data-filter-value="${escapeHtml(nextSeries)}" aria-current="${active ? 'true' : 'false'}">
       <h3>${escapeHtml(series)}</h3>
       <p>${escapeHtml(seriesIntro[series] || '相关文章会自动归档到这个系列。')}</p>
       <span>${note}</span>
@@ -244,6 +253,12 @@ function render() {
 function updateFilter(type, value) {
   if (type === 'category') {
     state.category = value || '全部';
+    state.series = '';
+    state.tag = '';
+  }
+  if (type === 'series') {
+    state.category = '全部';
+    state.series = value || '';
     state.tag = '';
   }
   if (type === 'tag') {
@@ -263,6 +278,7 @@ document.addEventListener('click', (event) => {
 window.addEventListener('popstate', () => {
   const params = new URLSearchParams(location.search);
   state.category = params.get('category') || '全部';
+  state.series = params.get('series') || '';
   state.tag = params.get('tag') || '';
   render();
 });

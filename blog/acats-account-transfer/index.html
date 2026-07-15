@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="从全转、部分转和资产可转性开始，讲清 ACATS 的发起路径、在途限制、成本基础补录和转仓后对账。">
+  <title>换券商不用先卖股票：ACATS 转仓流程、成本和注意事项｜DevRover的个人站</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/style.css?v=20260713-article-toc-2">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3874391842550034"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="/"><img class="brand-icon" src="/assets/devrover-icon.png" alt="" aria-hidden="true">DevRover的个人站</a>
+    <nav>
+      <a href="/blog/">博客</a>
+      <a href="/tools/">工具</a>
+      <a href="/about/">关于</a>
+    </nav>
+  </div>
+</header>
+
+<main class="article-page">
+  <div class="article-layout">
+    <article class="article">
+      <h1>换券商不用先卖股票：ACATS 转仓流程、成本和注意事项</h1>
+      <p class="article-meta">2026-07-13</p>
+      <p>想把美股账户换到另一家券商，很多人的第一反应是：先把股票全卖掉，汇出现金，再到新券商买回来。</p>
+<p>如果新旧券商都参加 ACATS，而且资产符合接收条件，通常可以直接“原仓转移”。股票数量和持有关系被搬到新券商，不必为了换平台先制造一笔卖出和一笔买入。但这也不是一键复制：碎股、专属基金、保证金负债、期权、成本基础和在途股息，都可能让转仓变复杂。</p>
+<blockquote>
+<p>本文是美国券商账户转移的一般操作说明，不构成投资、税务或法律建议。ACATS 只适用于符合条件的参与机构和资产；退休账户、联名账户、信托、公司账户和跨境税务居民可能有额外要求。费用、接收标准和时效以两家券商当前页面为准。资料核对日期：2026-07-13。</p>
+</blockquote>
+<figure><img src="assets/acats-timeline.png" alt="ACATS 转仓参与方和流程"><figcaption>ACATS 转仓参与方和流程</figcaption></figure>
+<h2 id="section-1">ACATS 到底是什么</h2>
+<p>ACATS 是 Automated Customer Account Transfer Service，由 DTCC 旗下的 NSCC 运营，用来标准化美国券商之间的客户账户转移。流程里有三方：</p>
+<div class="table-wrap"><table>
+<thead><tr><th>角色</th><th>你会看到的名称</th><th>负责什么</th></tr></thead>
+<tbody>
+<tr><td>旧券商</td><td>Delivering / Carrying Firm</td><td>验证请求、列出资产并交付可转部分。</td></tr>
+<tr><td>新券商</td><td>Receiving Firm</td><td>收取你的授权并在 ACATS 发起请求，决定是否接收资产。</td></tr>
+<tr><td>NSCC</td><td>ACATS 运营方</td><td>传递标准化指令、状态和交付数据。</td></tr>
+</tbody></table></div>
+<p>最重要的操作原则是：<strong>从接收券商发起</strong>。你要先开好新账户，再在新券商提交 Transfer Initiation Form 或等效电子授权，而不是只给旧券商发一封“请转走”的邮件。</p>
+<p>ACATS 主要处理美国参与券商之间的转移。加拿大常见 ATON，全球证券还可能使用 FOP、DRS、DWAC 或当地托管转移。页面没有 ACATS 时，不要硬选一个相似缩写。</p>
+<h2 id="section-2">全转和部分转怎么选</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>方式</th><th>会发生什么</th><th>更适合谁</th><th>主要注意点</th></tr></thead>
+<tbody>
+<tr><td>Full Transfer</td><td>原则上把账户中的全部可转资产和现金移走，旧账户通常进入关闭流程。</td><td>确定彻底离开旧券商的人。</td><td>未结算交易、负余额和不可转资产更容易造成异常；后续残余款项仍可能补转。</td></tr>
+<tr><td>Partial Transfer</td><td>只转你指定的证券和数量，旧账户继续保留。</td><td>想先测试一只证券，或两边都要继续使用的人。</td><td>要准确填写代码、CUSIP/ISIN、数量和多空方向；碎股仍不能直接转。</td></tr>
+</tbody></table></div>
+<p>新手第一次更适合先做一笔部分转仓：选择一只流动性较好、无公司行动、无碎股、无借贷状态的普通美股或 ETF，跑通后再决定是否全转。</p>
+<p>全转并不代表“所有东西一定都转”。它只是对全部账户资产发出指令，接收券商仍可根据产品、信用和合规政策拒收特定项目。</p>
+<h2 id="section-3">发起前先做资产体检</h2>
+<p>FINRA 说明，现金、美国国内公司股票和债券、上市期权等常见资产通常能通过 ACATS 转移；但“常见”不等于“必收”。逐项向新券商确认，不要只问旧券商“能不能转出”。</p>
+<figure><img src="assets/transferable-assets.png" alt="转仓前的资产可转性体检"><figcaption>转仓前的资产可转性体检</figcaption></figure>
+<h3 id="section-4">通常较容易转</h3>
+<ul>
+<li>已结算的整股美国股票和 ETF；</li>
+<li>接收券商支持的美国债券、权证和上市期权；</li>
+<li>已结算现金；</li>
+<li>两家券商都能承接、且没有销售协议障碍的部分美国共同基金。</li>
+</ul>
+<h3 id="section-5">经常需要额外处理</h3>
+<ul>
+<li><strong>碎股：</strong> FINRA 当前投资者资料明确指出，碎股不能转到另一家券商。通常要保留、补成整股或卖出碎股后转现金；卖出可能产生税务后果。</li>
+<li><strong>券商专属产品：</strong> 旧券商自有基金、第三方基金或货币基金，如果新券商没有承销或持有安排，可能不可转。</li>
+<li><strong>外国证券和特殊托管线路：</strong> 同一家公司在不同交易所、币种或存管地的证券，可能需要先变更存管地点或改用其他转移方式。</li>
+<li><strong>OTC、微盘股、受限证券：</strong> 接收券商可能有额外文件、持仓来源或最低市值要求。</li>
+<li><strong>加密资产、年金、私募、有限合伙权益：</strong> 往往不在标准 ACATS 可转范围内。</li>
+<li><strong>期权和空头：</strong> 到期日太近、权限不匹配或保证金不足时，新券商可能拒收。</li>
+<li><strong>质押、借出或保证金负债：</strong> 证券借贷、未偿借款、short position 和抵押关系会影响可转数量与信用审核。</li>
+<li><strong>正在发生公司行动的证券：</strong> 拆股、合并、收购、分红选择或投票事件可能延迟交付。</li>
+</ul>
+<p>最稳的做法是把最新月结单导出为表格，逐行标记“可转、需确认、不可转”，再决定全转还是部分转。</p>
+<h2 id="section-6">账户资料必须对得上</h2>
+<p>ACATS 会比对姓名或账户名称、旧账户号码、账户类型、税号等资料。IBKR 当前入口还要求填写 Account Title 和 Tax ID。</p>
+<p>提交前核对：</p>
+<p>1. 新旧账户的实际拥有人和登记形式是否一致； 2. Individual、Joint、Trust、IRA 等账户类型是否可对应； 3. 姓名拼写、空格、后缀和联名顺序是否一致； 4. 旧券商账号是否包含前缀或破折号； 5. 税号是否与旧账户记录一致； 6. 旧账户地址和身份资料是否已经过期。</p>
+<p>把个人账户转进公司账户，或把单人账户直接转进联名账户，不是简单的“改个名字”，可能涉及所有权和税务变化，应先让两家券商书面确认路径。</p>
+<h2 id="section-7">转入 IBKR 的完整路径</h2>
+<p>IBKR Client Portal 当前操作如下：</p>
+<p>1. 登录后进入 Transfer &amp; Pay &gt; Transfer Positions。 2. 选择正确的 IBKR 接收账户。 3. Transaction Type 选择 Incoming。 4. Region 选择 United States。 5. Method 选择 ACATS。 6. 选择旧券商，填写旧账号、Account Title、Account Type 和 Tax ID。 7. 选择 Full 或 Partial。 8. 若部分转，按代码、CUSIP 或 ISIN 搜索资产，填写数量和 Long / Short。 9. 预览全部资料，完成电子签名和身份确认。 10. 保存确认页和 Transfer ID，在 Transaction Status &amp; History 查看状态。</p>
+<p>全转页面还可能询问共同基金、美国微盘股等特殊资产的处理授权。不要一路默认选 Yes；看不懂时先退出，向新券商确认“拒收后会怎样”，再提交。</p>
+<h2 id="section-8">在途期间为什么最好别交易</h2>
+<p>FINRA Rule 11870 对完整转仓写得更明确：全转请求通过验证后，转出账户会被冻结，大多数未成交订单被取消，转出方不再接受新订单；部分转仓的交易限制则要看两家券商的具体安排。原因很直观：你提交时的持仓快照，可能因为成交、交收、期权行权或公司行动发生变化。</p>
+<p>发起前我会做这几件事：</p>
+<ul>
+<li>取消未成交订单、自动定投和可能触发的条件单；</li>
+<li>等待近期股票和 ETF 交易完成交收；美国多数证券目前采用 T+1，但不同产品可能不同；</li>
+<li>避开期权临近到期、股息选择和重大公司行动窗口；</li>
+<li>留足现金支付旧券商可能收取的转出或关闭费用；</li>
+<li>不在两边重复卖出同一仓位。</li>
+</ul>
+<p>转移状态显示 Pending，不代表证券已经能在新账户交易。等到新券商明确显示 Available，并核对数量后再操作。</p>
+<h2 id="section-9">需要多久、会花多少钱</h2>
+<p>FINRA 当前投资者页面说明，在资料正确匹配、接收券商同意接收后，验证和交付通常约需 3—4 个工作日。这是顺利案例的流程参考，不是到账承诺。非券商机构、退休或托管账户、不可转资产、资料不匹配、公司行动和人工转移都会更久。</p>
+<p>成本要分四层看：</p>
+<div class="table-wrap"><table>
+<thead><tr><th>成本来源</th><th>如何核对</th></tr></thead>
+<tbody>
+<tr><td>ACATS 处理费</td><td>IBKR 当前费率页列明其入站和出站 ACATS 不收费，但另一家券商可能收费；两边都要查。</td></tr>
+<tr><td>旧账户关闭或转出费</td><td>看旧券商最新 fee schedule，尤其是全转。</td></tr>
+<tr><td>不可转资产处置成本</td><td>卖出佣金、买卖价差、换汇、税款或提前赎回费用。</td></tr>
+<tr><td>在途持仓成本</td><td>保证金利息、借券费、市场波动和无法及时交易的机会成本。</td></tr>
+</tbody></table></div>
+<p>不要只比较“转仓费”和“卖出佣金”。如果先卖再买，还会产生离场期间的价格风险和潜在税务事件。</p>
+<h2 id="section-10">持仓到了，成本基础可能还没到</h2>
+<p>这是最容易被忽略的一步。证券数量通过 ACATS 到账，不代表每个 tax lot 的购买日期和调整后成本已经同步完成。</p>
+<p>IRS 2026 年 Form 1099-B 指引要求，适用的 covered securities 转移后，转出方通常应在转移结算后 15 天内向接收券商提供 transfer statement。成本基础记录仍可能比持仓晚到，老旧或 noncovered 证券也可能没有完整数据。</p>
+<p>因此，在转仓前保存：</p>
+<ul>
+<li>最近一期和年末 Activity Statement；</li>
+<li>每个 tax lot 的购买日期、数量、单价和佣金；</li>
+<li>公司行动、股息再投资、拆股与 wash sale 调整记录；</li>
+<li>历年 1099-B、1042-S 或你所在税区需要的资料；</li>
+<li>ACATS 确认页和最终转仓报表。</li>
+</ul>
+<p>IBKR 当前可在 Performance &amp; Reports &gt; Tax Documents &gt; Cost Basis &gt; Position Transfer 查看或补充转入持仓的数量、购入日期、总成本和币种。手工录入能帮助账户显示与 lot 管理，但是否能替代券商依法传递的正式成本基础、以及你所在税区如何申报，应向税务专业人士确认。</p>
+<figure><img src="assets/acats-checklist.png" alt="转仓前、中、后的核对清单"><figcaption>转仓前、中、后的核对清单</figcaption></figure>
+<h2 id="section-11">到账后做三次对账</h2>
+<h3 id="section-12">第一次：仓位</h3>
+<p>逐只核对代码、数量、多空方向、交易所和币种。重点看碎股是否留在旧账户、期权合约乘数和到期日是否正确。</p>
+<h3 id="section-13">第二次：现金和负债</h3>
+<p>核对已结算现金、保证金借款、应计利息和转仓费用。全转后旧账户仍可能收到迟到的股息、利息或公司行动款项。FINRA 规则要求完整转仓后的残余贷方余额在一定期间内继续转送，因此不要到账当天就丢掉旧账户登录。</p>
+<h3 id="section-14">第三次：税务批次</h3>
+<p>把新券商显示的购入日期、数量、成本和长期/短期标记与旧报表逐批比较。发现 Unknown 或缺失时，先保存截图并联系两家券商，不要等到卖出后才补。</p>
+<h2 id="section-15">7 个常见误区</h2>
+<p>1. <strong>“转仓就是卖出。”</strong> 原仓转移通常不需要卖出；但不可转资产被清算时可能产生税务后果。 2. <strong>“全转一定包含碎股。”</strong> 碎股目前不能跨券商转移。 3. <strong>“旧券商同意转出，新券商就必须接。”</strong> 接收券商可以根据产品和信用政策拒收。 4. <strong>“提交后还能照常交易。”</strong> 在途交易可能导致冻结、差异或延迟。 5. <strong>“持仓显示到了，成本也一定到了。”</strong> 两条记录链可能不同步。 6. <strong>“ACATS 固定三天完成。”</strong> 3—4 个工作日只是正常匹配后的通常流程，异常可明显延长。 7. <strong>“IBKR 不收费，所以转仓零成本。”</strong> 对手券商、处置交易、税务、换汇和在途融资仍可能产生费用。</p>
+<h2 id="section-16">提交前检查清单</h2>
+<ul>
+<li>[ ] 新旧券商都支持本次 ACATS，账户所有权和类型可匹配。</li>
+<li>[ ] 下载了旧券商最新报表和逐批成本基础。</li>
+<li>[ ] 逐项确认碎股、基金、外国证券、期权和微盘股可转性。</li>
+<li>[ ] 清理未成交订单，等待近期交易交收。</li>
+<li>[ ] 处理或确认保证金负债、证券借贷和空头仓位。</li>
+<li>[ ] 比较两家券商的转出、关闭和接收费用。</li>
+<li>[ ] 保存 Transfer ID，并预留在途不能交易的时间。</li>
+<li>[ ] 到账后核对仓位、现金、负债、费用和 tax lots。</li>
+<li>[ ] 暂时保留旧账户登录，跟踪残余股息和现金。</li>
+</ul>
+<h2 id="section-17">参考资料</h2>
+<ul>
+<li>FINRA, <a href="https://www.finra.org/investors/investing/investment-accounts/brokerage-accounts">Brokerage Accounts — Account Transfers</a>.</li>
+<li>FINRA, <a href="https://www.finra.org/rules-guidance/key-topics/customer-account-transfers">Customer Account Transfers</a>.</li>
+<li>FINRA Rule 11870, <a href="https://www.finra.org/rules-guidance/rulebooks/finra-rules/11870">Customer Account Transfer Contracts</a>.</li>
+<li>FINRA, <a href="https://www.finra.org/investors/insights/investing-fractional-shares">Investing in Fractional Shares</a>.</li>
+<li>DTCC, <a href="https://www.dtcc.com/clearing-and-settlement-services/equities-clearing-services/acats">Automated Customer Account Transfer Service</a>.</li>
+<li>IBKR Client Portal User Guide, <a href="https://www.ibkrguides.com/clientportal/transferandpay/enteracattransfer.htm">Enter an ACATS Position Transfer</a>.</li>
+<li>IBKR Client Portal User Guide, <a href="https://www.ibkrguides.com/clientportal/performanceandstatements/positiontransfer.htm">Position Transfer Cost Basis</a>.</li>
+<li>Interactive Brokers, <a href="https://www.interactivebrokers.com/en/pricing/other-fees.php">Other Fees — Security Transfer Fees</a>.</li>
+<li>IRS, <a href="https://www.irs.gov/instructions/i1099b">Instructions for Form 1099-B (2026) — Transfer Statements</a>.</li>
+</ul>
+    </article>
+    <aside class="article-toc" aria-label="文章目录">
+    <div class="toc-title">目录</div>
+    <nav>
+      <a class="toc-level-2" href="#section-1">ACATS 到底是什么</a>
+      <a class="toc-level-2" href="#section-2">全转和部分转怎么选</a>
+      <a class="toc-level-2" href="#section-3">发起前先做资产体检</a>
+      <a class="toc-level-3" href="#section-4">通常较容易转</a>
+      <a class="toc-level-3" href="#section-5">经常需要额外处理</a>
+      <a class="toc-level-2" href="#section-6">账户资料必须对得上</a>
+      <a class="toc-level-2" href="#section-7">转入 IBKR 的完整路径</a>
+      <a class="toc-level-2" href="#section-8">在途期间为什么最好别交易</a>
+      <a class="toc-level-2" href="#section-9">需要多久、会花多少钱</a>
+      <a class="toc-level-2" href="#section-10">持仓到了，成本基础可能还没到</a>
+      <a class="toc-level-2" href="#section-11">到账后做三次对账</a>
+      <a class="toc-level-3" href="#section-12">第一次：仓位</a>
+      <a class="toc-level-3" href="#section-13">第二次：现金和负债</a>
+      <a class="toc-level-3" href="#section-14">第三次：税务批次</a>
+      <a class="toc-level-2" href="#section-15">7 个常见误区</a>
+      <a class="toc-level-2" href="#section-16">提交前检查清单</a>
+      <a class="toc-level-2" href="#section-17">参考资料</a>
+    </nav>
+  </aside>
+  </div>
+</main>
+<footer>
+  <div class="container">© 2026 DevRover的个人站 · 纯静态部署</div>
+</footer>
+<button class="back-to-top" type="button" aria-label="回到顶部" title="回到顶部"><span>↑</span><strong>顶部</strong></button>
+<script>
+  const backToTop = document.querySelector('.back-to-top');
+  const toggleBackToTop = () => {
+    backToTop.classList.toggle('visible', window.scrollY > 420);
+  };
+  window.addEventListener('scroll', toggleBackToTop, { passive: true });
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  toggleBackToTop();
+</script>
+</body>
+</html>
