@@ -7,12 +7,13 @@ import argparse
 import html
 import re
 import shutil
+import struct
 import sys
 import unicodedata
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 
 
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif", ".svg"}
@@ -118,6 +119,84 @@ def copy_remaining_images(input_dir: Path, post_dir: Path) -> None:
     for source in input_dir.rglob("*"):
         if source.is_file() and source.suffix.lower() in IMAGE_EXTS:
             shutil.copy2(source, assets_dir / source.name)
+
+
+def image_dimensions(path: Path) -> tuple[int, int] | None:
+    """Read common raster dimensions without requiring an image library."""
+    try:
+        with path.open("rb") as handle:
+            header = handle.read(32)
+            if header.startswith(b"\x89PNG\r\n\x1a\n") and len(header) >= 24:
+                return struct.unpack(">II", header[16:24])
+            if header[:3] == b"GIF" and len(header) >= 10:
+                return struct.unpack("<HH", header[6:10])
+            if header[:2] != b"\xff\xd8":
+                return None
+
+            handle.seek(2)
+            while True:
+                marker_start = handle.read(1)
+                if not marker_start:
+                    return None
+                if marker_start != b"\xff":
+                    continue
+                marker = handle.read(1)
+                while marker == b"\xff":
+                    marker = handle.read(1)
+                if not marker or marker in {b"\xd8", b"\xd9"}:
+                    continue
+                length_raw = handle.read(2)
+                if len(length_raw) != 2:
+                    return None
+                segment_length = struct.unpack(">H", length_raw)[0]
+                if marker[0] in {
+                    0xC0,
+                    0xC1,
+                    0xC2,
+                    0xC3,
+                    0xC5,
+                    0xC6,
+                    0xC7,
+                    0xC9,
+                    0xCA,
+                    0xCB,
+                    0xCD,
+                    0xCE,
+                    0xCF,
+                }:
+                    payload = handle.read(5)
+                    if len(payload) != 5:
+                        return None
+                    height, width = struct.unpack(">HH", payload[1:5])
+                    return width, height
+                handle.seek(segment_length - 2, 1)
+    except (OSError, struct.error):
+        return None
+
+
+def optimize_article_images(article_html: str, post_dir: Path) -> str:
+    """Add lazy loading, stable dimensions, and optional WebP sources."""
+
+    def replace(match: re.Match[str]) -> str:
+        src = match.group(1)
+        alt = match.group(2)
+        local_path = post_dir / unquote(src)
+        dimensions = image_dimensions(local_path) if local_path.is_file() else None
+        size_attrs = ""
+        if dimensions:
+            size_attrs = f' width="{dimensions[0]}" height="{dimensions[1]}"'
+        image = (
+            f'<img src="{src}" alt="{alt}" loading="lazy" decoding="async"'
+            f"{size_attrs}>"
+        )
+
+        webp_path = local_path.with_suffix(".webp")
+        if local_path.is_file() and webp_path.is_file() and local_path.suffix.lower() != ".webp":
+            webp_src = quote(str(Path(unquote(src)).with_suffix(".webp")), safe="/")
+            return f'<picture><source srcset="{webp_src}" type="image/webp">{image}</picture>'
+        return image
+
+    return re.sub(r'<img src="([^"]+)" alt="([^"]*)">', replace, article_html)
 
 
 def inline_markdown(text: str) -> str:
@@ -343,7 +422,9 @@ def render_page(meta: PostMeta, article_html: str) -> str:
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/style.css?v=20260713-article-toc-2">
+  <link rel="stylesheet" href="/assets/style.css?v=20260716-article-performance-1">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3874391842550034"
+     crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -439,7 +520,8 @@ def main() -> int:
     (post_dir / "source.md").write_text("---\n" + "\n".join(f"{k}: {v}" for k, v in front_matter.items()) + "\n---\n\n" + rewritten_body, encoding="utf-8")
 
     meta = PostMeta(title=title, date=post_date, summary=summary, slug=slug)
-    (post_dir / "index.html").write_text(render_page(meta, markdown_to_html(rewritten_body)), encoding="utf-8")
+    article_html = optimize_article_images(markdown_to_html(rewritten_body), post_dir)
+    (post_dir / "index.html").write_text(render_page(meta, article_html), encoding="utf-8")
     update_blog_index(blog_root, meta)
     make_public(post_dir)
     make_public(blog_root / "index.html")

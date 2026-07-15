@@ -175,6 +175,7 @@ h2 { margin-top: 0; letter-spacing: -.025em; }
   text-underline-offset: 3px;
 }
 .article ul { padding-left: 1.25rem; }
+.article picture { display: block; }
 .article img {
   display: block;
   max-width: 100%;
