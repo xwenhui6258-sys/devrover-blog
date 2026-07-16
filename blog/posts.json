@@ -1,5 +1,24 @@
 [
   {
+    "title": "第一次用 IBKR 买美国国债：期限、收益率和下单界面怎么看",
+    "slug": "ibkr-us-treasury-first-order",
+    "url": "/blog/ibkr-us-treasury-first-order/",
+    "date": "2026-07-16",
+    "updated": "2026-07-16",
+    "category": "跨境投资",
+    "series": "海外资产入门",
+    "tags": [
+      "IBKR",
+      "盈透证券",
+      "美国国债",
+      "债券交易",
+      "到期收益率",
+      "新手下单"
+    ],
+    "summary": "第一次在 IBKR 买美国国债，先用资金用途确定期限，再读懂票息、到期收益率、买卖价和订单预览；附 TWS 与 Client Portal 的下单核对清单。",
+    "readingTime": "12 分钟"
+  },
+  {
     "title": "美股到底几点能交易：盘前、常规、盘后和夜盘一次讲清",
     "slug": "us-stock-trading-hours",
     "url": "/blog/us-stock-trading-hours/",
