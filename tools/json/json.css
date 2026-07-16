@@ -1,0 +1,1098 @@
+:root {
+  --json-bg: #f8f9fc;
+  --json-panel: #fff;
+  --json-soft: #f3f3f8;
+  --json-soft-2: #f7f8fb;
+  --json-text: #171722;
+  --json-muted: #717182;
+  --json-line: rgba(0,0,0,.08);
+  --json-primary: #5b5bd6;
+  --json-primary-2: #7c3aed;
+  --json-success: #10b981;
+  --json-danger: #dc2626;
+  --json-warning: #b7791f;
+  --json-blue: #2563eb;
+  --json-shadow: 0 14px 36px rgba(20,20,40,.06);
+  --json-code-bg: #fbfcff;
+  --json-code-line: #edf0f7;
+  --json-code-gutter: #f6f7fb;
+  --json-focus: 0 0 0 4px rgba(91,91,214,.12);
+}
+
+body.json-dark {
+  --json-bg: #0f0f14;
+  --json-panel: #18181f;
+  --json-soft: rgba(255,255,255,.06);
+  --json-soft-2: rgba(255,255,255,.04);
+  --json-text: #f8fafc;
+  --json-muted: #a1a1aa;
+  --json-line: rgba(255,255,255,.1);
+  --json-primary: #7b7bff;
+  --json-primary-2: #a78bfa;
+  --json-code-bg: #111119;
+  --json-code-line: rgba(255,255,255,.08);
+  --json-code-gutter: rgba(255,255,255,.04);
+  background: var(--json-bg);
+  color: var(--json-text);
+}
+
+body.json-dark header {
+  background: rgba(15,15,20,.78);
+  border-bottom-color: var(--json-line);
+}
+
+body.json-dark nav,
+body.json-dark .brand {
+  color: var(--json-text);
+}
+
+.json-page {
+  min-height: calc(100vh - 130px);
+  background: linear-gradient(135deg, var(--json-bg), var(--json-bg) 70%, rgba(91,91,214,.07));
+  padding: 0 0 56px;
+}
+
+.json-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding-top: 28px;
+}
+
+.json-page button,
+.json-page select,
+.json-page textarea,
+.json-page input {
+  font: inherit;
+}
+
+.json-page button {
+  cursor: pointer;
+}
+
+.json-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.json-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.json-logo {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--json-primary), var(--json-primary-2));
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(91,91,214,.24);
+  font: 800 20px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.json-title h1 {
+  margin: 0;
+  color: var(--json-text);
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.json-title span {
+  color: var(--json-muted);
+  font-size: 14px;
+}
+
+.json-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.json-select,
+.json-input {
+  width: 100%;
+  height: 38px;
+  border: 1px solid var(--json-line);
+  border-radius: 10px;
+  background: rgba(255,255,255,.68);
+  color: var(--json-text);
+  outline: none;
+  padding: 0 13px;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+body.json-dark .json-select,
+body.json-dark .json-input {
+  background: rgba(255,255,255,.06);
+}
+
+.json-select:focus,
+.json-input:focus,
+.json-page textarea:focus,
+.json-icon-btn:focus-visible,
+.json-btn:focus-visible,
+.json-segment button:focus-visible,
+.json-tabs button:focus-visible,
+.json-switch input:focus-visible + span,
+.json-tree-button:focus-visible {
+  outline: none;
+  border-color: rgba(91,91,214,.55);
+  box-shadow: var(--json-focus);
+}
+
+.json-controls .json-select {
+  width: 190px;
+}
+
+.json-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--json-line);
+  border-radius: 18px;
+  background: var(--json-panel);
+  box-shadow: var(--json-shadow);
+}
+
+.json-status {
+  padding: 26px 28px;
+  margin-bottom: 24px;
+}
+
+.json-status-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.json-status-main {
+  min-width: 0;
+}
+
+.json-kicker {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 8px;
+  color: var(--json-muted);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.json-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: rgba(16,185,129,.1);
+  color: #059669;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.json-live.off {
+  background: rgba(113,113,130,.12);
+  color: var(--json-muted);
+}
+
+.json-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: jsonPulse 1.6s ease-in-out infinite;
+}
+
+.json-state-title {
+  margin: 0 0 6px;
+  color: var(--json-text);
+  font-size: clamp(30px, 4vw, 42px);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.json-state-detail,
+.json-state-suggestion,
+.json-state-warning,
+.json-stats-line {
+  margin: 0;
+  color: var(--json-muted);
+  font-size: 14px;
+}
+
+.json-state-warning {
+  display: none;
+  margin-top: 6px;
+  color: var(--json-warning);
+  font-weight: 650;
+}
+
+.json-state-warning.show {
+  display: block;
+}
+
+.json-stats-line {
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+
+.json-status-actions {
+  display: grid;
+  justify-items: end;
+  gap: 14px;
+  flex: 0 0 auto;
+}
+
+.json-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.json-segment,
+.json-tabs,
+.json-operation-tabs {
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--json-line);
+  border-radius: 14px;
+  background: var(--json-soft);
+}
+
+.json-segment button,
+.json-tabs button,
+.json-operation-tabs button {
+  min-width: 82px;
+  height: 34px;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  color: var(--json-muted);
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.json-segment button.active,
+.json-tabs button.active,
+.json-operation-tabs button.active {
+  background: var(--json-panel);
+  color: var(--json-primary);
+  box-shadow: 0 5px 14px rgba(0,0,0,.06);
+}
+
+body.json-dark .json-segment button.active,
+body.json-dark .json-tabs button.active,
+body.json-dark .json-operation-tabs button.active {
+  background: rgba(255,255,255,.1);
+}
+
+.json-icon-btn,
+.json-btn,
+.json-tree-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 38px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: var(--json-primary);
+  color: #fff;
+  padding: 9px 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
+}
+
+.json-btn:hover,
+.json-icon-btn:hover,
+.json-tree-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(91,91,214,.18);
+}
+
+.json-btn.secondary,
+.json-icon-btn,
+.json-tree-button.secondary {
+  border-color: var(--json-line);
+  background: rgba(255,255,255,.72);
+  color: var(--json-text);
+}
+
+body.json-dark .json-btn.secondary,
+body.json-dark .json-icon-btn,
+body.json-dark .json-tree-button.secondary {
+  background: rgba(255,255,255,.06);
+}
+
+.json-icon-btn {
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
+  padding: 0;
+  font-size: 0;
+  box-shadow: 0 2px 8px rgba(17,24,39,.04);
+}
+
+.json-status-actions .json-icon-btn {
+  width: 58px;
+  height: 58px;
+  min-height: 58px;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.json-status-actions .json-icon-btn span {
+  display: block;
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.json-icon-btn svg,
+.json-btn svg,
+.json-tree-button svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.json-theme-btn {
+  width: 38px;
+  height: 38px;
+  min-height: 38px;
+  border-radius: 10px;
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.json-theme-btn:hover {
+  background: var(--json-soft);
+  box-shadow: none;
+}
+
+.json-workbench {
+  padding: 20px;
+}
+
+.json-tabs {
+  min-width: min(420px, 100%);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 12px;
+}
+
+.json-panel-note {
+  margin: 0 0 18px;
+  color: var(--json-muted);
+  font-size: 13px;
+}
+
+.json-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.json-tool {
+  padding: 20px;
+}
+
+.json-tool-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.json-tool h2,
+.json-tree-card h2,
+.json-advanced h2 {
+  margin: 0 0 4px;
+  color: var(--json-text);
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.json-tool p,
+.json-tree-card p,
+.json-advanced p {
+  margin: 0;
+  color: var(--json-muted);
+  font-size: 14px;
+}
+
+.json-codebox {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  height: 330px;
+  min-height: 0;
+  border: 1px solid var(--json-line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--json-code-bg);
+}
+
+.json-codebox.output {
+  height: 376px;
+  min-height: 0;
+}
+
+.json-line-nums {
+  height: 100%;
+  overflow: hidden;
+  padding: 12px 0;
+  border-right: 1px solid var(--json-code-line);
+  background: var(--json-code-gutter);
+  color: var(--json-muted);
+  font: 13px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  text-align: right;
+  user-select: none;
+}
+
+.json-line-nums span {
+  display: block;
+  min-height: 20.15px;
+  padding: 0 10px 0 4px;
+}
+
+.json-line-nums span.error {
+  background: rgba(220,38,38,.1);
+  color: var(--json-danger);
+  font-weight: 800;
+}
+
+.json-code-area {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: auto;
+}
+
+.json-code-highlight,
+.json-output-pre,
+.json-input {
+  margin: 0;
+  padding: 12px 14px;
+  min-height: 100%;
+  min-width: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  tab-size: 2;
+  font: 13px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0;
+}
+
+.json-code-highlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  color: var(--json-text);
+}
+
+.json-input {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  min-height: 330px;
+  border: 0;
+  outline: none;
+  resize: none;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--json-text);
+  overflow: auto;
+}
+
+.json-input::selection {
+  background: rgba(91,91,214,.22);
+}
+
+
+.json-codebox:not(.output) .json-code-area {
+  overflow: hidden;
+}
+
+.json-codebox:not(.output) .json-input {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+/* Input uses the real textarea text to avoid visual padding artifacts from the mirror layer. */
+.json-codebox:not(.output) .json-code-highlight {
+  display: none;
+}
+
+.json-codebox:not(.output) .json-input {
+  color: var(--json-text);
+  caret-color: var(--json-text);
+}
+
+.json-output-pre {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+  color: var(--json-text);
+}
+
+.json-output-wrap {
+  position: relative;
+}
+
+
+/* Output panel scrolls as a single surface so wheel/touch works reliably. */
+.json-codebox.output {
+  align-items: start;
+  grid-template-columns: 40px minmax(0, 1fr);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: auto;
+}
+
+.json-codebox.output .json-line-nums {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+  background: var(--json-code-bg);
+  border-right-color: rgba(23,32,51,.06);
+}
+
+body.json-dark .json-codebox.output .json-line-nums {
+  border-right-color: rgba(255,255,255,.06);
+}
+
+.json-codebox.output .json-line-nums span {
+  padding: 0 8px 0 0;
+}
+
+.json-codebox.output .json-code-area {
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+}
+
+.json-codebox.output .json-output-pre {
+  width: 100%;
+  min-width: 0;
+  min-height: 100%;
+}
+
+.json-empty-state {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--json-muted);
+  pointer-events: none;
+  text-align: center;
+  padding: 24px;
+}
+
+.json-empty-state.hidden {
+  display: none;
+}
+
+
+.json-codebox.output.is-empty {
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.json-codebox.output.is-empty .json-line-nums,
+.json-codebox.output.is-empty .json-output-pre {
+  display: none;
+}
+
+.json-codebox.output.is-empty .json-code-area {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.json-codebox.output.is-empty .json-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  writing-mode: horizontal-tb;
+}
+
+.json-token-key { color: var(--json-blue); font-weight: 650; }
+.json-token-string { color: #16803a; }
+.json-token-number { color: #b45309; }
+.json-token-boolean { color: #7c3aed; font-weight: 650; }
+.json-token-null { color: #be185d; font-weight: 650; }
+
+body.json-dark .json-token-string { color: #86efac; }
+body.json-dark .json-token-number { color: #fbbf24; }
+body.json-dark .json-token-key { color: #93c5fd; }
+body.json-dark .json-token-boolean { color: #c4b5fd; }
+body.json-dark .json-token-null { color: #f9a8d4; }
+
+.json-config {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.json-config-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+  gap: 10px;
+}
+
+.json-switch,
+.json-select-field {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid var(--json-line);
+  border-radius: 10px;
+  background: var(--json-soft-2);
+  color: var(--json-text);
+  padding: 7px 11px;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.json-select-field select {
+  width: auto;
+  min-width: 96px;
+  height: 28px;
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: var(--json-text);
+  outline: none;
+  font-weight: 650;
+}
+
+.json-select-field .json-input[type="number"] {
+  position: static;
+  width: 64px;
+  height: 28px;
+  min-height: 0;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--json-text);
+  caret-color: var(--json-text);
+  padding: 0;
+  resize: none;
+}
+
+.json-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.json-switch span {
+  position: relative;
+  width: 34px;
+  height: 20px;
+  flex: 0 0 auto;
+  border: 1px solid var(--json-line);
+  border-radius: 999px;
+  background: #d3d7e2;
+  transition: background .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+.json-switch span:after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,.18);
+  transition: transform .15s ease;
+}
+
+.json-switch input:checked + span {
+  border-color: rgba(91,91,214,.3);
+  background: var(--json-primary);
+}
+
+.json-switch input:checked + span:after {
+  transform: translateX(14px);
+}
+
+.json-process-row {
+  margin-top: 12px;
+}
+
+.json-process-row .json-btn {
+  width: 100%;
+}
+
+.json-operation-tabs {
+  width: min(470px, 100%);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 12px;
+}
+
+.json-operation-tabs button {
+  min-width: 0;
+}
+
+.json-inline-options {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  min-height: 34px;
+  margin-bottom: 12px;
+}
+
+.json-inline-options.hidden,
+.json-panel.hidden,
+.json-tree-panel.hidden,
+.json-advanced.hidden {
+  display: none;
+}
+
+
+
+.json-output-tool {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.json-output-tool .json-output-wrap {
+  flex: 1 1 376px;
+  height: auto;
+  min-height: 376px;
+  max-height: none;
+}
+
+.json-output-tool .json-result-bar {
+  flex: 0 0 auto;
+}
+
+.json-result-bar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 42px;
+  margin-top: 20px;
+  padding: 10px 12px;
+  border: 1px solid rgba(16,185,129,.14);
+  border-radius: 12px;
+  background: rgba(16,185,129,.06);
+  color: #059669;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.json-result-bar.error {
+  border-color: rgba(220,38,38,.18);
+  background: rgba(220,38,38,.06);
+  color: var(--json-danger);
+}
+
+.json-result-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.json-advanced {
+  padding: 20px;
+}
+
+.json-advanced-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.json-setting-group {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  border: 1px solid var(--json-line);
+  border-radius: 12px;
+  background: var(--json-soft-2);
+  padding: 14px;
+}
+
+.json-setting-group h3 {
+  margin: 0;
+  color: var(--json-text);
+  font-size: 15px;
+  letter-spacing: 0;
+}
+
+.json-tree-card {
+  padding: 20px;
+}
+
+.json-tree-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.json-tree {
+  max-height: 650px;
+  overflow: auto;
+  border: 1px solid var(--json-line);
+  border-radius: 12px;
+  background: var(--json-code-bg);
+  padding: 10px;
+  font: 13px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.json-tree-empty {
+  display: grid;
+  place-items: center;
+  min-height: 260px;
+  color: var(--json-muted);
+  text-align: center;
+  padding: 24px;
+}
+
+.json-node {
+  min-width: max-content;
+}
+
+.json-node-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 30px;
+  padding: 2px 6px;
+  border-radius: 8px;
+}
+
+.json-node-row:hover {
+  background: rgba(91,91,214,.06);
+}
+
+.json-node-children {
+  margin-left: 22px;
+  border-left: 1px dashed var(--json-line);
+  padding-left: 10px;
+}
+
+.json-node-toggle,
+.json-node-copy {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--json-muted);
+  padding: 0;
+}
+
+.json-node-toggle:hover,
+.json-node-copy:hover {
+  background: var(--json-soft);
+  color: var(--json-text);
+}
+
+.json-node-toggle svg,
+.json-node-copy svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.json-node-key {
+  color: var(--json-blue);
+  font-weight: 800;
+}
+
+.json-node-index {
+  color: var(--json-primary-2);
+  font-weight: 800;
+}
+
+.json-node-type {
+  border-radius: 7px;
+  padding: 2px 7px;
+  background: rgba(37,99,235,.1);
+  color: var(--json-blue);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.json-node-type.string { background: rgba(22,128,58,.1); color: #16803a; }
+.json-node-type.number { background: rgba(180,83,9,.1); color: #b45309; }
+.json-node-type.boolean { background: rgba(124,58,237,.1); color: #7c3aed; }
+.json-node-type.null { background: rgba(190,24,93,.1); color: #be185d; }
+.json-node-type.array { background: rgba(91,91,214,.1); color: var(--json-primary); }
+
+.json-node-preview {
+  color: var(--json-muted);
+  overflow-wrap: anywhere;
+}
+
+.json-toast {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 30;
+  max-width: min(360px, calc(100vw - 36px));
+  transform: translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+  border: 1px solid var(--json-line);
+  border-radius: 12px;
+  background: var(--json-panel);
+  color: var(--json-text);
+  box-shadow: 0 20px 50px rgba(0,0,0,.16);
+  padding: 12px 14px;
+  font-size: 14px;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.json-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+@keyframes jsonPulse {
+  50% { opacity: .45; }
+}
+
+@media (max-width: 960px) {
+  .json-status-inner,
+  .json-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .json-status-actions,
+  .json-controls {
+    align-items: stretch;
+    justify-items: stretch;
+    width: 100%;
+  }
+  .json-controls .json-select,
+  .json-controls .json-theme-btn {
+    width: 100%;
+  }
+  .json-grid,
+  .json-advanced-grid {
+    grid-template-columns: 1fr;
+  }
+  .json-segment,
+  .json-tabs,
+  .json-operation-tabs,
+  .json-row {
+    width: 100%;
+  }
+  .json-status-actions .json-icon-btn {
+    flex: 1 1 0;
+    width: auto;
+  }
+}
+
+@media (max-width: 620px) {
+  .json-shell {
+    width: min(100% - 24px, 1180px);
+    padding-top: 20px;
+  }
+  .json-status,
+  .json-tool,
+  .json-workbench,
+  .json-tree-card,
+  .json-advanced {
+    padding: 16px;
+  }
+  .json-state-title {
+    font-size: 30px;
+  }
+  .json-codebox {
+    grid-template-columns: 42px minmax(0, 1fr);
+    height: 300px;
+  }
+  .json-codebox.output {
+    height: 330px;
+  }
+
+  .json-output-tool .json-output-wrap {
+    min-height: 330px;
+    flex-basis: 330px;
+  }
+  .json-input {
+    min-height: 300px;
+  }
+  .json-config-row {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  .json-operation-tabs button,
+  .json-tabs button,
+  .json-segment button {
+    padding: 0 8px;
+    font-size: 13px;
+  }
+  .json-tree-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .json-tree-toolbar .json-row,
+  .json-tree-button {
+    width: 100%;
+  }
+}

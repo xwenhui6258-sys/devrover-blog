@@ -1,8 +1,15 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>JSON 格式化｜DevRover的个人站</title><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><link rel="stylesheet" href="/assets/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Jsonify 是 DevRover 的 JSON 格式化、压缩、转义、去转义和树形查看工具。所有内容仅在浏览器本地处理。">
+  <title>Jsonify｜JSON 格式化与转换工具｜DevRover的个人站</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/tools/json/json.css?v=20260715-inputreal1">
 </head>
 <body>
 <header>
@@ -16,47 +23,200 @@
   </div>
 </header>
 
-<main class="page"><div class="container">
-  <div class="eyebrow">TOOLS / JSON</div><h1>JSON 格式化</h1>
-  <p class="lead">内容只在浏览器本地处理，不会上传到服务器。</p>
-  <textarea id="input" placeholder='请输入 JSON，例如：{"name":"demo","items":[1,2,3]}'></textarea>
-  <div class="tool-actions">
-    <button onclick="formatJSON()">格式化</button>
-    <button class="secondary" onclick="minifyJSON()">压缩</button>
-    <button class="secondary" onclick="clearText()">清空</button>
+<main class="json-page">
+  <div class="json-shell">
+    <section class="json-topbar" aria-label="JSON 工具设置">
+      <div class="json-title">
+        <div class="json-logo" aria-hidden="true">{}</div>
+        <div>
+          <h1>Jsonify</h1>
+          <span>JSON 格式化与转换工具</span>
+        </div>
+      </div>
+      <div class="json-controls">
+        <select class="json-select" id="indentSelect" aria-label="选择缩进">
+          <option value="2">2 空格</option>
+          <option value="4">4 空格</option>
+          <option value="tab">Tab</option>
+        </select>
+        <button class="json-icon-btn json-theme-btn" type="button" id="themeToggle" aria-label="切换深浅色" title="切换深浅色"></button>
+      </div>
+    </section>
+
+    <section class="json-card json-status" aria-label="当前 JSON 状态">
+      <div class="json-status-inner">
+        <div class="json-status-main">
+          <div class="json-kicker">
+            当前 JSON 状态
+            <span class="json-live" id="statusBadge"><span class="json-dot"></span><span id="statusBadgeText">自动识别中</span></span>
+          </div>
+          <h2 class="json-state-title" id="statusTitle">等待输入</h2>
+          <p class="json-state-detail" id="statusDetail">请输入或粘贴 JSON 内容</p>
+          <p class="json-state-suggestion" id="statusSuggestion"></p>
+          <p class="json-state-warning" id="statusWarning"></p>
+          <p class="json-stats-line" id="statsLine">0 字符 · 0 行 · 0 字段 · 0 层 · 0 B</p>
+        </div>
+        <div class="json-status-actions">
+          <div class="json-segment" role="tablist" aria-label="视图模式">
+            <button type="button" class="active" data-view="edit">编辑模式</button>
+            <button type="button" data-view="tree">树形视图</button>
+          </div>
+          <div class="json-row" aria-label="快捷操作">
+            <button class="json-icon-btn" type="button" id="quickCopy" aria-label="复制" title="复制"></button>
+            <button class="json-icon-btn" type="button" id="quickClear" aria-label="清空" title="清空"></button>
+            <button class="json-icon-btn" type="button" id="loadExample" aria-label="填充示例" title="示例"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="json-card json-workbench" aria-label="JSON 工作区">
+      <div class="json-tabs" role="tablist">
+        <button type="button" class="active" data-main-tab="single">单项处理</button>
+        <button type="button" data-main-tab="advanced">高级处理</button>
+      </div>
+
+      <div class="json-panel" id="singlePanel">
+        <div class="json-grid">
+          <section class="json-card json-tool" aria-label="输入 JSON">
+            <div class="json-tool-head">
+              <div>
+                <h2>输入 JSON</h2>
+                <p>支持标准 JSON、压缩 JSON、转义字符串，自动识别内容类型。</p>
+              </div>
+            </div>
+            <div class="json-codebox">
+              <div class="json-line-nums" id="inputLines" aria-hidden="true"></div>
+              <div class="json-code-area">
+                <pre class="json-code-highlight" id="inputHighlight" aria-hidden="true"></pre>
+                <textarea class="json-input" id="jsonInput" spellcheck="false" wrap="soft" aria-label="输入 JSON" placeholder='请输入 JSON，例如：{"name":"DevRover","enabled":true}'></textarea>
+              </div>
+            </div>
+
+            <div class="json-config" aria-label="输入配置">
+              <div class="json-config-row">
+                <label class="json-switch">自动识别<input type="checkbox" data-option="autoDetect" checked><span aria-hidden="true"></span></label>
+                <label class="json-switch">保留中文<input type="checkbox" data-option="preserveChinese" checked><span aria-hidden="true"></span></label>
+                <label class="json-select-field">排序
+                  <select data-option="sortOrder" aria-label="键名排序">
+                    <option value="none">原顺序</option>
+                    <option value="asc">升序</option>
+                    <option value="desc">降序</option>
+                  </select>
+                </label>
+              </div>
+              <div class="json-config-row">
+                <label class="json-switch">删除 null<input type="checkbox" data-clean="deleteNull"><span aria-hidden="true"></span></label>
+                <label class="json-switch">删除空字符串<input type="checkbox" data-clean="deleteEmptyString"><span aria-hidden="true"></span></label>
+                <label class="json-switch">删除空数组<input type="checkbox" data-clean="deleteEmptyArray"><span aria-hidden="true"></span></label>
+              </div>
+              <div class="json-config-row">
+                <label class="json-switch">删除空对象<input type="checkbox" data-clean="deleteEmptyObject"><span aria-hidden="true"></span></label>
+              </div>
+            </div>
+
+            <div class="json-process-row">
+              <button class="json-btn" type="button" id="processButton">立即处理</button>
+            </div>
+          </section>
+
+          <section class="json-card json-tool json-output-tool" aria-label="输出结果">
+            <div class="json-tool-head">
+              <div>
+                <h2>输出结果</h2>
+                <p>支持格式化、压缩、转义、去除转义，并展示校验结果。</p>
+              </div>
+              <button class="json-btn secondary" type="button" id="outputCopy" aria-label="复制输出结果" title="复制输出结果"></button>
+            </div>
+            <div class="json-operation-tabs" role="tablist" aria-label="处理操作">
+              <button type="button" class="active" data-operation="format">格式化</button>
+              <button type="button" data-operation="minify">压缩</button>
+              <button type="button" data-operation="escape">转义</button>
+              <button type="button" data-operation="unescape">去转义</button>
+            </div>
+            <div class="json-inline-options hidden" id="escapeOptions">
+              <label class="json-switch">包含外层引号<input type="checkbox" data-option="includeOuterQuotes"><span aria-hidden="true"></span></label>
+            </div>
+            <div class="json-inline-options hidden" id="unescapeOptions">
+              <div class="json-segment" aria-label="去转义模式">
+                <button type="button" class="active" data-unescape-mode="single">去除一层</button>
+                <button type="button" data-unescape-mode="recursive">递归去除</button>
+              </div>
+              <label class="json-select-field">最多
+                <input class="json-input" type="number" min="1" max="10" value="10" data-option="unescapeDepth" aria-label="去转义最大层级">
+              </label>
+            </div>
+
+            <div class="json-codebox output json-output-wrap">
+              <div class="json-line-nums" id="outputLines" aria-hidden="true"></div>
+              <div class="json-code-area" id="outputArea">
+                <pre class="json-output-pre" id="outputPre" aria-label="输出结果"></pre>
+                <div class="json-empty-state" id="outputEmpty">处理结果将在这里显示</div>
+              </div>
+            </div>
+            <div class="json-result-bar" id="resultBar" role="status" aria-live="polite">
+              <span class="json-result-dot" aria-hidden="true"></span>
+              <span id="resultText">处理结果将在这里显示</span>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <section class="json-card json-advanced hidden" id="advancedPanel" aria-label="高级处理">
+        <h2>高级处理</h2>
+        <p>集中调整键名排序、递归清理、转义输出和去转义层级。</p>
+        <div class="json-advanced-grid">
+          <div class="json-setting-group">
+            <h3>结构处理</h3>
+            <label class="json-select-field">键名排序
+              <select data-option="sortOrder" aria-label="高级键名排序">
+                <option value="none">保持原顺序</option>
+                <option value="asc">升序</option>
+                <option value="desc">降序</option>
+              </select>
+            </label>
+            <label class="json-switch">删除 null<input type="checkbox" data-clean="deleteNull"><span aria-hidden="true"></span></label>
+            <label class="json-switch">删除空字符串<input type="checkbox" data-clean="deleteEmptyString"><span aria-hidden="true"></span></label>
+            <label class="json-switch">删除空数组<input type="checkbox" data-clean="deleteEmptyArray"><span aria-hidden="true"></span></label>
+            <label class="json-switch">删除空对象<input type="checkbox" data-clean="deleteEmptyObject"><span aria-hidden="true"></span></label>
+          </div>
+          <div class="json-setting-group">
+            <h3>转换细节</h3>
+            <label class="json-switch">保留中文<input type="checkbox" data-option="preserveChinese" checked><span aria-hidden="true"></span></label>
+            <label class="json-switch">转义时包含外层引号<input type="checkbox" data-option="includeOuterQuotes"><span aria-hidden="true"></span></label>
+            <label class="json-select-field">去转义层级
+              <input class="json-input" type="number" min="1" max="10" value="10" data-option="unescapeDepth" aria-label="高级去转义最大层级">
+            </label>
+            <button class="json-btn" type="button" id="advancedProcessButton">回到单项处理并执行</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="json-tree-panel hidden" id="treePanel" aria-label="JSON 树形视图">
+        <div class="json-card json-tree-card">
+          <div class="json-tree-toolbar">
+            <div>
+              <h2>树形视图</h2>
+              <p>默认展开前两层，可复制当前值或当前节点 JSON。</p>
+            </div>
+            <div class="json-row">
+              <button class="json-tree-button secondary" type="button" id="expandTree">全部展开</button>
+              <button class="json-tree-button secondary" type="button" id="collapseTree">全部折叠</button>
+            </div>
+          </div>
+          <div class="json-tree" id="treeRoot"></div>
+        </div>
+      </section>
+    </section>
   </div>
-  <div class="status" id="status"></div>
-</div></main>
+</main>
+
 <footer>
-  <div class="container">© 2026 DevRover的个人站 · 纯静态部署</div>
+  <div class="container">© 2026 DevRover的个人站</div>
 </footer>
 
-<script>
-const input = document.getElementById('input');
-const statusBox = document.getElementById('status');
-function parseValue() {
-  return JSON.parse(input.value);
-}
-function formatJSON() {
-  try {
-    input.value = JSON.stringify(parseValue(), null, 2);
-    statusBox.textContent = 'JSON 格式正确，已完成格式化。';
-  } catch (e) {
-    statusBox.textContent = '格式错误：' + e.message;
-  }
-}
-function minifyJSON() {
-  try {
-    input.value = JSON.stringify(parseValue());
-    statusBox.textContent = 'JSON 格式正确，已完成压缩。';
-  } catch (e) {
-    statusBox.textContent = '格式错误：' + e.message;
-  }
-}
-function clearText() {
-  input.value = '';
-  statusBox.textContent = '';
-  input.focus();
-}
-</script>
-</body></html>
+<div class="json-toast" id="jsonToast" role="status" aria-live="polite"></div>
+<script src="/tools/json/json-utils.js?v=20260715-inputreal1"></script>
+<script src="/tools/json/json-page.js?v=20260715-inputreal1"></script>
+</body>
+</html>

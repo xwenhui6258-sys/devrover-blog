@@ -111,7 +111,7 @@ Charles Schwab 官方 Pricing Guide for Individual Investors 写明：
 
 ## 入金前检查清单
 
-![嘉信电汇前检查清单](assets/schwab-wire-checklist-site.svg)
+![嘉信电汇前检查清单](assets/schwab-wire-checklist-site.svg?v=20260714-textfit)
 
 电汇或 ACH 前，我会检查 9 件事：
 

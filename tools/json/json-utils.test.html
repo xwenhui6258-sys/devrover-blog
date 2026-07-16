@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Jsonify 核心函数测试</title>
+  <style>
+    body { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; margin: 24px; background: #f8f9fc; color: #171722; }
+    .pass { color: #059669; }
+    .fail { color: #dc2626; }
+    li { margin: 6px 0; }
+  </style>
+</head>
+<body>
+  <h1>Jsonify 核心函数测试</h1>
+  <p id="summary">运行中...</p>
+  <ol id="results"></ol>
+  <script src="/tools/json/json-utils.js"></script>
+  <script>
+    const tests = [];
+    const u = window.JsonUtils;
+    function test(name, fn) { tests.push({ name, fn }); }
+    function equal(actual, expected) {
+      if (actual !== expected) throw new Error('expected ' + JSON.stringify(expected) + ', got ' + JSON.stringify(actual));
+    }
+    function deepEqual(actual, expected) {
+      const a = JSON.stringify(actual);
+      const e = JSON.stringify(expected);
+      if (a !== e) throw new Error('expected ' + e + ', got ' + a);
+    }
+
+    test('普通对象格式化', () => equal(u.formatJson('{"name":"DevRover","enabled":true}', 2), '{\n  "name": "DevRover",\n  "enabled": true\n}'));
+    test('数组格式化', () => equal(u.formatJson('[1,{"a":2}]', 2), '[\n  1,\n  {\n    "a": 2\n  }\n]'));
+    test('JSON 压缩', () => equal(u.minifyJson('{\n  "name": "DevRover"\n}'), '{"name":"DevRover"}'));
+    test('中文内容', () => equal(u.formatJson('{"名称":"开发者"}', 2), '{\n  "名称": "开发者"\n}'));
+    test('普通转义', () => equal(u.escapeJson('{"name":"DevRover"}', false), '{\\"name\\":\\"DevRover\\"}'));
+    test('包含外层引号的转义', () => equal(u.escapeJson('{"name":"DevRover"}', true), '"{\\"name\\":\\"DevRover\\"}"'));
+    test('去除一层转义', () => equal(u.unescapeJson('{\\"name\\":\\"DevRover\\"}').value, '{"name":"DevRover"}'));
+    test('多层递归去转义', () => equal(u.formatJson(u.recursivelyUnescapeJson('"{\\"data\\":\\"{\\\\\\"name\\\\\\":\\\\\\"DevRover\\\\\\"}\\"}"', 10).value, 2), '{\n  "data": {\n    "name": "DevRover"\n  }\n}'));
+    test('非法 JSON', () => equal(u.validateJson('{name:1}').valid, false));
+    test('空输入', () => equal(u.detectJsonType('').kind, 'empty'));
+    test('键名升序', () => deepEqual(u.sortObjectKeys({ b: 1, a: { d: 1, c: 2 } }, 'asc'), { a: { c: 2, d: 1 }, b: 1 }));
+    test('键名降序', () => deepEqual(u.sortObjectKeys({ a: 1, b: { c: 1, d: 2 } }, 'desc'), { b: { d: 2, c: 1 }, a: 1 }));
+    test('删除 null', () => deepEqual(u.cleanJsonValue({ a: null, b: 1 }, { deleteNull: true }), { b: 1 }));
+    test('删除空字符串', () => deepEqual(u.cleanJsonValue({ a: '', b: '0' }, { deleteEmptyString: true }), { b: '0' }));
+    test('删除空数组', () => deepEqual(u.cleanJsonValue({ a: [], b: [0] }, { deleteEmptyArray: true }), { b: [0] }));
+    test('删除空对象', () => deepEqual(u.cleanJsonValue({ a: {}, b: { c: 1 } }, { deleteEmptyObject: true }), { b: { c: 1 } }));
+    test('嵌套对象清理', () => deepEqual(u.cleanJsonValue({ a: { b: null }, c: 1 }, { deleteNull: true, deleteEmptyObject: true }), { c: 1 }));
+    test('false 和 0 不被删除', () => deepEqual(u.cleanJsonValue({ a: false, b: 0, c: '0', d: null }, { deleteNull: true, deleteEmptyString: true }), { a: false, b: 0, c: '0' }));
+    test('字段数与层级统计', () => { const s = u.calculateJsonStats('{"a":{"b":1},"c":[{"d":2}]}', { a: { b: 1 }, c: [{ d: 2 }] }); equal(s.fields, 4); equal(s.depth, 4); });
+    test('大整数风险检测', () => equal(u.detectUnsafeIntegers('{"id":9007199254740993}').length, 1));
+    test('递归去转义达到最大层数后停止', () => { const r = u.recursivelyUnescapeJson('\\\\\\\\"x\\\\\\\\"', 1); equal(r.maxReached, true); });
+
+    const list = document.getElementById('results');
+    let pass = 0;
+    tests.forEach((item) => {
+      const li = document.createElement('li');
+      try {
+        item.fn();
+        pass += 1;
+        li.className = 'pass';
+        li.textContent = 'PASS ' + item.name;
+      } catch (error) {
+        li.className = 'fail';
+        li.textContent = 'FAIL ' + item.name + ' - ' + error.message;
+      }
+      list.appendChild(li);
+    });
+    document.getElementById('summary').textContent = pass + ' / ' + tests.length + ' 通过';
+    document.getElementById('summary').className = pass === tests.length ? 'pass' : 'fail';
+  </script>
+</body>
+</html>

@@ -223,4 +223,3 @@ IBKR 行情订阅看起来复杂，是因为“美股”并不是一个数据源
 - IBKR Client Portal User Guide, [Market Data Assistant](https://www.ibkrguides.com/clientportal/marketdataassistant.htm).
 - IBKR Trader Workstation User Guide, [Consolidated / Snapshot Market Data](https://www.ibkrguides.com/traderworkstation/snapshot-market-data.htm).
 - IBKR Trader Workstation User Guide, [Classic TWS Snapshot Quotes](https://www.ibkrguides.com/traderworkstation/classic-snapshot-quotes.htm).
-- IBKR Campus, [Market Data Subscriptions](https://www.interactivebrokers.com/campus/ibkr-api-page/market-data-subscriptions/).

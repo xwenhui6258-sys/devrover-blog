@@ -345,6 +345,31 @@ h2 { margin-top: 0; letter-spacing: -.025em; }
   flex-wrap: wrap;
   gap: 10px;
 }
+.tag-filter-control {
+  min-width: 0;
+}
+.tag-filter-chips {
+  max-height: 122px;
+  overflow: hidden;
+}
+.tag-filter-chips.is-expanded {
+  max-height: none;
+}
+.tag-filter-toggle {
+  margin-top: 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.tag-filter-toggle:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .filter-chip,
 .mini-chip,
 .category-pill,
