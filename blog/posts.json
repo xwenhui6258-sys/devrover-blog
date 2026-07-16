@@ -1,5 +1,23 @@
 [
   {
+    "title": "IBKR 账户要不要绑定第三方平台：直营账户和介绍经纪商账户的区别",
+    "slug": "ibkr-direct-vs-introducing-broker",
+    "url": "/blog/ibkr-direct-vs-introducing-broker/",
+    "date": "2026-07-16",
+    "updated": "2026-07-16",
+    "category": "跨境投资",
+    "series": "海外资产入门",
+    "tags": [
+      "IBKR",
+      "盈透证券",
+      "介绍经纪商",
+      "第三方平台",
+      "账户绑定"
+    ],
+    "summary": "第三方平台可能只是交易前端，也可能是介绍经纪商或顾问。本文拆清直营账户、全披露介绍经纪商、非披露结构和 API 连接，并给出绑定前核验清单。",
+    "readingTime": "13 分钟"
+  },
+  {
     "title": "换券商不用先卖股票：ACATS 转仓流程、成本和注意事项",
     "slug": "acats-account-transfer",
     "url": "/blog/acats-account-transfer/",
