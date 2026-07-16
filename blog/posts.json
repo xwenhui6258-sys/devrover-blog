@@ -1,5 +1,23 @@
 [
   {
+    "title": "为什么看到的股价会延迟：IBKR 行情权限和市场数据订阅指南",
+    "slug": "ibkr-market-data-subscriptions",
+    "url": "/blog/ibkr-market-data-subscriptions/",
+    "date": "2026-07-16",
+    "updated": "2026-07-16",
+    "category": "跨境投资",
+    "series": "海外资产入门",
+    "tags": [
+      "IBKR",
+      "盈透证券",
+      "市场数据",
+      "实时行情",
+      "行情订阅"
+    ],
+    "summary": "从免费非合并实时数据、延迟行情、快照、L1 与 L2 入手，讲清 IBKR 交易权限、行情权限、专业身份和市场数据订阅的选择方法。",
+    "readingTime": "12 分钟"
+  },
+  {
     "title": "IBKR 账户要不要绑定第三方平台：直营账户和介绍经纪商账户的区别",
     "slug": "ibkr-direct-vs-introducing-broker",
     "url": "/blog/ibkr-direct-vs-introducing-broker/",

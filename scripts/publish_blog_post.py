@@ -33,12 +33,12 @@ def slugify(value: str) -> str:
     return slug or f"post-{date.today().isoformat()}"
 
 
-def parse_front_matter(text: str) -> tuple[dict[str, str], str]:
+def parse_front_matter(text: str) -> tuple[dict[str, str], str, str]:
     if not text.startswith("---\n"):
-        return {}, text
+        return {}, "", text
     end = text.find("\n---", 4)
     if end == -1:
-        return {}, text
+        return {}, "", text
     raw = text[4:end].strip()
     body = text[end + 4 :].lstrip("\n")
     meta: dict[str, str] = {}
@@ -47,7 +47,7 @@ def parse_front_matter(text: str) -> tuple[dict[str, str], str]:
             continue
         key, value = line.split(":", 1)
         meta[key.strip().lower()] = value.strip().strip("'\"")
-    return meta, body
+    return meta, raw, body
 
 
 def first_heading(body: str) -> str | None:
@@ -90,6 +90,26 @@ def find_asset(input_dir: Path, target: str) -> Path | None:
         return by_name.resolve()
     matches = [path for path in input_dir.rglob(Path(target).name) if path.is_file()]
     return matches[0].resolve() if matches else None
+
+
+def rewrite_front_matter_asset_paths(front_matter: str, input_dir: Path) -> str:
+    """Preserve YAML verbatim while mapping a local cover into article assets."""
+
+    def replace(match: re.Match[str]) -> str:
+        prefix, quote_mark, target = match.groups()
+        target = target.strip()
+        if re.match(r"^(https?:)?//", target) or target.startswith("/"):
+            return match.group(0)
+        source = find_asset(input_dir, target)
+        if source is None or source.suffix.lower() not in IMAGE_EXTS:
+            return match.group(0)
+        return f"{prefix}{quote_mark}assets/{source.name}{quote_mark}"
+
+    return re.sub(
+        r"(?m)^(cover:\s*)(['\"]?)([^'\"\n]+)\2\s*$",
+        replace,
+        front_matter,
+    )
 
 
 def rewrite_asset_paths(markdown: str, input_dir: Path, post_dir: Path) -> str:
@@ -506,7 +526,7 @@ def main() -> int:
         raise SystemExit(f"Markdown file does not exist: {markdown_path}")
 
     source_text = markdown_path.read_text(encoding="utf-8")
-    front_matter, body = parse_front_matter(source_text)
+    front_matter, raw_front_matter, body = parse_front_matter(source_text)
     title = front_matter.get("title") or first_heading(body) or markdown_path.stem
     post_date = front_matter.get("date") or date.today().isoformat()
     summary = front_matter.get("summary") or front_matter.get("description") or plain_summary(body)
@@ -517,7 +537,13 @@ def main() -> int:
     body = remove_duplicate_title(body, title)
     rewritten_body = rewrite_asset_paths(body, input_dir, post_dir)
     copy_remaining_images(input_dir, post_dir)
-    (post_dir / "source.md").write_text("---\n" + "\n".join(f"{k}: {v}" for k, v in front_matter.items()) + "\n---\n\n" + rewritten_body, encoding="utf-8")
+    source_front_matter = rewrite_front_matter_asset_paths(
+        raw_front_matter, input_dir
+    ) or "\n".join(f"{k}: {v}" for k, v in front_matter.items())
+    (post_dir / "source.md").write_text(
+        "---\n" + source_front_matter + "\n---\n\n" + rewritten_body,
+        encoding="utf-8",
+    )
 
     meta = PostMeta(title=title, date=post_date, summary=summary, slug=slug)
     article_html = optimize_article_images(markdown_to_html(rewritten_body), post_dir)
