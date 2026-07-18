@@ -9,11 +9,8 @@ status: "published"
 cover: "assets/ibkr-fit-map.png"
 tags:
   - IBKR
-  - W-8BEN
-  - 地址证明
-  - 开户
-  - 入金
-  - 风控
+  - 账户管理
+  - 风险管理
 ---
 
 # IBKR 开户前先搞懂：适合谁、准备什么、哪些选项别乱填

@@ -9,11 +9,9 @@ series: "海外银行卡与资金流转"
 status: "published"
 cover: "assets/hong-kong-bank-account-cover.png"
 tags:
-  - 开户
-  - 地址证明
   - 海外银行卡
-  - 入金
-  - 风控
+  - 账户管理
+  - 风险管理
 ---
 
 # 赴港办银行卡前准备什么：材料、预约、面谈和手机漫游清单

@@ -11,8 +11,7 @@ cover: "assets/acats-timeline.png"
 tags:
   - IBKR
   - Charles Schwab
-  - 转仓
-  - 风控
+  - 账户管理
 ---
 
 # 换券商不用先卖股票：ACATS 转仓流程、成本和注意事项

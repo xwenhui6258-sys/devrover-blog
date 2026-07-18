@@ -9,9 +9,8 @@ status: "published"
 cover: "assets/account-money-map.png"
 tags:
   - IBKR
-  - 入金
-  - 出金
-  - 风控
+  - 账户管理
+  - 风险管理
 ---
 
 # 券商账户里的钱怎么看：现金、净资产、购买力和保证金一次讲清

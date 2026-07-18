@@ -10,10 +10,8 @@ status: "published"
 cover: "assets/schwab-funding-map-site.svg"
 tags:
   - Charles Schwab
-  - 入金
-  - 出金
-  - 美国银行卡
-  - 风控
+  - 入金出金
+  - 海外银行卡
 ---
 
 # Charles Schwab 入金路径整理：电汇、ACH 与到账时间

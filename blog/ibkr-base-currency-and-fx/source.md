@@ -9,9 +9,7 @@ status: "published"
 cover: "assets/base-vs-holdings.png"
 tags:
   - IBKR
-  - 入金
-  - 出金
-  - 风控
+  - 入金出金
 ---
 
 # 基础货币不是持仓货币：IBKR 换汇前必须懂的几个概念

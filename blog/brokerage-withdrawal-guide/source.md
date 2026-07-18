@@ -10,9 +10,8 @@ status: "published"
 cover: "assets/withdrawal-flow.png"
 tags:
   - IBKR
-  - 出金
-  - 海外银行卡
-  - 风控
+  - 入金出金
+  - 风险管理
 ---
 
 # 钱准备取回来时怎么走：券商出金、同名账户和到账核对

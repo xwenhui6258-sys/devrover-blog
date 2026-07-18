@@ -7,12 +7,9 @@ slug: "local-currency-to-first-overseas-asset"
 category: "券商入金"
 series: "美股新手基础设施"
 tags:
-  - 开户
-  - 入金
-  - 出金
-  - W-8BEN
-  - 风控
-  - 海外银行卡
+  - 账户管理
+  - 入金出金
+  - 风险管理
 status: "published"
 ---
 

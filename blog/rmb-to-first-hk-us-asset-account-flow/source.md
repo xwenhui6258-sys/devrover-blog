@@ -6,10 +6,9 @@ slug: "rmb-to-first-hk-us-asset-account-flow"
 category: "美股账户"
 series: "美股新手基础设施"
 tags:
-  - 入金
-  - 出金
+  - 入金出金
   - 海外银行卡
-  - 风控
+  - 风险管理
 cover: "images/account-flow-overview.png"
 summary: "从人民币余额到第一笔港美股资产，中间至少经过银行账户、换汇/跨境支付环节、境外银行或多币种账户、券商现金账和证券结算托管。"
 status: "published"

@@ -9,12 +9,9 @@ series: "海外银行卡与资金流转"
 status: "published"
 cover: "assets/funding-path-map.png"
 tags:
-  - Wise
-  - 入金
-  - 出金
-  - 美国银行卡
+  - 入金出金
   - 海外银行卡
-  - 风控
+  - 风险管理
 ---
 
 # 入金路径怎么选：ACH、FPS、eDDA、电汇和 Wise 的区别

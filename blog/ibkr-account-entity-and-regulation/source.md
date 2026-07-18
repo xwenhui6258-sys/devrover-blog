@@ -10,10 +10,8 @@ status: "published"
 cover: "assets/ibkr-account-entity-map.png"
 tags:
   - IBKR
-  - 盈透证券
-  - 账户归属
-  - 券商监管
-  - 投资者保护
+  - 账户管理
+  - 风险管理
 ---
 
 # 同样叫 IBKR，账户归属为什么不同：如何确认开户主体和监管地区

@@ -9,10 +9,9 @@ series: "美股新手基础设施"
 status: "published"
 cover: "assets/broker-selection-framework.png"
 tags:
-  - 开户
-  - 入金
-  - 出金
-  - 风控
+  - 账户管理
+  - 入金出金
+  - 风险管理
 ---
 
 # 美港股券商怎么选：先看安全、入金、功能，再看佣金

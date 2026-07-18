@@ -9,8 +9,8 @@ status: "published"
 cover: "assets/order-type-map.png"
 tags:
   - IBKR
-  - 开户
-  - 风控
+  - 交易入门
+  - 风险管理
 ---
 
 # 第一次下单怎么选：市价单、限价单、止损单和有效期

@@ -7,11 +7,7 @@ series: "海外资产入门"
 status: "published"
 cover: "assets/dividend-waterfall.png"
 tags:
-  - 美股分红
-  - W-8BEN
-  - 预扣税
-  - 税收协定
-  - 1042-S
+  - 税务合规
 ---
 
 # 美股分红为什么少了一截：W-8BEN 与预扣税新手说明书

@@ -9,11 +9,9 @@ series: "海外银行卡与资金流转"
 status: "published"
 cover: "assets/wise-card-flow-map-site.svg"
 tags:
-  - Wise
   - 海外银行卡
-  - 入金
-  - 出金
-  - 风控
+  - 入金出金
+  - 风险管理
 ---
 
 # Wise 与海外银行卡：资金流转路径和风控注意事项

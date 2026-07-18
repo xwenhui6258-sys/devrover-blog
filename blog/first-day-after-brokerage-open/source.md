@@ -11,10 +11,7 @@ cover: "assets/first-day-checklist.png"
 tags:
   - IBKR
   - Charles Schwab
-  - W-8BEN
-  - 开户
-  - 入金
-  - 风控
+  - 账户管理
 ---
 
 # 开户后第一天要设置什么：App、2FA、基础货币、交易权限和 W-8

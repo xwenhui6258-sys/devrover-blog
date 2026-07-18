@@ -8,11 +8,7 @@ status: "draft"
 cover: "assets/ibkr-us-treasury-first-order-map.png"
 tags:
   - IBKR
-  - 盈透证券
-  - 美国国债
-  - 债券交易
-  - 到期收益率
-  - 新手下单
+  - 交易入门
 ---
 
 第一次在 IBKR 买美国国债，最容易踩的坑不是“不会点下单”，而是把不同概念看成同一个数字：期限、票息、到期收益率、买入价、面值和预计扣款彼此相关，却不相同。

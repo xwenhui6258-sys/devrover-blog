@@ -7,11 +7,8 @@ series: "海外资产入门"
 status: "draft"
 cover: "assets/us-stock-session-clock.png"
 tags:
-  - 美股交易时段
-  - 盘前盘后
-  - 夜盘
-  - Extended Hours
   - IBKR
+  - 交易入门
 ---
 
 美股不是只有纽约时间 9:30 开盘、16:00 收盘。对一部分股票和 ETF 来说，一天可以被拆成夜盘、盘前、常规和盘后四段；但四段并不等价，也不是每家券商、每只证券、每种订单都能无缝交易。

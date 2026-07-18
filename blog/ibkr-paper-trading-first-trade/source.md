@@ -8,10 +8,7 @@ status: "published"
 cover: "assets/paper-trading-route.png"
 tags:
   - IBKR
-  - 模拟交易
-  - Paper Trading
-  - 新手下单
-  - 订单核对
+  - 交易入门
 ---
 
 # 先别急着投入真金白银：用 IBKR 模拟账户完成第一次买卖

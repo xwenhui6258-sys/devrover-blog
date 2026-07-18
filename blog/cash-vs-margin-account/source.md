@@ -8,10 +8,8 @@ status: "published"
 cover: "assets/cash-vs-margin.png"
 tags:
   - IBKR
-  - 现金账户
-  - 保证金账户
-  - 融资风险
-  - 券商开户
+  - 账户管理
+  - 风险管理
 ---
 
 # 现金账户还是保证金账户：新手开户时应该怎么选

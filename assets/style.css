@@ -347,31 +347,6 @@ h2 { margin-top: 0; letter-spacing: -.025em; }
   flex-wrap: wrap;
   gap: 10px;
 }
-.tag-filter-control {
-  min-width: 0;
-}
-.tag-filter-chips {
-  max-height: 122px;
-  overflow: hidden;
-}
-.tag-filter-chips.is-expanded {
-  max-height: none;
-}
-.tag-filter-toggle {
-  margin-top: 10px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--accent);
-  font: inherit;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-}
-.tag-filter-toggle:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
 .filter-chip,
 .mini-chip,
 .category-pill,
@@ -387,11 +362,29 @@ h2 { margin-top: 0; letter-spacing: -.025em; }
 .filter-chip {
   min-height: 34px;
   padding: 7px 15px;
+  gap: 7px;
   background: #f4f7fb;
   color: var(--text);
 }
+.filter-count {
+  display: inline-flex;
+  min-width: 22px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.72);
+  color: currentColor;
+  font-size: 11px;
+  line-height: 1;
+}
 .filter-chip.active {
   background: var(--text);
+  color: white;
+}
+.filter-chip.active .filter-count {
+  background: rgba(255,255,255,.18);
   color: white;
 }
 .filter-chip.blue,

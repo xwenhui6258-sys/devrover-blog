@@ -8,10 +8,8 @@ status: "draft"
 cover: "assets/ibkr-direct-vs-introducing-framework.png"
 tags:
   - IBKR
-  - 盈透证券
-  - 介绍经纪商
-  - 第三方平台
-  - 账户绑定
+  - 账户管理
+  - 风险管理
 ---
 
 先说结论：**如果你只是觉得第三方 App 更容易用，不要立刻把现有 IBKR 账户整户绑定过去。先确认它究竟只是软件连接，还是会把账户移入介绍经纪商或顾问的主账户结构。**

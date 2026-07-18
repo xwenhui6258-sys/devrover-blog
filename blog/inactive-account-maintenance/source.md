@@ -10,9 +10,8 @@ status: "published"
 cover: "assets/maintenance-calendar.png"
 tags:
   - IBKR
-  - W-8BEN
-  - 海外银行卡
-  - 风控
+  - 账户管理
+  - 税务合规
 ---
 
 # 账户长期不用会怎样：银行卡、券商、手机号和税务资料维护清单

@@ -111,6 +111,22 @@ slug: "optional-slug"
 - 副标题示例：`全流程：手把手图文教程`
 - 顶部不再显示 `返回博客 / BLOG`。
 
+## 博客分类与标签
+
+- `category` 表示文章唯一的主归属；当前分类为 `跨境投资`、`券商入金`、`海外银行卡`、`美股账户`。
+- `tags` 表示可以跨分类浏览的长期主题。唯一白名单见 `blog/tag-taxonomy.json`。
+- 每篇文章必须有 1–3 个标签，标签必须来自白名单；不要把产品功能、英文同义词、表单名或单篇文章关键词新增为标签。
+- 新文章不会自动扩充标签池。确需新增长期主题时，必须先更新标签白名单、迁移别名并说明原因。
+- 同一篇文章的 `blog/<slug>/source.md` 和 `blog/posts.json` 标签必须一致。
+- 首页分类数量由 `posts.json` 自动统计；运行同步脚本后，不得手工维护数字或重复维护文章卡片。
+
+更新文章元数据或 `posts.json` 后执行：
+
+```bash
+python3 scripts/sync_blog_index.py
+python3 scripts/validate_blog_taxonomy.py
+```
+
 ## 后续给 Codex 的用法
 
 你把文章目录上传后，可以直接这样说：
@@ -145,6 +161,8 @@ find blog/<slug>/assets -type f | wc -l
 rg -n "目标标题|目标 slug" blog/index.html blog/<slug>/index.html
 rg -n "不应出现的文本" blog/<slug>/source.md blog/<slug>/index.html
 python3 scripts/validate_blog_toc.py blog/<slug>/index.html
+python3 scripts/sync_blog_index.py --check
+python3 scripts/validate_blog_taxonomy.py
 ```
 
 确认：
@@ -155,4 +173,5 @@ python3 scripts/validate_blog_toc.py blog/<slug>/index.html
 - 图片路径已变成 `assets/...`。
 - 右侧目录正常生成。
 - 右侧目录仅展示一级标题（H2）；运行 python3 scripts/validate_blog_toc.py blog/文章-slug/index.html 必须通过。
+- 标签只使用 `blog/tag-taxonomy.json` 白名单，每篇 1–3 个，首页内嵌数据和静态卡片与 `posts.json` 一致。
 - 不需要的导入文本已删除。

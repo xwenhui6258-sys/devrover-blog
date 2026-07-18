@@ -8,13 +8,9 @@ series: "大陆用户海外券商开户"
 status: "published"
 cover: "assets/schwab-vs-ibkr-map.png"
 tags:
-  - Charles Schwab
   - IBKR
-  - W-8BEN
-  - 地址证明
-  - 开户
-  - 入金
-  - 风控
+  - Charles Schwab
+  - 账户管理
 ---
 
 # 嘉信理财开户前认知：和 IBKR 有什么不同，新手要准备什么

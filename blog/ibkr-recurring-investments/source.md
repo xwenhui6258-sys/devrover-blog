@@ -8,10 +8,7 @@ status: "published"
 cover: "assets/recurring-setup.png"
 tags:
   - IBKR
-  - 定期投资
-  - 碎股
-  - 小额投资
-  - 新手教程
+  - 交易入门
 ---
 
 # 小额定投怎么设置：IBKR 定期投资的完整操作路径

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import json
 import re
 import shutil
 import struct
@@ -49,6 +50,38 @@ def parse_front_matter(text: str) -> tuple[dict[str, str], str, str]:
         key, value = line.split(":", 1)
         meta[key.strip().lower()] = value.strip().strip("'\"")
     return meta, raw, body
+
+
+def parse_front_matter_tags(raw: str) -> list[str]:
+    match = re.search(r"(?m)^tags:\s*$", raw)
+    if not match:
+        return []
+    tags: list[str] = []
+    for line in raw[match.end() :].lstrip("\n").splitlines():
+        item = re.match(r"^[ \t]+-\s*(.+?)\s*$", line)
+        if not item:
+            break
+        tags.append(item.group(1).strip("'\""))
+    return tags
+
+
+def validate_front_matter_tags(raw: str, site_root: Path) -> None:
+    taxonomy_path = site_root / "blog" / "tag-taxonomy.json"
+    if not taxonomy_path.is_file():
+        raise SystemExit(f"Missing tag taxonomy: {taxonomy_path}")
+    taxonomy = json.loads(taxonomy_path.read_text(encoding="utf-8"))
+    allowed = set(taxonomy.get("tags", []))
+    maximum = int(taxonomy.get("maxTagsPerPost", 3))
+    tags = parse_front_matter_tags(raw)
+    if not tags:
+        raise SystemExit("Front matter tags must contain 1-3 canonical tags.")
+    if len(tags) > maximum:
+        raise SystemExit(f"Front matter has {len(tags)} tags; maximum is {maximum}.")
+    if len(tags) != len(set(tags)):
+        raise SystemExit("Front matter tags contain duplicates.")
+    unknown = sorted(set(tags) - allowed)
+    if unknown:
+        raise SystemExit(f"Front matter contains non-canonical tags: {unknown}")
 
 
 def first_heading(body: str) -> str | None:
@@ -529,6 +562,7 @@ def main() -> int:
 
     source_text = markdown_path.read_text(encoding="utf-8")
     front_matter, raw_front_matter, body = parse_front_matter(source_text)
+    validate_front_matter_tags(raw_front_matter, site_root)
     title = front_matter.get("title") or first_heading(body) or markdown_path.stem
     post_date = front_matter.get("date") or date.today().isoformat()
     summary = front_matter.get("summary") or front_matter.get("description") or plain_summary(body)
