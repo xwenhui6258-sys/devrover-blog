@@ -597,6 +597,119 @@
     };
   }
 
+
+
+  function splitLooseTopLevel(text, separator) {
+    const parts = [];
+    let start = 0;
+    let depth = 0;
+    let inString = false;
+    let escaped = false;
+    for (let i = 0; i < text.length; i += 1) {
+      const char = text[i];
+      if (inString) {
+        if (escaped) escaped = false;
+        else if (char === '\\') escaped = true;
+        else if (char === '"' || char === "'") inString = false;
+        continue;
+      }
+      if (char === '"' || char === "'") {
+        inString = true;
+        continue;
+      }
+      if (char === '{' || char === '[') depth += 1;
+      else if (char === '}' || char === ']') depth -= 1;
+      else if (char === separator && depth === 0) {
+        parts.push(text.slice(start, i));
+        start = i + 1;
+      }
+    }
+    parts.push(text.slice(start));
+    return parts;
+  }
+
+  function findLooseTopLevelColon(text) {
+    let depth = 0;
+    let inString = false;
+    let escaped = false;
+    for (let i = 0; i < text.length; i += 1) {
+      const char = text[i];
+      if (inString) {
+        if (escaped) escaped = false;
+        else if (char === '\\') escaped = true;
+        else if (char === '"' || char === "'") inString = false;
+        continue;
+      }
+      if (char === '"' || char === "'") {
+        inString = true;
+        continue;
+      }
+      if (char === '{' || char === '[') depth += 1;
+      else if (char === '}' || char === ']') depth -= 1;
+      else if (char === ':' && depth === 0) return i;
+    }
+    return -1;
+  }
+
+  function stripLooseQuotes(text) {
+    const trimmed = String(text == null ? '' : text).trim();
+    if ((trimmed[0] === '"' && trimmed[trimmed.length - 1] === '"') ||
+        (trimmed[0] === "'" && trimmed[trimmed.length - 1] === "'")) {
+      return trimmed.slice(1, -1);
+    }
+    return trimmed;
+  }
+
+  function parseLooseJsonLike(text) {
+    const raw = String(text == null ? '' : text).trim();
+    if (!raw) return { success: false, value: raw };
+    if (raw[0] === '{' && raw[raw.length - 1] === '}') return parseLooseObject(raw);
+    if (raw[0] === '[' && raw[raw.length - 1] === ']') return parseLooseArray(raw);
+    return { success: false, value: raw };
+  }
+
+  function parseLooseObject(text) {
+    const body = text.trim().slice(1, -1).trim();
+    if (!body) return { success: true, value: {} };
+    const object = {};
+    const fields = splitLooseTopLevel(body, ',');
+    for (let i = 0; i < fields.length; i += 1) {
+      const field = fields[i].trim();
+      if (!field) continue;
+      const colon = findLooseTopLevelColon(field);
+      if (colon < 0) return { success: false, value: text };
+      const key = stripLooseQuotes(field.slice(0, colon));
+      if (!key) return { success: false, value: text };
+      object[key] = parseLooseValue(field.slice(colon + 1));
+    }
+    return { success: true, value: object };
+  }
+
+  function parseLooseArray(text) {
+    const body = text.trim().slice(1, -1).trim();
+    if (!body) return { success: true, value: [] };
+    return {
+      success: true,
+      value: splitLooseTopLevel(body, ',').map(function (item) {
+        return parseLooseValue(item);
+      })
+    };
+  }
+
+  function parseLooseValue(text) {
+    const raw = String(text == null ? '' : text).trim();
+    if (!raw) return '';
+    const strict = validateJson(raw);
+    if (strict.valid) return strict.value;
+    const loose = parseLooseJsonLike(raw);
+    if (loose.success) return loose.value;
+    if (raw === 'true') return true;
+    if (raw === 'false') return false;
+    if (raw === 'null') return null;
+    if (/^-?\d+(?:\.\d+)?$/.test(raw) && !/^\d{4}-\d{1,2}-\d{1,2}$/.test(raw)) return Number(raw);
+    return stripLooseQuotes(raw);
+  }
+
   function deepUnescapeJsonValue(value, maxLayers) {
     if (maxLayers <= 0) return { value: value, changed: false, layers: 0, maxReached: true };
     if (Array.isArray(value)) {
@@ -647,6 +760,16 @@
           continue;
         }
       }
+      const loose = parseLooseJsonLike(current);
+      if (loose.success) {
+        const nestedLoose = deepUnescapeJsonValue(loose.value, maxLayers - layers - 1);
+        return {
+          value: nestedLoose.value,
+          changed: true,
+          layers: layers + 1 + nestedLoose.layers,
+          maxReached: nestedLoose.maxReached
+        };
+      }
       const decoded = unescapeJson(current);
       if (decoded.success && decoded.value !== current) {
         current = decoded.value;
@@ -668,31 +791,61 @@
     let current = String(text == null ? '' : text);
     let layers = 0;
     let maxReached = false;
+
+    const initial = validateJson(current);
+    if (initial.valid) {
+      const nested = deepUnescapeJsonValue(initial.value, limit);
+      if (nested.changed) {
+        return {
+          success: true,
+          value: JSON.stringify(nested.value),
+          layers: nested.layers,
+          nestedChanged: true,
+          maxReached: nested.maxReached || nested.layers >= limit,
+          error: null
+        };
+      }
+      return {
+        success: false,
+        value: current,
+        layers: 0,
+        nestedChanged: false,
+        maxReached: false,
+        error: '输入内容不是有效的转义 JSON'
+      };
+    }
+
     for (let i = 0; i < limit; i += 1) {
       const decoded = unescapeJson(current);
       if (!decoded.success || decoded.value === current) break;
       current = decoded.value;
       layers += 1;
-    }
-    if (layers >= limit) maxReached = true;
-    const direct = validateJson(current);
-    let nestedChanged = false;
-    if (direct.valid && layers < limit) {
-      const nested = deepUnescapeJsonValue(direct.value, limit - layers);
-      if (nested.changed) {
-        current = JSON.stringify(nested.value);
-        nestedChanged = true;
-        layers += nested.layers;
-        maxReached = nested.maxReached || layers >= limit;
+      const parsed = validateJson(current);
+      if (parsed.valid) {
+        const nested = deepUnescapeJsonValue(parsed.value, limit - layers);
+        if (nested.changed) {
+          current = JSON.stringify(nested.value);
+          layers += nested.layers;
+          maxReached = nested.maxReached || layers >= limit;
+        }
+        return {
+          success: true,
+          value: current,
+          layers: layers,
+          nestedChanged: true,
+          maxReached: maxReached,
+          error: null
+        };
       }
     }
+    if (layers >= limit) maxReached = true;
     return {
-      success: layers > 0 || nestedChanged,
+      success: layers > 0,
       value: current,
       layers: layers,
-      nestedChanged: nestedChanged,
+      nestedChanged: false,
       maxReached: maxReached,
-      error: layers > 0 || nestedChanged ? null : '输入内容不是有效的转义 JSON'
+      error: layers > 0 ? null : '输入内容不是有效的转义 JSON'
     };
   }
 
@@ -761,6 +914,21 @@
         };
       }
       if (isPlainObject(direct.value) || Array.isArray(direct.value)) {
+        const nested = deepUnescapeJsonValue(direct.value, 10);
+        if (nested.changed) {
+          return {
+            kind: nested.layers > 1 ? 'multi-escaped-json' : 'escaped-json',
+            title: nested.layers > 1 ? '检测到多层转义' : '检测到转义内容',
+            detail: '已识别：标准 JSON 内含转义 JSON 字段',
+            suggestion: '建议使用“递归去转义”',
+            rootType: kind,
+            recommendation: 'unescape',
+            recursive: true,
+            validation: direct,
+            stats: validStats,
+            unsafeIntegers: unsafeIntegers
+          };
+        }
         const compressed = isCompressedJsonText(raw, direct.value);
         return {
           kind: compressed ? 'compressed-json' : 'standard-json',

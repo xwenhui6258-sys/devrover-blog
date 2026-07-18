@@ -37,6 +37,8 @@
     test('包含外层引号的转义', () => equal(u.escapeJson('{"name":"DevRover"}', true), '"{\\"name\\":\\"DevRover\\"}"'));
     test('去除一层转义', () => equal(u.unescapeJson('{\\"name\\":\\"DevRover\\"}').value, '{"name":"DevRover"}'));
     test('多层递归去转义', () => equal(u.formatJson(u.recursivelyUnescapeJson('"{\\"data\\":\\"{\\\\\\"name\\\\\\":\\\\\\"DevRover\\\\\\"}\\"}"', 10).value, 2), '{\n  "data": {\n    "name": "DevRover"\n  }\n}'));
+    test('合法对象内部字段递归去转义', () => { const raw = JSON.stringify({ responseUnit: JSON.stringify({ summary: '会议纪要', data: JSON.stringify({ name: 'DevRover' }) }) }); const out = JSON.parse(u.recursivelyUnescapeJson(raw, 10).value); equal(out.responseUnit.summary, '会议纪要'); equal(out.responseUnit.data.name, 'DevRover'); });
+    test('类 JSON 子待办字符串递归转对象', () => { const raw = JSON.stringify({ subTodos: ['{todoName: 完成需求评审, todoEndDate: 2026-07-17, subTodos: [{todoName: 完成系分评审, todoEndDate: 2026-07-20, subTodos: []}] }'] }); const out = JSON.parse(u.recursivelyUnescapeJson(raw, 10).value); equal(out.subTodos[0].todoName, '完成需求评审'); equal(out.subTodos[0].subTodos[0].todoName, '完成系分评审'); });
     test('非法 JSON', () => equal(u.validateJson('{name:1}').valid, false));
     test('空输入', () => equal(u.detectJsonType('').kind, 'empty'));
     test('键名升序', () => deepEqual(u.sortObjectKeys({ b: 1, a: { d: 1, c: 2 } }, 'asc'), { a: { c: 2, d: 1 }, b: 1 }));
