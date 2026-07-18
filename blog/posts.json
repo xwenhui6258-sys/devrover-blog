@@ -1,5 +1,24 @@
 [
   {
+    "title": "分红到账后金额为什么不对：读懂 IBKR 股息和预扣税记录",
+    "slug": "ibkr-dividend-withholding-records",
+    "url": "/blog/ibkr-dividend-withholding-records/",
+    "date": "2026-07-18",
+    "updated": "2026-07-18",
+    "category": "跨境投资",
+    "series": "海外资产入门",
+    "tags": [
+      "IBKR",
+      "盈透证券",
+      "股息",
+      "预扣税",
+      "W-8BEN",
+      "1042-S"
+    ],
+    "summary": "从股息总额、预扣税、净额、支付日、替代股息到 1042-S，拆解 IBKR 分红记录的核对顺序，避免把到账差额都误判成扣错税。",
+    "readingTime": "12 分钟"
+  },
+  {
     "title": "第一次用 IBKR 买美国国债：期限、收益率和下单界面怎么看",
     "slug": "ibkr-us-treasury-first-order",
     "url": "/blog/ibkr-us-treasury-first-order/",
