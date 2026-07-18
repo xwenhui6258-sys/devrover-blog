@@ -102,7 +102,7 @@ slug: "optional-slug"
 - 小屏幕下目录自动移动到正文下方。
 - 文章图片全宽展示，圆角、细边框、轻阴影。
 - Markdown 表格会渲染为横向可滚动表格。
-- `h2` / `h3` 会自动生成锚点，并出现在右侧目录中。
+- H2 与 H3 会自动生成锚点；右侧目录只展示 H2，绝不展示 H3 或更深层级。
 
 标题规则：
 
@@ -144,6 +144,7 @@ my-merged-article
 find blog/<slug>/assets -type f | wc -l
 rg -n "目标标题|目标 slug" blog/index.html blog/<slug>/index.html
 rg -n "不应出现的文本" blog/<slug>/source.md blog/<slug>/index.html
+python3 scripts/validate_blog_toc.py blog/<slug>/index.html
 ```
 
 确认：
@@ -153,4 +154,5 @@ rg -n "不应出现的文本" blog/<slug>/source.md blog/<slug>/index.html
 - 图片数量正确。
 - 图片路径已变成 `assets/...`。
 - 右侧目录正常生成。
+- 右侧目录仅展示一级标题（H2）；运行 python3 scripts/validate_blog_toc.py blog/文章-slug/index.html 必须通过。
 - 不需要的导入文本已删除。

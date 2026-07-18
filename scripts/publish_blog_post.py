@@ -17,6 +17,7 @@ from urllib.parse import quote, unquote
 
 
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif", ".svg"}
+TOC_HEADING_LEVEL = 2
 
 
 @dataclass
@@ -383,6 +384,7 @@ def heading_text(value: str) -> str:
 
 
 def add_heading_ids_and_toc(article_html: str) -> tuple[str, str]:
+    """Give H2/H3 anchors, but list H2 only in the table of contents."""
     used: set[str] = set()
     items: list[tuple[int, str, str]] = []
     counter = 0
@@ -410,7 +412,7 @@ def add_heading_ids_and_toc(article_html: str) -> tuple[str, str]:
 
     links = "\n".join(
         f'      <a class="toc-level-{level}" href="#{anchor}">{html.escape(text)}</a>'
-        for level, anchor, text in items
+        for level, anchor, text in items if level == TOC_HEADING_LEVEL
     )
     toc_html = f"""<aside class="article-toc" aria-label="文章目录">
     <div class="toc-title">目录</div>
@@ -442,7 +444,7 @@ def render_page(meta: PostMeta, article_html: str) -> str:
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/style.css?v=20260716-article-performance-1">
+  <link rel="stylesheet" href="/assets/style.css?v=20260718-article-toc-level1-1">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3874391842550034"
      crossorigin="anonymous"></script>
 </head>

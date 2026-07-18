@@ -123,6 +123,7 @@ h2 { margin-top: 0; letter-spacing: -.025em; }
 }
 .article-toc a:hover { color: var(--accent); }
 .article-toc .toc-level-3 {
+  display: none;
   padding-left: 14px;
   font-size: 13px;
 }
