@@ -452,5 +452,21 @@
     ],
     "summary": "把香港银行账户的持续收费拆成账户级别与平均结余、纸质账单和交易/附加服务三类，教你按扣款名称、评估周期和费用表逐项核对。",
     "readingTime": "10 分钟"
+  },
+  {
+    "title": "先画一张个人账户地图：银行卡、券商和支付工具分别负责什么",
+    "slug": "personal-account-map-bank-broker-payment",
+    "url": "/blog/personal-account-map-bank-broker-payment/",
+    "date": "2026-07-19",
+    "updated": "2026-07-19",
+    "category": "跨境投资",
+    "series": "海外资产入门",
+    "tags": [
+      "账户管理",
+      "入金出金",
+      "风险管理"
+    ],
+    "summary": "用一张个人账户地图拆清银行卡、券商和支付工具的任务、资金流向与保护边界，并附可直接照抄的盘点字段。",
+    "readingTime": "13 分钟"
   }
 ]
