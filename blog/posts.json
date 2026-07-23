@@ -1,5 +1,37 @@
 [
   {
+    "title": "先画一张个人账户地图：银行卡、券商和支付工具分别负责什么",
+    "slug": "personal-account-map-bank-broker-payment",
+    "url": "/blog/personal-account-map-bank-broker-payment/",
+    "date": "2026-07-19",
+    "updated": "2026-07-19",
+    "category": "跨境投资",
+    "series": "海外资产入门",
+    "tags": [
+      "账户管理",
+      "入金出金",
+      "风险管理"
+    ],
+    "summary": "用一张个人账户地图拆清银行卡、券商和支付工具的任务、资金流向与保护边界，并附可直接照抄的盘点字段。",
+    "readingTime": "13 分钟"
+  },
+  {
+    "title": "IBKR 为什么有这么多客户端：网页、手机和专业交易平台怎么选",
+    "slug": "ibkr-platforms-guide",
+    "url": "/blog/ibkr-platforms-guide/",
+    "date": "2026-07-19",
+    "updated": "2026-07-19",
+    "category": "跨境投资",
+    "series": "海外资产入门",
+    "tags": [
+      "IBKR",
+      "账户管理",
+      "交易入门"
+    ],
+    "summary": "把 Client Portal、GlobalTrader、IBKR Mobile、IBKR Desktop 和 TWS 放回账户管理、移动下单、日常桌面交易与专业工作流，给出新手最小客户端组合。",
+    "readingTime": "13 分钟"
+  },
+  {
     "title": "分红到账后金额为什么不对：读懂 IBKR 股息和预扣税记录",
     "slug": "ibkr-dividend-withholding-records",
     "url": "/blog/ibkr-dividend-withholding-records/",
@@ -13,6 +45,21 @@
     ],
     "summary": "从股息总额、预扣税、净额、支付日、替代股息到 1042-S，拆解 IBKR 分红记录的核对顺序，避免把到账差额都误判成扣错税。",
     "readingTime": "12 分钟"
+  },
+  {
+    "title": "香港银行卡没怎么用，为什么仍然被收费：账户级别、结余和账单设置",
+    "slug": "hk-bank-account-fees",
+    "url": "/blog/hk-bank-account-fees/",
+    "date": "2026-07-18",
+    "updated": "2026-07-18",
+    "category": "海外银行卡",
+    "series": "海外银行卡与资金流转",
+    "tags": [
+      "海外银行卡",
+      "账户管理"
+    ],
+    "summary": "把香港银行账户的持续收费拆成账户级别与平均结余、纸质账单和交易/附加服务三类，教你按扣款名称、评估周期和费用表逐项核对。",
+    "readingTime": "10 分钟"
   },
   {
     "title": "第一次用 IBKR 买美国国债：期限、收益率和下单界面怎么看",
@@ -437,36 +484,5 @@
     ],
     "summary": "准备材料、W-8BEN、地址证明、开户后设置和常见卡点，一篇走完。",
     "readingTime": "8 分钟"
-  },
-  {
-    "title": "香港银行卡没怎么用，为什么仍然被收费：账户级别、结余和账单设置",
-    "slug": "hk-bank-account-fees",
-    "url": "/blog/hk-bank-account-fees/",
-    "date": "2026-07-18",
-    "updated": "2026-07-18",
-    "category": "海外银行卡",
-    "series": "海外银行卡与资金流转",
-    "tags": [
-      "海外银行卡",
-      "账户管理"
-    ],
-    "summary": "把香港银行账户的持续收费拆成账户级别与平均结余、纸质账单和交易/附加服务三类，教你按扣款名称、评估周期和费用表逐项核对。",
-    "readingTime": "10 分钟"
-  },
-  {
-    "title": "先画一张个人账户地图：银行卡、券商和支付工具分别负责什么",
-    "slug": "personal-account-map-bank-broker-payment",
-    "url": "/blog/personal-account-map-bank-broker-payment/",
-    "date": "2026-07-19",
-    "updated": "2026-07-19",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "账户管理",
-      "入金出金",
-      "风险管理"
-    ],
-    "summary": "用一张个人账户地图拆清银行卡、券商和支付工具的任务、资金流向与保护边界，并附可直接照抄的盘点字段。",
-    "readingTime": "13 分钟"
   }
 ]
