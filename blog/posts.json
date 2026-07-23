@@ -1,5 +1,20 @@
 [
   {
+    "title": "开户后的第一笔投资：新手如何完成第一次 ETF 买入",
+    "slug": "first-etf-purchase",
+    "url": "/blog/first-etf-purchase/",
+    "date": "2026-07-23",
+    "updated": "2026-07-23",
+    "category": "跨境投资",
+    "series": "海外资产入门",
+    "tags": [
+      "交易入门",
+      "风险管理"
+    ],
+    "summary": "把第一次 ETF 买入拆成产品核对、订单预览、成交确认与账单复核四步，帮助新手在提交前看清合约、价格、费用和记录。",
+    "readingTime": "12 分钟"
+  },
+  {
     "title": "券商免佣不等于没有成本：ETF 费用到底藏在哪里",
     "slug": "etf-hidden-costs",
     "url": "/blog/etf-hidden-costs/",
@@ -15,18 +30,19 @@
     "readingTime": "12 分钟"
   },
   {
-    "title": "开户后的第一笔投资：新手如何完成第一次 ETF 买入",
-    "slug": "first-etf-purchase",
-    "url": "/blog/first-etf-purchase/",
+    "title": "境外汇款到账为什么变少了：汇率差、汇款费和中转行费用拆解",
+    "slug": "overseas-remittance-received-less",
+    "url": "/blog/overseas-remittance-received-less/",
     "date": "2026-07-23",
     "updated": "2026-07-23",
     "category": "跨境投资",
     "series": "海外资产入门",
     "tags": [
-      "交易入门",
+      "入金出金",
+      "海外银行卡",
       "风险管理"
     ],
-    "summary": "把第一次 ETF 买入拆成产品核对、订单预览、成交确认与账单复核四步，帮助新手在提交前看清合约、价格、费用和记录。",
+    "summary": "把境外汇款的到账差额拆成报价汇率、汇出行收费、中转行扣费和收款行入账四层，学会在汇前、汇后用回单和流水逐项核对。",
     "readingTime": "12 分钟"
   },
   {
