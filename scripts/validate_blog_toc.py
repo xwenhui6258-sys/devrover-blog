@@ -14,7 +14,7 @@ TOC_BLOCK = re.compile(
     re.IGNORECASE | re.DOTALL,
 )
 TOC_LEVEL = re.compile(r'class="[^"]*\btoc-level-(\d+)\b[^"]*"', re.IGNORECASE)
-H2 = re.compile(r"<h2\b", re.IGNORECASE)
+H2 = re.compile(r"<h2\b(?![^>]*\bdata-toc-exclude\b)", re.IGNORECASE)
 
 
 def article_pages(target: Path) -> list[Path]:

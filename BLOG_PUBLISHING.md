@@ -124,8 +124,17 @@ slug: "optional-slug"
 
 ```bash
 python3 scripts/sync_blog_index.py
+python3 scripts/rebuild_blog_pages.py
+python3 scripts/generate_sitemap.py
 python3 scripts/validate_blog_taxonomy.py
 ```
+
+其中：
+
+- `sync_blog_index.py` 同步博客列表、筛选器和列表页结构化数据。
+- `rebuild_blog_pages.py` 从每篇 `source.md` 和 `posts.json` 重建详情页，并更新面包屑、文章元数据、相关阅读和上一篇/下一篇。
+- `generate_sitemap.py` 生成包含静态页面和全部文章的 `/sitemap.xml`。
+- `posts.json` 仍是列表、文章关系和 Sitemap 的唯一文章数据源。
 
 ## 后续给 Codex 的用法
 
@@ -161,8 +170,12 @@ find blog/<slug>/assets -type f | wc -l
 rg -n "目标标题|目标 slug" blog/index.html blog/<slug>/index.html
 rg -n "不应出现的文本" blog/<slug>/source.md blog/<slug>/index.html
 python3 scripts/validate_blog_toc.py blog/<slug>/index.html
+python3 scripts/validate_adsense.py blog/<slug>/index.html
 python3 scripts/sync_blog_index.py --check
+python3 scripts/rebuild_blog_pages.py --check
+python3 scripts/generate_sitemap.py --check
 python3 scripts/validate_blog_taxonomy.py
+python3 scripts/validate_site_architecture.py
 ```
 
 确认：
@@ -173,5 +186,8 @@ python3 scripts/validate_blog_taxonomy.py
 - 图片路径已变成 `assets/...`。
 - 右侧目录正常生成。
 - 右侧目录仅展示一级标题（H2）；运行 python3 scripts/validate_blog_toc.py blog/文章-slug/index.html 必须通过。
+- 每篇文章详情页有 canonical、`BlogPosting`、`BreadcrumbList`、3 篇相关阅读和正确的前后篇关系。
+- `/sitemap.xml` 与 `posts.json` 同步，`robots.txt` 声明 Sitemap 地址。
+- 每篇文章详情页 `<head>` 内恰好有一个 Google AdSense loader。
 - 标签只使用 `blog/tag-taxonomy.json` 白名单，每篇 1–3 个，首页内嵌数据和静态卡片与 `posts.json` 一致。
 - 不需要的导入文本已删除。

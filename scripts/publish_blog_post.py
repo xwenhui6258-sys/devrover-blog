@@ -14,11 +14,14 @@ import unicodedata
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
-from urllib.parse import quote, unquote
+from urllib.parse import quote, quote_plus, unquote
 
 
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif", ".svg"}
 TOC_HEADING_LEVEL = 2
+SITE_NAME = "DevRover的个人站"
+SITE_URL = "https://7hui.top"
+STYLE_VERSION = "20260726-blog-v1"
 
 
 @dataclass
@@ -27,6 +30,12 @@ class PostMeta:
     date: str
     summary: str
     slug: str
+    updated: str = ""
+    category: str = ""
+    series: str = ""
+    tags: tuple[str, ...] = ()
+    reading_time: str = ""
+    url: str = ""
 
 
 def slugify(value: str) -> str:
@@ -456,8 +465,251 @@ def add_heading_ids_and_toc(article_html: str) -> tuple[str, str]:
     return article_html, toc_html
 
 
-def render_page(meta: PostMeta, article_html: str) -> str:
+def post_url(meta: PostMeta) -> str:
+    return meta.url or f"/blog/{quote(meta.slug)}/"
+
+
+def absolute_url(path: str) -> str:
+    if re.match(r"^https?://", path):
+        return path
+    return SITE_URL + (path if path.startswith("/") else f"/{path}")
+
+
+def first_article_image(article_html: str, meta: PostMeta) -> str:
+    match = re.search(r'<img\b[^>]*\bsrc="([^"]+)"', article_html)
+    if not match:
+        return ""
+    src = html.unescape(match.group(1))
+    if re.match(r"^https?://", src):
+        return src
+    return absolute_url(f"{post_url(meta)}{src}")
+
+
+def post_record_url(post: dict) -> str:
+    return str(post.get("url") or f'/blog/{post["slug"]}/')
+
+
+def sorted_post_records(posts: list[dict]) -> list[dict]:
+    return sorted(
+        posts,
+        key=lambda post: str(post.get("updated") or post.get("date") or ""),
+        reverse=True,
+    )
+
+
+def related_post_records(meta: PostMeta, posts: list[dict], limit: int = 3) -> list[dict]:
+    candidates = [post for post in posts if post.get("slug") != meta.slug]
+    meta_tags = set(meta.tags)
+
+    def score(post: dict) -> int:
+        shared_tags = len(meta_tags.intersection(post.get("tags") or []))
+        return (
+            (100 if meta.series and post.get("series") == meta.series else 0)
+            + shared_tags * 10
+            + (2 if meta.category and post.get("category") == meta.category else 0)
+        )
+
+    candidates.sort(key=lambda post: str(post.get("slug") or ""))
+    candidates.sort(
+        key=lambda post: str(post.get("updated") or post.get("date") or ""),
+        reverse=True,
+    )
+    candidates.sort(key=score, reverse=True)
+    return candidates[:limit]
+
+
+def neighboring_post_records(meta: PostMeta, posts: list[dict]) -> tuple[dict | None, dict | None]:
+    ordered = sorted_post_records(posts)
+    current_index = next(
+        (index for index, post in enumerate(ordered) if post.get("slug") == meta.slug),
+        None,
+    )
+    if current_index is None:
+        return None, None
+    previous_post = ordered[current_index - 1] if current_index > 0 else None
+    next_post = ordered[current_index + 1] if current_index + 1 < len(ordered) else None
+    return previous_post, next_post
+
+
+def render_article_meta(meta: PostMeta) -> str:
+    updated = meta.updated or meta.date
+    details = [
+        f'<time datetime="{html.escape(meta.date, quote=True)}">发布于 {html.escape(meta.date)}</time>'
+    ]
+    if updated != meta.date:
+        details.append(
+            f'<time datetime="{html.escape(updated, quote=True)}">更新于 {html.escape(updated)}</time>'
+        )
+    if meta.reading_time:
+        details.append(f"<span>{html.escape(meta.reading_time)}读完</span>")
+    meta_html = "\n        ".join(details)
+
+    taxonomy: list[str] = []
+    if meta.category:
+        category_url = f"/blog/?category={quote_plus(meta.category)}"
+        taxonomy.append(
+            f'<a class="article-category" href="{category_url}">{html.escape(meta.category)}</a>'
+        )
+    if meta.series:
+        series_url = f"/blog/?series={quote_plus(meta.series)}"
+        taxonomy.append(
+            f'<a href="{series_url}">系列：{html.escape(meta.series)}</a>'
+        )
+    taxonomy.extend(
+        f'<a href="/blog/?tag={quote_plus(tag)}">#{html.escape(tag)}</a>'
+        for tag in meta.tags
+    )
+    taxonomy_html = (
+        f'\n      <div class="article-taxonomy">{"".join(taxonomy)}</div>'
+        if taxonomy
+        else ""
+    )
+    return f"""<div class="article-meta">
+        {meta_html}
+      </div>{taxonomy_html}"""
+
+
+def render_breadcrumbs(meta: PostMeta) -> str:
+    category_item = ""
+    if meta.category:
+        category_item = (
+            '<span aria-hidden="true">›</span>'
+            f'<a href="/blog/?category={quote_plus(meta.category)}">{html.escape(meta.category)}</a>'
+        )
+    return f"""<nav class="breadcrumbs" aria-label="面包屑">
+        <a href="/">首页</a>
+        <span aria-hidden="true">›</span>
+        <a href="/blog/">博客</a>
+        {category_item}
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">当前文章</span>
+      </nav>"""
+
+
+def render_article_discovery(meta: PostMeta, posts: list[dict]) -> str:
+    related = related_post_records(meta, posts)
+    related_cards = "\n".join(
+        f"""        <a class="related-card" href="{html.escape(post_record_url(post), quote=True)}">
+          <span>{html.escape(str(post.get("series") or post.get("category") or "相关阅读"))}</span>
+          <h3>{html.escape(str(post.get("title") or ""))}</h3>
+          <p>{html.escape(str(post.get("updated") or post.get("date") or ""))} · {html.escape(str(post.get("readingTime") or "5 分钟"))}读完</p>
+        </a>"""
+        for post in related
+    )
+    previous_post, next_post = neighboring_post_records(meta, posts)
+    pagination_links: list[str] = []
+    if previous_post:
+        pagination_links.append(
+            f"""        <a class="article-prev" rel="prev" href="{html.escape(post_record_url(previous_post), quote=True)}">
+          <span>上一篇</span>
+          <strong>{html.escape(str(previous_post.get("title") or ""))}</strong>
+        </a>"""
+        )
+    if next_post:
+        pagination_links.append(
+            f"""        <a class="article-next" rel="next" href="{html.escape(post_record_url(next_post), quote=True)}">
+          <span>下一篇</span>
+          <strong>{html.escape(str(next_post.get("title") or ""))}</strong>
+        </a>"""
+        )
+    pagination = "\n".join(pagination_links)
+    if not related_cards and not pagination:
+        return ""
+    related_section = ""
+    if related_cards:
+        related_section = f"""      <h2 id="related-articles" data-toc-exclude>相关阅读</h2>
+      <div class="related-grid">
+{related_cards}
+      </div>"""
+    pagination_section = ""
+    if pagination:
+        pagination_section = f"""
+      <nav class="article-pagination" aria-label="上一篇和下一篇">
+{pagination}
+      </nav>"""
+    return f"""
+    <section class="article-discovery" aria-labelledby="related-articles">
+{related_section}{pagination_section}
+    </section>"""
+
+
+def article_structured_data(meta: PostMeta, image_url: str) -> str:
+    canonical = absolute_url(post_url(meta))
+    blog_posting: dict[str, object] = {
+        "@type": "BlogPosting",
+        "@id": canonical + "#article",
+        "mainEntityOfPage": canonical,
+        "headline": meta.title,
+        "description": meta.summary,
+        "datePublished": meta.date,
+        "dateModified": meta.updated or meta.date,
+        "inLanguage": "zh-CN",
+        "author": {
+            "@type": "Person",
+            "name": "Seven Wayne",
+            "url": SITE_URL + "/about/",
+        },
+        "publisher": {
+            "@type": "Person",
+            "name": "Seven Wayne",
+            "url": SITE_URL + "/about/",
+        },
+        "isPartOf": {
+            "@type": "Blog",
+            "@id": SITE_URL + "/blog/#blog",
+            "name": "DevRover 海外投资与数字生活笔记",
+        },
+    }
+    if image_url:
+        blog_posting["image"] = [image_url]
+    if meta.tags:
+        blog_posting["keywords"] = list(meta.tags)
+    breadcrumbs = {
+        "@type": "BreadcrumbList",
+        "@id": canonical + "#breadcrumb",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "首页",
+                "item": SITE_URL + "/",
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "博客",
+                "item": SITE_URL + "/blog/",
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": meta.category or "文章",
+                "item": absolute_url(
+                    f"/blog/?category={quote_plus(meta.category)}"
+                    if meta.category
+                    else post_url(meta)
+                ),
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": meta.title,
+                "item": canonical,
+            },
+        ],
+    }
+    payload = {
+        "@context": "https://schema.org",
+        "@graph": [blog_posting, breadcrumbs],
+    }
+    return json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace(
+        "</", "<\\/"
+    )
+
+
+def render_page(meta: PostMeta, article_html: str, posts: list[dict] | None = None) -> str:
     article_html, toc_html = add_heading_ids_and_toc(article_html)
+    posts = posts or []
     title_main = meta.title
     title_subtitle = ""
     if "全流程：" in meta.title:
@@ -467,19 +719,43 @@ def render_page(meta: PostMeta, article_html: str) -> str:
     title_html = f"<h1>{html.escape(title_main)}</h1>"
     if title_subtitle:
         title_html += f'\n      <p class="article-subtitle">{html.escape(title_subtitle)}</p>'
+    canonical = absolute_url(post_url(meta))
+    image_url = first_article_image(article_html, meta)
+    image_meta = (
+        f'\n  <meta property="og:image" content="{html.escape(image_url, quote=True)}">'
+        f'\n  <meta name="twitter:image" content="{html.escape(image_url, quote=True)}">'
+        if image_url
+        else ""
+    )
+    twitter_card = "summary_large_image" if image_url else "summary"
+    structured_data = article_structured_data(meta, image_url)
+    discovery_html = render_article_discovery(meta, posts)
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="{html.escape(meta.summary)}">
-  <title>{html.escape(meta.title)}｜DevRover的个人站</title>
+  <link rel="canonical" href="{html.escape(canonical, quote=True)}">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="{SITE_NAME}">
+  <meta property="og:title" content="{html.escape(meta.title, quote=True)}">
+  <meta property="og:description" content="{html.escape(meta.summary, quote=True)}">
+  <meta property="og:url" content="{html.escape(canonical, quote=True)}">
+  <meta property="article:published_time" content="{html.escape(meta.date, quote=True)}">
+  <meta property="article:modified_time" content="{html.escape(meta.updated or meta.date, quote=True)}">
+  <meta name="twitter:card" content="{twitter_card}">
+  <meta name="twitter:title" content="{html.escape(meta.title, quote=True)}">
+  <meta name="twitter:description" content="{html.escape(meta.summary, quote=True)}">{image_meta}
+  <title>{html.escape(meta.title)}｜{SITE_NAME}</title>
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/style.css?v=20260718-article-toc-level1-1">
+  <link rel="stylesheet" href="/assets/style.css?v={STYLE_VERSION}">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3874391842550034"
      crossorigin="anonymous"></script>
+  <script type="application/ld+json">{structured_data}</script>
 </head>
 <body>
 <header>
@@ -496,9 +772,10 @@ def render_page(meta: PostMeta, article_html: str) -> str:
 <main class="article-page">
   <div class="article-layout">
     <article class="article">
+      {render_breadcrumbs(meta)}
       {title_html}
-      <p class="article-meta">{html.escape(meta.date)}</p>
-      {article_html}
+      {render_article_meta(meta)}
+      {article_html}{discovery_html}
     </article>
     {toc_html}
   </div>
@@ -513,7 +790,10 @@ def render_page(meta: PostMeta, article_html: str) -> str:
     backToTop.classList.toggle('visible', window.scrollY > 420);
   }};
   window.addEventListener('scroll', toggleBackToTop, {{ passive: true }});
-  backToTop.addEventListener('click', () => window.scrollTo({{ top: 0, behavior: 'smooth' }}));
+  backToTop.addEventListener('click', () => {{
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    window.scrollTo({{ top: 0, behavior }});
+  }});
   toggleBackToTop();
 </script>
 </body>
@@ -581,9 +861,47 @@ def main() -> int:
         encoding="utf-8",
     )
 
-    meta = PostMeta(title=title, date=post_date, summary=summary, slug=slug)
+    posts_path = blog_root / "posts.json"
+    posts = (
+        json.loads(posts_path.read_text(encoding="utf-8"))
+        if posts_path.is_file()
+        else []
+    )
+    post_record = next(
+        (post for post in posts if post.get("slug") == slug),
+        None,
+    )
+    if post_record:
+        meta = PostMeta(
+            title=str(post_record.get("title") or title),
+            date=str(post_record.get("date") or post_date),
+            summary=str(post_record.get("summary") or summary),
+            slug=slug,
+            updated=str(post_record.get("updated") or post_record.get("date") or post_date),
+            category=str(post_record.get("category") or ""),
+            series=str(post_record.get("series") or ""),
+            tags=tuple(str(tag) for tag in post_record.get("tags") or []),
+            reading_time=str(post_record.get("readingTime") or ""),
+            url=str(post_record.get("url") or f"/blog/{slug}/"),
+        )
+    else:
+        meta = PostMeta(
+            title=title,
+            date=post_date,
+            summary=summary,
+            slug=slug,
+            updated=front_matter.get("updated") or post_date,
+            category=front_matter.get("category") or "",
+            series=front_matter.get("series") or "",
+            tags=tuple(parse_front_matter_tags(raw_front_matter)),
+            reading_time=front_matter.get("readingtime") or "",
+            url=f"/blog/{slug}/",
+        )
     article_html = optimize_article_images(markdown_to_html(rewritten_body), post_dir)
-    (post_dir / "index.html").write_text(render_page(meta, article_html), encoding="utf-8")
+    (post_dir / "index.html").write_text(
+        render_page(meta, article_html, posts),
+        encoding="utf-8",
+    )
     update_blog_index(blog_root, meta)
     make_public(post_dir)
     make_public(blog_root / "index.html")

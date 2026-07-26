@@ -111,7 +111,7 @@ def main() -> int:
     if "tagFiltersToggle" in index_html or "展开全部标签" in index_html:
         errors.append("blog index still contains the obsolete tag expansion control")
     static_match = re.search(
-        r'<div class="post-list" id="postList">(.*?)</div>\n    </div>\n\n    <aside class="series-panel"',
+        r'<div class="post-list" id="postList">(.*?)</div>\n\s*<button class="load-more-posts".*?</button>\n\s*</div>\n\n\s*<aside class="series-panel"',
         index_html,
         re.DOTALL,
     )

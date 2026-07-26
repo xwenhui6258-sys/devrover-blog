@@ -13,6 +13,7 @@ from pathlib import Path
 from urllib.parse import quote_plus
 
 
+SITE_URL = "https://7hui.top"
 CATEGORY_ORDER = ["跨境投资", "券商入金", "海外银行卡", "美股账户"]
 CATEGORY_TONES = {
     "美股账户": "blue",
@@ -63,7 +64,7 @@ def render_post(post: dict) -> str:
       {link(category_url(category), category, "category", category, f"category-pill {tone}")}
       <h3><a href="{html.escape(url, quote=True)}">{html.escape(str(post["title"]))}</a></h3>
       <p>{html.escape(str(post.get("summary") or ""))}</p>
-      <div class="post-meta">{updated} · {reading}读完{series_suffix}</div>
+      <div class="post-meta"><time datetime="{html.escape(str(post.get("updated") or post.get("date") or ""), quote=True)}">{updated}</time> · {reading}读完{series_suffix}</div>
       <div class="post-tags">{tags}</div>
     </article>'''
 
@@ -119,6 +120,42 @@ def render_series(posts: list[dict]) -> str:
     return "".join(cards)
 
 
+def render_blog_jsonld(posts: list[dict]) -> str:
+    ordered = sorted_posts(posts)
+    payload = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "@id": SITE_URL + "/blog/#collection",
+        "url": SITE_URL + "/blog/",
+        "name": "海外投资与数字生活笔记",
+        "description": "美股账户、海外银行卡、跨境工具和真实踩坑经验。",
+        "inLanguage": "zh-CN",
+        "isPartOf": {
+            "@type": "WebSite",
+            "@id": SITE_URL + "/#website",
+            "name": "DevRover的个人站",
+            "url": SITE_URL + "/",
+        },
+        "mainEntity": {
+            "@type": "ItemList",
+            "numberOfItems": len(ordered),
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": index,
+                    "url": SITE_URL
+                    + str(post.get("url") or f'/blog/{post["slug"]}/'),
+                    "name": str(post["title"]),
+                }
+                for index, post in enumerate(ordered, start=1)
+            ],
+        },
+    }
+    return json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace(
+        "</", "<\\/"
+    )
+
+
 def replace_one(text: str, pattern: str, replacement: str, label: str) -> str:
     updated, count = re.subn(pattern, replacement, text, count=1, flags=re.DOTALL)
     if count != 1:
@@ -131,7 +168,7 @@ def synchronize(index_text: str, posts: list[dict], taxonomy: dict) -> str:
     static_posts = "\n".join(render_post(post) for post in ordered)
     index_text = replace_one(
         index_text,
-        r'(<div class="post-list" id="postList">).*?(</div>\n    </div>\n\n    <aside class="series-panel")',
+        r'(<div class="post-list" id="postList">).*?(</div>\n\s*<button class="load-more-posts".*?</button>\n\s*</div>\n\n\s*<aside class="series-panel")',
         lambda match: match.group(1) + static_posts + match.group(2),
         "static post list",
     )
@@ -173,6 +210,12 @@ def synchronize(index_text: str, posts: list[dict], taxonomy: dict) -> str:
         r'const canonicalTags = \[.*?\];\nconst tagAliases = \{.*?\};',
         f"const canonicalTags = {canonical};\nconst tagAliases = {aliases};",
         "taxonomy constants",
+    )
+    index_text = replace_one(
+        index_text,
+        r'(<script type="application/ld\+json" id="blog-jsonld">).*?(</script>)',
+        lambda match: match.group(1) + render_blog_jsonld(posts) + match.group(2),
+        "blog JSON-LD",
     )
     return index_text
 

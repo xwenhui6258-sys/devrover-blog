@@ -4,13 +4,28 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="从成交速度、价格保护和不成交风险出发，讲清市价单、限价单、止损单、止损限价单，以及 DAY、GTC 与盘前盘后设置。">
+  <link rel="canonical" href="https://7hui.top/blog/first-order-types-and-tif/">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="DevRover的个人站">
+  <meta property="og:title" content="第一次下单怎么选：市价单、限价单、止损单和有效期">
+  <meta property="og:description" content="从成交速度、价格保护和不成交风险出发，讲清市价单、限价单、止损单、止损限价单，以及 DAY、GTC 与盘前盘后设置。">
+  <meta property="og:url" content="https://7hui.top/blog/first-order-types-and-tif/">
+  <meta property="article:published_time" content="2026-07-13">
+  <meta property="article:modified_time" content="2026-07-14">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="第一次下单怎么选：市价单、限价单、止损单和有效期">
+  <meta name="twitter:description" content="从成交速度、价格保护和不成交风险出发，讲清市价单、限价单、止损单、止损限价单，以及 DAY、GTC 与盘前盘后设置。">
+  <meta property="og:image" content="https://7hui.top/blog/first-order-types-and-tif/assets/order-type-map.png">
+  <meta name="twitter:image" content="https://7hui.top/blog/first-order-types-and-tif/assets/order-type-map.png">
   <title>第一次下单怎么选：市价单、限价单、止损单和有效期｜DevRover的个人站</title>
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/style.css?v=20260718-article-toc-level1-1">
+  <link rel="stylesheet" href="/assets/style.css?v=20260726-blog-v1">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3874391842550034"
      crossorigin="anonymous"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://7hui.top/blog/first-order-types-and-tif/#article","mainEntityOfPage":"https://7hui.top/blog/first-order-types-and-tif/","headline":"第一次下单怎么选：市价单、限价单、止损单和有效期","description":"从成交速度、价格保护和不成交风险出发，讲清市价单、限价单、止损单、止损限价单，以及 DAY、GTC 与盘前盘后设置。","datePublished":"2026-07-13","dateModified":"2026-07-14","inLanguage":"zh-CN","author":{"@type":"Person","name":"Seven Wayne","url":"https://7hui.top/about/"},"publisher":{"@type":"Person","name":"Seven Wayne","url":"https://7hui.top/about/"},"isPartOf":{"@type":"Blog","@id":"https://7hui.top/blog/#blog","name":"DevRover 海外投资与数字生活笔记"},"image":["https://7hui.top/blog/first-order-types-and-tif/assets/order-type-map.png"],"keywords":["IBKR","交易入门","风险管理"]},{"@type":"BreadcrumbList","@id":"https://7hui.top/blog/first-order-types-and-tif/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://7hui.top/"},{"@type":"ListItem","position":2,"name":"博客","item":"https://7hui.top/blog/"},{"@type":"ListItem","position":3,"name":"美股账户","item":"https://7hui.top/blog/?category=%E7%BE%8E%E8%82%A1%E8%B4%A6%E6%88%B7"},{"@type":"ListItem","position":4,"name":"第一次下单怎么选：市价单、限价单、止损单和有效期","item":"https://7hui.top/blog/first-order-types-and-tif/"}]}]}</script>
 </head>
 <body>
 <header>
@@ -27,14 +42,27 @@
 <main class="article-page">
   <div class="article-layout">
     <article class="article">
+      <nav class="breadcrumbs" aria-label="面包屑">
+        <a href="/">首页</a>
+        <span aria-hidden="true">›</span>
+        <a href="/blog/">博客</a>
+        <span aria-hidden="true">›</span><a href="/blog/?category=%E7%BE%8E%E8%82%A1%E8%B4%A6%E6%88%B7">美股账户</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">当前文章</span>
+      </nav>
       <h1>第一次下单怎么选：市价单、限价单、止损单和有效期</h1>
-      <p class="article-meta">2026-07-13</p>
+      <div class="article-meta">
+        <time datetime="2026-07-13">发布于 2026-07-13</time>
+        <time datetime="2026-07-14">更新于 2026-07-14</time>
+        <span>12 分钟读完</span>
+      </div>
+      <div class="article-taxonomy"><a class="article-category" href="/blog/?category=%E7%BE%8E%E8%82%A1%E8%B4%A6%E6%88%B7">美股账户</a><a href="/blog/?series=%E7%BE%8E%E8%82%A1%E6%96%B0%E6%89%8B%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD">系列：美股新手基础设施</a><a href="/blog/?tag=IBKR">#IBKR</a><a href="/blog/?tag=%E4%BA%A4%E6%98%93%E5%85%A5%E9%97%A8">#交易入门</a><a href="/blog/?tag=%E9%A3%8E%E9%99%A9%E7%AE%A1%E7%90%86">#风险管理</a></div>
       <p>第一次下单，真正要选的不是一个“最好的订单类型”，而是你愿意承担哪一种风险：为了尽快成交，接受价格不确定；为了锁定最差价格，接受可能不成交；还是等价格触发后，再在成交确定性和价格保护之间取舍。</p>
 <p>把这三个问题想清楚，市价单、限价单和止损单就不再是一排陌生缩写。</p>
 <blockquote>
 <p>本文为个人经验记录和股票/ETF 基础订单教育，不构成投资、税务或法律建议，也不构成证券推荐、交易或止损建议。订单类型、触发方法、可用交易时段和有效期会因券商、市场、产品和路由而不同。界面入口以当前 Client Portal、App 或桌面端为准，提交前以订单预览和合约规则为准。资料核对日期：2026-07-14。</p>
 </blockquote>
-<figure><img src="assets/order-type-map.png" alt="三种基础订单的选择逻辑"><figcaption>三种基础订单的选择逻辑</figcaption></figure>
+<figure><img src="assets/order-type-map.png" alt="三种基础订单的选择逻辑" loading="lazy" decoding="async" width="1400" height="900"><figcaption>三种基础订单的选择逻辑</figcaption></figure>
 <h2 id="section-1">下单前先看三种价格</h2>
 <p>假设一只 ETF 页面显示：</p>
 <div class="table-wrap"><table>
@@ -63,12 +91,9 @@
 <h2 id="section-4">限价单：控制最差价格，不保证成交</h2>
 <p>限价买单规定“最多愿意付多少”，限价卖单规定“最低愿意收多少”。买入限价 100.05，意味着只能在 100.05 或更低成交；卖出限价 100.05，则只能在 100.05 或更高成交。</p>
 <p>这也解释了两个常见误解：</p>
-<ol>
-<li>限价 100.10 的买单不是“必须按 100.10 买”，有更低报价时可以获得更优价格。</li>
-<li>市价碰到 100.05 不等于你的订单必然成交。你前面可能已有排队订单，市场也可能只短暂成交很少数量。</li>
-</ol>
+<p>1. 限价 100.10 的买单不是“必须按 100.10 买”，有更低报价时可以获得更优价格。 2. 市价碰到 100.05 不等于你的订单必然成交。你前面可能已有排队订单，市场也可能只短暂成交很少数量。</p>
 <p>第一次买一只流动性好的股票或 ETF，如果目标是先熟悉流程，我更倾向于小额、常规时段、DAY 限价单。限价可参考实时 Ask 和自己能接受的最高价，而不是为了省几分钱把价格挂得很远，最后误以为系统坏了。</p>
-<figure><img src="assets/limit-stop-example.png" alt="限价单与止损单从触发到成交的路径"><figcaption>限价单与止损单从触发到成交的路径</figcaption></figure>
+<figure><img src="assets/limit-stop-example.png" alt="限价单与止损单从触发到成交的路径" loading="lazy" decoding="async" width="1400" height="900"><figcaption>限价单与止损单从触发到成交的路径</figcaption></figure>
 <h2 id="section-5">止损单：止损价只是开关</h2>
 <p>持有一只股票，现价 100 美元，你设置 95 美元的卖出止损单。市场达到券商规定的触发条件后，系统会提交市价卖单。</p>
 <p>关键句是：<strong>95 美元是触发价，不是保证成交价。</strong></p>
@@ -89,7 +114,7 @@
 <p>第一次下单若只是买入长期持有的 ETF，不必为了“功能完整”同时上止损、跟踪止损和括号单。先在模拟账户理解触发、部分成交和撤单，再决定真实账户是否需要。</p>
 <h2 id="section-7">有效期决定订单能活多久</h2>
 <p>订单类型决定“用什么价格规则成交”，Time in Force / TIF 决定“这张订单保留多久”。二者要一起设置。</p>
-<figure><img src="assets/time-in-force-map.png" alt="订单有效期地图"><figcaption>订单有效期地图</figcaption></figure>
+<figure><img src="assets/time-in-force-map.png" alt="订单有效期地图" loading="lazy" decoding="async" width="1400" height="900"><figcaption>订单有效期地图</figcaption></figure>
 <h3 id="section-8">DAY：当前交易日有效</h3>
 <p>DAY 订单在当前交易日未成交部分会被取消。它适合“今天没买到就重新判断”的第一笔交易。</p>
 <p>DAY 不自动等于盘前盘后也有效。是否允许 Outside Regular Trading Hours 通常是单独选项，且不同订单类型未必支持扩展时段。</p>
@@ -124,12 +149,7 @@
 <p>Submitted 不是 Filled。到 Orders &amp; Trades 检查是否已成交、部分成交、被拒绝或仍在等待；部分成交后，剩余数量可能继续挂单。若不再需要，主动取消并确认状态变成 Canceled。</p>
 <h2 id="section-19">第一次下单的判断路径</h2>
 <p>可以把选择压缩成四句话：</p>
-<ol>
-<li><strong>必须尽快成交，并接受价格不确定</strong>：才考虑市价单。</li>
-<li><strong>最高买价或最低卖价不能突破</strong>：使用限价单，并接受可能不成交。</li>
-<li><strong>到某个价格才启动退出，退出优先</strong>：理解滑点后再考虑止损单。</li>
-<li><strong>到某个价格才启动，但成交下限更重要</strong>：考虑止损限价单，并接受可能卖不掉。</li>
-</ol>
+<p>1. <strong>必须尽快成交，并接受价格不确定</strong>：才考虑市价单。 2. <strong>最高买价或最低卖价不能突破</strong>：使用限价单，并接受可能不成交。 3. <strong>到某个价格才启动退出，退出优先</strong>：理解滑点后再考虑止损单。 4. <strong>到某个价格才启动，但成交下限更重要</strong>：考虑止损限价单，并接受可能卖不掉。</p>
 <p>如果你对第三、四句仍犹豫，先用模拟账户测试跳空、触发和撤单，不要用真仓位来理解定义。</p>
 <h2 id="section-20">八项提交前检查清单</h2>
 <ul>
@@ -152,6 +172,36 @@
 <li>Interactive Brokers, <a href="https://www.interactivebrokers.com/campus/trading-lessons/client-portal-order-entry/">Client Portal – Enter a Trade</a>.</li>
 <li>Interactive Brokers, <a href="https://www.interactivebrokers.com/campus/glossary-terms/outside-rth/">Outside Regular Trading Hours</a>.</li>
 </ul>
+    <section class="article-discovery" aria-labelledby="related-articles">
+      <h2 id="related-articles" data-toc-exclude>相关阅读</h2>
+      <div class="related-grid">
+        <a class="related-card" href="/blog/brokerage-account-balances/">
+          <span>美股新手基础设施</span>
+          <h3>券商账户里的钱怎么看：现金、净资产、购买力和保证金一次讲清</h3>
+          <p>2026-07-14 · 11 分钟读完</p>
+        </a>
+        <a class="related-card" href="/blog/acats-account-transfer/">
+          <span>美股新手基础设施</span>
+          <h3>换券商不用先卖股票：ACATS 转仓流程、成本和注意事项</h3>
+          <p>2026-07-15 · 11 分钟读完</p>
+        </a>
+        <a class="related-card" href="/blog/inactive-account-maintenance/">
+          <span>美股新手基础设施</span>
+          <h3>账户长期不用会怎样：银行卡、券商、手机号和税务资料维护清单</h3>
+          <p>2026-07-15 · 12 分钟读完</p>
+        </a>
+      </div>
+      <nav class="article-pagination" aria-label="上一篇和下一篇">
+        <a class="article-prev" rel="prev" href="/blog/ibkr-base-currency-and-fx/">
+          <span>上一篇</span>
+          <strong>基础货币不是持仓货币：IBKR 换汇前必须懂的几个概念</strong>
+        </a>
+        <a class="article-next" rel="next" href="/blog/overseas-bank-card-hk-sg-us/">
+          <span>下一篇</span>
+          <strong>境外银行卡怎么选：香港卡、新加坡卡、美国卡分别适合谁</strong>
+        </a>
+      </nav>
+    </section>
     </article>
     <aside class="article-toc" aria-label="文章目录">
     <div class="toc-title">目录</div>
@@ -182,7 +232,10 @@
     backToTop.classList.toggle('visible', window.scrollY > 420);
   };
   window.addEventListener('scroll', toggleBackToTop, { passive: true });
-  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  backToTop.addEventListener('click', () => {
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    window.scrollTo({ top: 0, behavior });
+  });
   toggleBackToTop();
 </script>
 </body>
