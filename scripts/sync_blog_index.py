@@ -130,6 +130,11 @@ def render_blog_jsonld(posts: list[dict]) -> str:
         "name": "海外投资与数字生活笔记",
         "description": "美股账户、海外银行卡、跨境工具和真实踩坑经验。",
         "inLanguage": "zh-CN",
+        "author": {
+            "@type": "Person",
+            "name": "Seven Wayne",
+            "url": SITE_URL + "/about/",
+        },
         "isPartOf": {
             "@type": "WebSite",
             "@id": SITE_URL + "/#website",

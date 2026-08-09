@@ -6,6 +6,11 @@
 - /tools/index.html         工具箱
 - /tools/json/index.html    JSON 工具
 - /about/index.html         关于页
+- /contact/index.html       联系与纠错
+- /editorial-policy/index.html  编辑与内容政策
+- /privacy/index.html       隐私与 Cookie 政策
+- /disclaimer/index.html    免责声明
+- /terms/index.html         使用条款
 - /assets/style.css         全站样式
 - /404.html                 404 页面
 

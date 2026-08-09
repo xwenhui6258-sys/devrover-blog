@@ -18,6 +18,11 @@ STATIC_PATHS = (
     "/tools/json/",
     "/tools/timestamp/",
     "/about/",
+    "/contact/",
+    "/editorial-policy/",
+    "/privacy/",
+    "/disclaimer/",
+    "/terms/",
 )
 
 

@@ -19,7 +19,22 @@ STATIC_PAGES = {
     "/tools/json/": "tools/json/index.html",
     "/tools/timestamp/": "tools/timestamp/index.html",
     "/about/": "about/index.html",
+    "/contact/": "contact/index.html",
+    "/editorial-policy/": "editorial-policy/index.html",
+    "/privacy/": "privacy/index.html",
+    "/disclaimer/": "disclaimer/index.html",
+    "/terms/": "terms/index.html",
 }
+REQUIRED_FOOTER_LINKS = (
+    "/about/",
+    "/contact/",
+    "/editorial-policy/",
+    "/privacy/",
+    "/disclaimer/",
+    "/terms/",
+)
+ADSENSE_LOADER = "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+ADSENSE_STATIC_PAGES = {"/", "/blog/"}
 
 
 def canonical_from_html(text: str) -> str:
@@ -103,6 +118,16 @@ def main() -> int:
             errors.append(f"{relative_file}: missing Open Graph title")
         if '<meta name="twitter:card"' not in text:
             errors.append(f"{relative_file}: missing Twitter card")
+        for footer_path in REQUIRED_FOOTER_LINKS:
+            if f'href="{footer_path}"' not in text:
+                errors.append(f"{relative_file}: missing footer link {footer_path}")
+        loader_count = text.count(ADSENSE_LOADER)
+        expected_loaders = 1 if path in ADSENSE_STATIC_PAGES else 0
+        if loader_count != expected_loaders:
+            errors.append(
+                f"{relative_file}: expected {expected_loaders} AdSense loaders, "
+                f"found {loader_count}"
+            )
 
     blog_index = (root / "blog" / "index.html").read_text(encoding="utf-8")
     for marker in (
@@ -137,6 +162,13 @@ def main() -> int:
             errors.append(f"{slug}: missing article taxonomy")
         if "<time " not in text:
             errors.append(f"{slug}: missing semantic time")
+        if 'class="article-byline"' not in text:
+            errors.append(f"{slug}: missing visible author byline")
+        if 'class="article-author-note"' not in text:
+            errors.append(f"{slug}: missing author and verification note")
+        for footer_path in REQUIRED_FOOTER_LINKS:
+            if f'href="{footer_path}"' not in text:
+                errors.append(f"{slug}: missing footer link {footer_path}")
         discovery_match = re.search(
             r'<section class="article-discovery".*?</section>',
             text,

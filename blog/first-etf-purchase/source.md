@@ -2,6 +2,7 @@
 title: "开户后的第一笔投资：新手如何完成第一次 ETF 买入"
 description: "把第一次 ETF 买入拆成产品核对、订单预览、成交确认与账单复核四步，帮助新手在提交前看清合约、价格、费用和记录。"
 date: 2026-07-23
+updated: 2026-08-09
 category: "跨境投资"
 series: "海外资产入门"
 status: "draft"
@@ -19,7 +20,7 @@ tags:
 
 把这三个问题答清楚，第一次下单就不再只是点击一个绿色的 Buy 按钮，而是一条能回看、能纠错的记录链路。
 
-> 本文是一般性的 ETF 与订单操作教育，不构成任何证券推荐、投资、交易、税务、开户、银行或跨境资金建议。不同市场、券商实体、账户类型、交易权限、币种、产品和软件版本的字段与规则会不同；下单前请以基金发行人资料、本人账户的订单预览及当前协议为准。本文不替代适当性评估。资料核对日期：2026-07-23。
+> 本文是一般性的 ETF 与订单操作教育，不构成任何证券推荐、投资、交易、税务、开户、银行或跨境资金建议。不同市场、券商实体、账户类型、交易权限、币种、产品和软件版本的字段与规则会不同；下单前请以基金发行人资料、本人账户的订单预览及当前协议为准。本文不替代适当性评估。资料核对日期：2026-08-09。
 
 ![第一次 ETF 买入的三道核对关](assets/first-etf-buying-framework.png)
 
@@ -151,6 +152,12 @@ Submitted、Working、Partially Filled、Filled、Cancelled、Rejected 是不同
 
 第一笔 ETF 买入不需要做得复杂，但必须做得可解释：**先把产品读明白，再把订单填明白，最后把成交记录对明白。** 这套顺序比任何一个“买入按钮在哪里”的教学都更能在下一次交易中保护你。
 
+## 本次复核说明
+
+2026 年 8 月 9 日复核时，本文重新检查了四个容易被界面教程掩盖的边界：ETF 市价与 NAV 不是同一个数字、市价单不保证成交价格、限价单不保证成交、美国多数证券的 T+1 结算也不等于所有资金立即可取。正文没有把某一家券商的按钮位置写成通用规则。
+
+读者仍需针对**本人要买的具体 ETF、挂牌市场、账户类型与券商订单预览**重新确认。本文提供的是一套可复用的核对顺序，不是产品推荐或实时下单指令；如果发行人文件、交易所规则或券商权限与文中示例不同，以当前官方文件为准。
+
 ## 官方资料
 
 - [美国 SEC / Investor.gov：Updated Investor Bulletin: Exchange-Traded Funds (ETFs)](https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-24)
@@ -158,4 +165,4 @@ Submitted、Working、Partially Filled、Filled、Cancelled、Rejected 是不同
 - [美国 SEC：美国市场 T+1 标准结算周期说明](https://www.sec.gov/newsroom/press-releases/2024-62)
 - [Investor.gov：Better Understanding Your Brokerage Account Statement](https://www.investor.gov/better-understanding-your-brokerage-account-statement)
 
-资料核对日期：2026-07-23。具体基金的策略、费用、持仓、溢价/折价和市场数据会变动；实际下单前，请再次查看该基金发行人、交易所与本人券商的当前页面。
+资料核对日期：2026-08-09。具体基金的策略、费用、持仓、溢价/折价和市场数据会变动；实际下单前，请再次查看该基金发行人、交易所与本人券商的当前页面。

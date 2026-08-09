@@ -21,7 +21,7 @@ IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif", ".svg"}
 TOC_HEADING_LEVEL = 2
 SITE_NAME = "DevRover的个人站"
 SITE_URL = "https://7hui.top"
-STYLE_VERSION = "20260726-blog-v1"
+STYLE_VERSION = "20260809-trust-v1"
 
 
 @dataclass
@@ -564,9 +564,48 @@ def render_article_meta(meta: PostMeta) -> str:
         if taxonomy
         else ""
     )
-    return f"""<div class="article-meta">
+    return f"""<div class="article-byline">
+        <span class="article-avatar" aria-hidden="true"></span>
+        <div>
+          <span>作者</span>
+          <a href="/about/" rel="author">Seven Wayne</a>
+        </div>
+      </div>
+      <div class="article-meta">
         {meta_html}
       </div>{taxonomy_html}"""
+
+
+def render_article_author_note() -> str:
+    return """
+    <aside class="article-author-note" aria-label="作者与内容核验说明">
+      <h2 data-toc-exclude>作者与内容核验</h2>
+      <p>本文由 <a href="/about/" rel="author">Seven Wayne</a> 编辑发布。写作时优先核对监管机构、金融机构和产品官方资料，并明确区分通用规则、机构示例与个人判断；涉及投资、税务或法律事项时，请结合所在地规定和个人情况独立核实。</p>
+      <p>本站可能使用 AI 辅助整理资料、检查结构或润色文字，选题、事实核查和最终发布由作者负责。查看<a href="/editorial-policy/">编辑与内容政策</a>，或通过<a href="/contact/">联系页面</a>提交纠错。</p>
+    </aside>"""
+
+
+def render_site_footer() -> str:
+    return """<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="/">DevRover的个人站</a>
+      <p>记录跨境金融、海外投资与数字生活中的真实问题、核验过程和实用工具。</p>
+    </div>
+    <nav class="footer-links" aria-label="站点信息">
+      <a href="/about/">关于作者</a>
+      <a href="/contact/">联系与纠错</a>
+      <a href="/editorial-policy/">编辑与内容政策</a>
+      <a href="/privacy/">隐私与 Cookie</a>
+      <a href="/disclaimer/">免责声明</a>
+      <a href="/terms/">使用条款</a>
+    </nav>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 DevRover的个人站</span>
+    <span>内容仅供信息与经验交流，不构成投资、税务或法律建议。</span>
+  </div>
+</footer>"""
 
 
 def render_breadcrumbs(meta: PostMeta) -> str:
@@ -736,6 +775,7 @@ def render_page(meta: PostMeta, article_html: str, posts: list[dict] | None = No
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="{html.escape(meta.summary)}">
+  <meta name="author" content="Seven Wayne">
   <link rel="canonical" href="{html.escape(canonical, quote=True)}">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:type" content="article">
@@ -775,14 +815,12 @@ def render_page(meta: PostMeta, article_html: str, posts: list[dict] | None = No
       {render_breadcrumbs(meta)}
       {title_html}
       {render_article_meta(meta)}
-      {article_html}{discovery_html}
+      {article_html}{render_article_author_note()}{discovery_html}
     </article>
     {toc_html}
   </div>
 </main>
-<footer>
-  <div class="container">© 2026 DevRover的个人站</div>
-</footer>
+{render_site_footer()}
 <button class="back-to-top" type="button" aria-label="回到顶部" title="回到顶部"><span>↑</span><strong>顶部</strong></button>
 <script>
   const backToTop = document.querySelector('.back-to-top');

@@ -190,6 +190,7 @@ python3 scripts/validate_public_boundaries.py --base-url https://7hui.top
 - 右侧目录正常生成。
 - 右侧目录仅展示一级标题（H2）；运行 python3 scripts/validate_blog_toc.py blog/文章-slug/index.html 必须通过。
 - 每篇文章详情页有 canonical、`BlogPosting`、`BreadcrumbList`、3 篇相关阅读和正确的前后篇关系。
+- 每篇文章详情页显示作者署名、内容核验与 AI 辅助披露，并链接关于、联系、编辑政策、隐私、免责声明和使用条款。
 - `/sitemap.xml` 与 `posts.json` 同步，`robots.txt` 声明 Sitemap 地址。
 - 每篇文章详情页 `<head>` 内恰好有一个 Google AdSense loader。
 - 标签只使用 `blog/tag-taxonomy.json` 白名单，每篇 1–3 个，首页内嵌数据和静态卡片与 `posts.json` 一致。
