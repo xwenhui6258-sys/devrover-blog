@@ -1779,3 +1779,11 @@ footer { color: var(--muted); border-top: 1px solid var(--line); }
   html { scroll-behavior: auto; }
   .back-to-top { transition: none; }
 }
+
+/* Desktop homepage: preserve the wide composition while displaying it at 1080px. */
+@media (min-width: 1221px) {
+  .home-page main .container {
+    width: 1385px;
+    zoom: .78;
+  }
+}
