@@ -1082,7 +1082,7 @@ h2 { margin-top: 0; letter-spacing: -.025em; }
   background: radial-gradient(ellipse at 45% 42%, rgba(214,229,255,.72), rgba(221,231,255,.42) 44%, transparent 72%);
 }
 .home-page main > * { position: relative; z-index: 1; }
-.home-page main .container { width: min(1600px, calc(100% - 80px)); }
+.home-page main .container { width: min(1080px, calc(100% - 32px)); }
 .home-page .hero { padding: 130px 0 54px; }
 .home-hero-grid {
   display: grid;
