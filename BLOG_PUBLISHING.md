@@ -176,6 +176,9 @@ python3 scripts/rebuild_blog_pages.py --check
 python3 scripts/generate_sitemap.py --check
 python3 scripts/validate_blog_taxonomy.py
 python3 scripts/validate_site_architecture.py
+python3 scripts/validate_public_boundaries.py
+# 发布后的线上检查：
+python3 scripts/validate_public_boundaries.py --base-url https://7hui.top
 ```
 
 确认：
@@ -191,3 +194,5 @@ python3 scripts/validate_site_architecture.py
 - 每篇文章详情页 `<head>` 内恰好有一个 Google AdSense loader。
 - 标签只使用 `blog/tag-taxonomy.json` 白名单，每篇 1–3 个，首页内嵌数据和静态卡片与 `posts.json` 一致。
 - 不需要的导入文本已删除。
+- `incoming/` 和 `blog/*/source.md` 只作为发布过程文件，线上必须返回 403/404；它们不应被搜索引擎抓取。
+- 公开 HTML 与源文中不得出现 `innomad-archive`、本机绝对路径、`file://` 或写作归档提示。

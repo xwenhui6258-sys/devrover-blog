@@ -158,4 +158,4 @@ IBKR 的教学提示，部分交易场所不接受市价单，并建议为债券
 - [IBKR Campus：Enter US Treasury Orders in TWS](https://www.interactivebrokers.com/campus/trading-lessons/enter-us-treasury-orders-in-tws/?ibban=1&src=lin399op)
 - [IBKR Campus：The Bond Scanner Layout](https://www.interactivebrokers.com/campus/trading-lessons/the-bond-scanner-layout/)
 
-写作取材归档：`innomad-archive/articles/how-to-buy-bonds-with-ibkr/article.md`（仅用于旧版字段与常见误解的交叉核对；当前菜单和费用以文中链接的官方资料及账户预览为准）。
+本文曾参考既有资料中的旧版字段与常见误解；当前菜单和费用以文中链接的官方资料及账户预览为准。
