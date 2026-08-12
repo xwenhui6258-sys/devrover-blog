@@ -22,7 +22,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/style.css?v=20260812-home-v7">
+  <link rel="stylesheet" href="/assets/style.css?v=20260812-home-v8">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3874391842550034"
      crossorigin="anonymous"></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://7hui.top/#website","url":"https://7hui.top/","name":"DevRover的个人站","description":"用官方资料、可复核清单和真实问题拆解券商账户、海外银行卡、资金流转与 ETF 入门。","inLanguage":"zh-CN","author":{"@type":"Person","name":"Seven Wayne","url":"https://7hui.top/about/","sameAs":["https://x.com/sevenmouhui"]}}</script>
@@ -126,9 +126,37 @@
     </article>
   </section>
 
-  <section class="container home-tools-callout">
-    <div><div class="eyebrow">BROWSER TOOLS</div><h2>简单工具，数据尽量留在浏览器里</h2><p>JSON 格式化和时间戳转换默认在本机浏览器完成，不需要注册账户。</p></div>
-    <a class="button" href="/tools/">打开工具箱</a>
+  <section class="container home-tools-callout" aria-labelledby="home-tools-title">
+    <div class="home-tools-intro">
+      <div class="eyebrow">BROWSER TOOLS</div>
+      <h2 id="home-tools-title">简单工具，数据尽量留在浏览器里</h2>
+      <p>JSON 格式化和时间戳转换默认在本机完成，不需要注册账户，也不会上传你输入的内容。</p>
+      <div class="home-tools-actions">
+        <a class="button primary home-tools-button" href="/tools/"><span>打开工具箱</span><span aria-hidden="true">→</span></a>
+        <span class="home-tools-local">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+          无需登录 · 数据本地处理
+        </span>
+      </div>
+    </div>
+    <div class="home-tools-list" aria-label="可用工具">
+      <a class="home-tool-item" href="/tools/json/">
+        <span class="home-tool-icon home-tool-icon-blue" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M8 3H6a2 2 0 0 0-2 2v4a3 3 0 0 1-3 3 3 3 0 0 1 3 3v4a2 2 0 0 0 2 2h2"/><path d="M16 3h2a2 2 0 0 1 2 2v4a3 3 0 0 0 3 3 3 3 0 0 0-3 3v4a2 2 0 0 1-2 2h-2"/></svg>
+        </span>
+        <span class="home-tool-copy"><strong>JSON 格式化</strong><span>格式化、压缩并快速检查 JSON 内容。</span></span>
+        <span class="home-tool-tag home-tool-tag-blue">本地处理</span>
+        <span class="home-tool-arrow" aria-hidden="true">›</span>
+      </a>
+      <a class="home-tool-item" href="/tools/timestamp/">
+        <span class="home-tool-icon home-tool-icon-purple" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </span>
+        <span class="home-tool-copy"><strong>时间戳转换</strong><span>秒、毫秒与本地日期时间快速互转。</span></span>
+        <span class="home-tool-tag home-tool-tag-purple">秒 / 毫秒</span>
+        <span class="home-tool-arrow" aria-hidden="true">›</span>
+      </a>
+    </div>
   </section>
 </main>
 
