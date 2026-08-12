@@ -1318,14 +1318,19 @@ h2 { margin-top: 0; letter-spacing: -.025em; }
 }
 .home-method-grid > article {
   padding: 30px;
+  border: 1px solid rgba(88,132,210,.13);
   border-radius: 22px;
-  background: #111c33;
-  color: white;
+  background: linear-gradient(145deg, #eef4ff 0%, #e8f0fd 100%);
+  box-shadow: 0 14px 32px rgba(55,86,139,.07);
+  color: var(--text);
 }
-.home-method-grid > article:nth-child(2) { background: #f1f5fb; color: var(--text); }
+.home-method-grid > article:nth-child(2) {
+  border-color: rgba(118,151,207,.13);
+  background: linear-gradient(145deg, #f4f7fd 0%, #edf3fb 100%);
+}
 .home-method-grid p {
   margin: 16px 0 0;
-  color: rgba(255,255,255,.75);
+  color: #536784;
   line-height: 1.7;
 }
 .home-method-grid > article:nth-child(2) p { color: #536079; }
@@ -1339,14 +1344,15 @@ h2 { margin-top: 0; letter-spacing: -.025em; }
 .home-topic-links a,
 .home-method-links a {
   padding: 7px 12px;
+  border: 1px solid rgba(53,103,194,.08);
   border-radius: 999px;
-  background: rgba(255,255,255,.12);
-  color: white;
+  background: rgba(255,255,255,.82);
+  color: #2d62d9;
   font-size: 13px;
   font-weight: 720;
 }
 .home-method-grid > article:nth-child(2) .home-method-links a {
-  background: white;
+  background: rgba(255,255,255,.88);
   color: var(--accent);
 }
 .home-tools-callout {
@@ -1782,8 +1788,37 @@ footer { color: var(--muted); border-top: 1px solid var(--line); }
 
 /* Desktop homepage: preserve the wide composition while displaying it at 1080px. */
 @media (min-width: 1221px) {
+  .home-page main {
+    background:
+      radial-gradient(ellipse 50% 40% at -7% 44%, rgba(231,208,255,.78), rgba(224,221,255,.46) 48%, transparent 76%),
+      radial-gradient(ellipse 36% 43% at 82% 15%, rgba(207,220,255,.72), transparent 74%),
+      linear-gradient(128deg, #fcfdff 0%, #f9f9ff 48%, #f3f6ff 100%);
+  }
+  .home-page main::before {
+    top: 235px;
+    width: 74%;
+    height: 430px;
+    opacity: .55;
+    background: linear-gradient(142deg, rgba(255,255,255,.78) 12%, rgba(250,252,255,.64) 68%, rgba(235,243,255,.40));
+  }
+  .home-page .hero {
+    padding-top: 72px;
+    padding-bottom: 44px;
+  }
   .home-page main .container {
     width: 1385px;
     zoom: .78;
+  }
+  .home-hero-copy h1 {
+    max-width: 680px;
+    margin: 20px 0;
+    font-size: 56px;
+    line-height: 1.22;
+    letter-spacing: -.05em;
+  }
+  .home-hero-copy .lead {
+    max-width: 630px;
+    font-size: 20px;
+    line-height: 1.72;
   }
 }
