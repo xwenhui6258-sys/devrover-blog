@@ -576,12 +576,10 @@ def render_article_meta(meta: PostMeta) -> str:
       </div>{taxonomy_html}"""
 
 
-def render_article_author_note() -> str:
+def render_article_disclaimer() -> str:
     return """
-    <aside class="article-author-note" aria-label="作者与内容核验说明">
-      <h2 data-toc-exclude>作者与内容核验</h2>
-      <p>本文由 <a href="/about/" rel="author">Seven Wayne</a> 编辑发布。写作时优先核对监管机构、金融机构和产品官方资料，并明确区分通用规则、机构示例与个人判断；涉及投资、税务或法律事项时，请结合所在地规定和个人情况独立核实。</p>
-      <p>本站可能使用 AI 辅助整理资料、检查结构或润色文字，选题、事实核查和最终发布由作者负责。查看<a href="/editorial-policy/">编辑与内容政策</a>，或通过<a href="/contact/">联系页面</a>提交纠错。</p>
+    <aside class="article-disclaimer" aria-label="风险提示">
+      <p>本文仅供信息与经验交流，不构成投资、税务或法律建议。请结合自身情况独立判断；查看<a href="/editorial-policy/">编辑与内容政策</a>，或通过<a href="/contact/">联系页面</a>提交纠错。</p>
     </aside>"""
 
 
@@ -815,7 +813,7 @@ def render_page(meta: PostMeta, article_html: str, posts: list[dict] | None = No
       {render_breadcrumbs(meta)}
       {title_html}
       {render_article_meta(meta)}
-      {article_html}{render_article_author_note()}{discovery_html}
+      {article_html}{render_article_disclaimer()}{discovery_html}
     </article>
     {toc_html}
   </div>

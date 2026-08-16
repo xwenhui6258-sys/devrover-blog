@@ -164,8 +164,10 @@ def main() -> int:
             errors.append(f"{slug}: missing semantic time")
         if 'class="article-byline"' not in text:
             errors.append(f"{slug}: missing visible author byline")
-        if 'class="article-author-note"' not in text:
-            errors.append(f"{slug}: missing author and verification note")
+        if 'class="article-disclaimer"' not in text:
+            errors.append(f"{slug}: missing article disclaimer")
+        if "本文仅供信息与经验交流，不构成投资、税务或法律建议。" not in text:
+            errors.append(f"{slug}: missing concise advice disclaimer")
         for footer_path in REQUIRED_FOOTER_LINKS:
             if f'href="{footer_path}"' not in text:
                 errors.append(f"{slug}: missing footer link {footer_path}")
