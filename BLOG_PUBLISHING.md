@@ -123,9 +123,11 @@ slug: "optional-slug"
 更新文章元数据或 `posts.json` 后执行：
 
 ```bash
+python3 scripts/sync_blog_visibility.py
 python3 scripts/sync_blog_index.py
 python3 scripts/rebuild_blog_pages.py
 python3 scripts/generate_sitemap.py
+python3 scripts/apply_blog_visibility.py
 python3 scripts/validate_blog_taxonomy.py
 ```
 
@@ -134,7 +136,16 @@ python3 scripts/validate_blog_taxonomy.py
 - `sync_blog_index.py` 同步博客列表、筛选器和列表页结构化数据。
 - `rebuild_blog_pages.py` 从每篇 `source.md` 和 `posts.json` 重建详情页，并更新面包屑、文章元数据、相关阅读和上一篇/下一篇。
 - `generate_sitemap.py` 生成包含静态页面和全部文章的 `/sitemap.xml`。
-- `posts.json` 仍是列表、文章关系和 Sitemap 的唯一文章数据源。
+- `posts.json` 是公开、可索引文章的唯一数据源；它驱动列表、文章关系和 Sitemap。
+
+## 内容可见性与合并规则
+
+- `blog/content-status.json` 是旧文治理清单。它可以把旧文标记为暂不索引（`hiddenSlugs`）、合并跳转（`redirects`）或退役（`retiredSlugs`）。
+- `hiddenSlugs` 的原始文章和素材会保留，方便后续重写；但页面必须带 `noindex`，不得包含 AdSense loader，也不能出现在首页、博客列表、公开文章的相关推荐或 Sitemap。
+- 已合并文章以目标文章为唯一公开入口；生产环境须配置 HTTP 301，静态页面只作为无脚本场景下的跳转兜底。
+- 已退役文章生产环境须返回 HTTP 410；静态页面只显示简短下线说明，不保留旧内容或广告代码。
+- 恢复一篇隐藏文章时，从 `hiddenSlugs` 删除该 slug，并在 `publicAdditions` 为它补充 `readingTime`；同步脚本会从该文的 `source.md` 重建公开记录。脚本会拒绝任何既不公开、也未被标记为隐藏/合并/退役的源文目录，避免内容被意外遗漏。
+- 每次新增、恢复或合并文章后，先更新 `content-status.json`，再依次运行同步、重建和可见性脚本；不要手改由脚本生成的页面。
 
 ## 后续给 Codex 的用法
 
@@ -171,9 +182,11 @@ rg -n "目标标题|目标 slug" blog/index.html blog/<slug>/index.html
 rg -n "不应出现的文本" blog/<slug>/source.md blog/<slug>/index.html
 python3 scripts/validate_blog_toc.py blog/<slug>/index.html
 python3 scripts/validate_adsense.py blog/<slug>/index.html
+python3 scripts/sync_blog_visibility.py --check
 python3 scripts/sync_blog_index.py --check
 python3 scripts/rebuild_blog_pages.py --check
 python3 scripts/generate_sitemap.py --check
+python3 scripts/apply_blog_visibility.py --check
 python3 scripts/validate_blog_taxonomy.py
 python3 scripts/validate_site_architecture.py
 python3 scripts/validate_public_boundaries.py
@@ -193,6 +206,7 @@ python3 scripts/validate_public_boundaries.py --base-url https://7hui.top
 - 每篇文章详情页显示作者署名，并在正文末尾提供简短风险提示，链接编辑与内容政策和联系页面；页脚仍提供关于、联系、编辑政策、隐私、免责声明和使用条款。
 - `/sitemap.xml` 与 `posts.json` 同步，`robots.txt` 声明 Sitemap 地址。
 - 每篇文章详情页 `<head>` 内恰好有一个 Google AdSense loader。
+- 仅公开、可索引文章才可以加载 AdSense；暂不索引、已合并和已退役页面不得加载广告代码。
 - 标签只使用 `blog/tag-taxonomy.json` 白名单，每篇 1–3 个，首页内嵌数据和静态卡片与 `posts.json` 一致。
 - 不需要的导入文本已删除。
 - `incoming/` 和 `blog/*/source.md` 只作为发布过程文件，线上必须返回 403/404；它们不应被搜索引擎抓取。

@@ -1,40 +1,10 @@
 [
   {
-    "title": "买 ETF 前先认识指数：标普500、纳斯达克100和全球指数的区别",
-    "slug": "etf-index-sp500-nasdaq100-global",
-    "url": "/blog/etf-index-sp500-nasdaq100-global/",
-    "date": "2026-08-16",
-    "updated": "2026-08-16",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "交易入门",
-      "风险管理"
-    ],
-    "summary": "先拆开指数的覆盖范围、选样规则和权重，再分清标普500、纳斯达克100与不同“全球指数”实际代表的市场。",
-    "readingTime": "20 分钟"
-  },
-  {
-    "title": "ETF 不只有指数基金：股票、债券、商品和策略 ETF 怎么分",
-    "slug": "etf-stock-bond-commodity-strategy-types",
-    "url": "/blog/etf-stock-bond-commodity-strategy-types/",
-    "date": "2026-08-16",
-    "updated": "2026-08-16",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "交易入门",
-      "风险管理"
-    ],
-    "summary": "ETF 是交易载体，不是单一投资方法。用“主要持有什么”和“怎样实现目标”两条线，拆清股票、债券、商品与策略 ETF 的差别和重叠。",
-    "readingTime": "13 分钟"
-  },
-  {
     "title": "ETF 到底是什么：一篮子股票是怎么买进一个代码里的",
     "slug": "what-is-etf-basket-in-one-ticker",
     "url": "/blog/what-is-etf-basket-in-one-ticker/",
     "date": "2026-08-13",
-    "updated": "2026-08-13",
+    "updated": "2026-08-21",
     "category": "跨境投资",
     "series": "海外资产入门",
     "tags": [
@@ -42,7 +12,23 @@
       "风险管理"
     ],
     "summary": "把 ETF 的代码、基金份额、资产池与一级/二级市场拆开讲清：你下单时究竟买到了什么，以及为什么一个代码不等于一只股票。",
-    "readingTime": "12 分钟"
+    "readingTime": "14 分钟"
+  },
+  {
+    "title": "从本地货币到第一笔海外资产：我会检查哪些环节",
+    "slug": "local-currency-to-first-overseas-asset",
+    "url": "/blog/local-currency-to-first-overseas-asset/",
+    "date": "2026-07-12",
+    "updated": "2026-08-21",
+    "category": "券商入金",
+    "series": "美股新手基础设施",
+    "tags": [
+      "账户管理",
+      "入金出金",
+      "风险管理"
+    ],
+    "summary": "把本地货币到第一笔海外资产拆成目标、账户地图、资金路径、换汇、下单与记录六步，先验证系统可回退，再完成第一笔小额交易。",
+    "readingTime": "11 分钟"
   },
   {
     "title": "开户后的第一笔投资：新手如何完成第一次 ETF 买入",
@@ -75,102 +61,6 @@
     "readingTime": "12 分钟"
   },
   {
-    "title": "境外汇款到账为什么变少了：汇率差、汇款费和中转行费用拆解",
-    "slug": "overseas-remittance-received-less",
-    "url": "/blog/overseas-remittance-received-less/",
-    "date": "2026-07-23",
-    "updated": "2026-08-09",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "入金出金",
-      "海外银行卡",
-      "风险管理"
-    ],
-    "summary": "把境外汇款的到账差额拆成报价汇率、汇出行收费、中转行扣费和收款行入账四层，学会在汇前、汇后用回单和流水逐项核对。",
-    "readingTime": "12 分钟"
-  },
-  {
-    "title": "境外银行卡不只用来入金：出境消费时如何选卡和避免手续费",
-    "slug": "overseas-card-travel-spending-fees",
-    "url": "/blog/overseas-card-travel-spending-fees/",
-    "date": "2026-07-23",
-    "updated": "2026-08-09",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "海外银行卡",
-      "风险管理",
-      "账户管理"
-    ],
-    "summary": "把出境消费拆成支付网络、发卡行换汇、商户 DCC、ATM 取现和预授权五件事，建立不依赖具体银行的选卡与省费检查清单。",
-    "readingTime": "12 分钟"
-  },
-  {
-    "title": "大陆税务居民投资港美股，需要保留哪些账户和交易资料",
-    "slug": "mainland-tax-resident-hk-us-stock-records",
-    "url": "/blog/mainland-tax-resident-hk-us-stock-records/",
-    "date": "2026-07-23",
-    "updated": "2026-08-09",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "税务合规",
-      "账户管理",
-      "风险管理"
-    ],
-    "summary": "用账户主档、成交链、公司行动、境外税款和申报回执五类资料，把港美股投资记录整理成可核对、可解释的年度档案。",
-    "readingTime": "14 分钟"
-  },
-  {
-    "title": "投资账户应该留多少现金：满仓、空仓和现金仓位怎么理解",
-    "slug": "investment-account-cash-position",
-    "url": "/blog/investment-account-cash-position/",
-    "date": "2026-07-23",
-    "updated": "2026-08-09",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "风险管理",
-      "账户管理",
-      "交易入门"
-    ],
-    "summary": "不从一个固定比例出发，而是用用途、时间、账户可用性与复核规则，理解满仓、空仓和现金仓位的真正边界。",
-    "readingTime": "12 分钟"
-  },
-  {
-    "title": "先画一张个人账户地图：银行卡、券商和支付工具分别负责什么",
-    "slug": "personal-account-map-bank-broker-payment",
-    "url": "/blog/personal-account-map-bank-broker-payment/",
-    "date": "2026-07-19",
-    "updated": "2026-08-09",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "账户管理",
-      "入金出金",
-      "风险管理"
-    ],
-    "summary": "用一张个人账户地图拆清银行卡、券商和支付工具的任务、资金流向与保护边界，并附可直接照抄的盘点字段。",
-    "readingTime": "13 分钟"
-  },
-  {
-    "title": "IBKR 为什么有这么多客户端：网页、手机和专业交易平台怎么选",
-    "slug": "ibkr-platforms-guide",
-    "url": "/blog/ibkr-platforms-guide/",
-    "date": "2026-07-19",
-    "updated": "2026-08-09",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "IBKR",
-      "账户管理",
-      "交易入门"
-    ],
-    "summary": "把 Client Portal、GlobalTrader、IBKR Mobile、IBKR Desktop 和 TWS 放回账户管理、移动下单、日常桌面交易与专业工作流，给出新手最小客户端组合。",
-    "readingTime": "13 分钟"
-  },
-  {
     "title": "分红到账后金额为什么不对：读懂 IBKR 股息和预扣税记录",
     "slug": "ibkr-dividend-withholding-records",
     "url": "/blog/ibkr-dividend-withholding-records/",
@@ -184,21 +74,6 @@
     ],
     "summary": "从股息总额、预扣税、净额、支付日、替代股息到 1042-S，拆解 IBKR 分红记录的核对顺序，避免把到账差额都误判成扣错税。",
     "readingTime": "12 分钟"
-  },
-  {
-    "title": "香港银行卡没怎么用，为什么仍然被收费：账户级别、结余和账单设置",
-    "slug": "hk-bank-account-fees",
-    "url": "/blog/hk-bank-account-fees/",
-    "date": "2026-07-18",
-    "updated": "2026-07-18",
-    "category": "海外银行卡",
-    "series": "海外银行卡与资金流转",
-    "tags": [
-      "海外银行卡",
-      "账户管理"
-    ],
-    "summary": "把香港银行账户的持续收费拆成账户级别与平均结余、纸质账单和交易/附加服务三类，教你按扣款名称、评估周期和费用表逐项核对。",
-    "readingTime": "10 分钟"
   },
   {
     "title": "第一次用 IBKR 买美国国债：期限、收益率和下单界面怎么看",
@@ -216,36 +91,6 @@
     "readingTime": "12 分钟"
   },
   {
-    "title": "美股到底几点能交易：盘前、常规、盘后和夜盘一次讲清",
-    "slug": "us-stock-trading-hours",
-    "url": "/blog/us-stock-trading-hours/",
-    "date": "2026-07-16",
-    "updated": "2026-07-16",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "IBKR",
-      "交易入门"
-    ],
-    "summary": "用美东时间和北京时间对照美股夜盘、盘前、常规与盘后时段，并说明交易场所、订单设置、流动性和 2026 年 23/5 交易边界。",
-    "readingTime": "10 分钟"
-  },
-  {
-    "title": "为什么看到的股价会延迟：IBKR 行情权限和市场数据订阅指南",
-    "slug": "ibkr-market-data-subscriptions",
-    "url": "/blog/ibkr-market-data-subscriptions/",
-    "date": "2026-07-16",
-    "updated": "2026-07-16",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "IBKR",
-      "交易入门"
-    ],
-    "summary": "从免费非合并实时数据、延迟行情、快照、L1 与 L2 入手，讲清 IBKR 交易权限、行情权限、专业身份和市场数据订阅的选择方法。",
-    "readingTime": "12 分钟"
-  },
-  {
     "title": "IBKR 账户要不要绑定第三方平台：直营账户和介绍经纪商账户的区别",
     "slug": "ibkr-direct-vs-introducing-broker",
     "url": "/blog/ibkr-direct-vs-introducing-broker/",
@@ -260,69 +105,6 @@
     ],
     "summary": "第三方平台可能只是交易前端，也可能是介绍经纪商或顾问。本文拆清直营账户、全披露介绍经纪商、非披露结构和 API 连接，并给出绑定前核验清单。",
     "readingTime": "13 分钟"
-  },
-  {
-    "title": "换券商不用先卖股票：ACATS 转仓流程、成本和注意事项",
-    "slug": "acats-account-transfer",
-    "url": "/blog/acats-account-transfer/",
-    "date": "2026-07-13",
-    "updated": "2026-07-15",
-    "category": "美股账户",
-    "series": "美股新手基础设施",
-    "tags": [
-      "IBKR",
-      "Charles Schwab",
-      "账户管理"
-    ],
-    "summary": "从全转、部分转和资产可转性开始，讲清 ACATS 的发起路径、在途限制、成本基础补录和转仓后对账。",
-    "readingTime": "11 分钟"
-  },
-  {
-    "title": "钱准备取回来时怎么走：券商出金、同名账户和到账核对",
-    "slug": "brokerage-withdrawal-guide",
-    "url": "/blog/brokerage-withdrawal-guide/",
-    "date": "2026-07-13",
-    "updated": "2026-07-15",
-    "category": "券商入金",
-    "series": "海外银行卡与资金流转",
-    "tags": [
-      "IBKR",
-      "入金出金",
-      "风险管理"
-    ],
-    "summary": "从可出金现金、交收和入金 hold 开始，完整走一遍 IBKR 出金指令、同名银行账户、费用时效和到账追踪。",
-    "readingTime": "12 分钟"
-  },
-  {
-    "title": "账户长期不用会怎样：银行卡、券商、手机号和税务资料维护清单",
-    "slug": "inactive-account-maintenance",
-    "url": "/blog/inactive-account-maintenance/",
-    "date": "2026-07-13",
-    "updated": "2026-07-15",
-    "category": "美股账户",
-    "series": "美股新手基础设施",
-    "tags": [
-      "IBKR",
-      "账户管理",
-      "税务合规"
-    ],
-    "summary": "长期持有不等于长期不管：用一张年度清单维护银行账户、券商登录、2FA 手机号、W-8BEN 和跨境资料。",
-    "readingTime": "12 分钟"
-  },
-  {
-    "title": "先别急着投入真金白银：用 IBKR 模拟账户完成第一次买卖",
-    "slug": "ibkr-paper-trading-first-trade",
-    "url": "/blog/ibkr-paper-trading-first-trade/",
-    "date": "2026-07-13",
-    "updated": "2026-07-15",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "IBKR",
-      "交易入门"
-    ],
-    "summary": "先在 IBKR Paper Trading 里认清账户、行情、订单和报表，再用一买一卖走完完整闭环，并理解模拟成交与真实成交之间的差距。",
-    "readingTime": "9 分钟"
   },
   {
     "title": "现金账户还是保证金账户：新手开户时应该怎么选",
@@ -433,22 +215,6 @@
     "readingTime": "12 分钟"
   },
   {
-    "title": "境外银行卡怎么选：香港卡、新加坡卡、美国卡分别适合谁",
-    "slug": "overseas-bank-card-hk-sg-us",
-    "url": "/blog/overseas-bank-card-hk-sg-us/",
-    "date": "2026-07-13",
-    "updated": "2026-07-14",
-    "category": "海外银行卡",
-    "series": "海外银行卡与资金流转",
-    "tags": [
-      "海外银行卡",
-      "入金出金",
-      "风险管理"
-    ],
-    "summary": "不要按开户热度选境外银行卡，而要按主币种、主付款网络、出入金路径、存款保障边界和长期维护能力来选。",
-    "readingTime": "16 分钟"
-  },
-  {
     "title": "IBKR 开户前先搞懂：适合谁、准备什么、哪些选项别乱填",
     "slug": "ibkr-before-open",
     "url": "/blog/ibkr-before-open/",
@@ -479,22 +245,6 @@
     ],
     "summary": "嘉信理财更像美国本土券商和长期投资账户生态，IBKR 更像多市场、多币种交易系统。开户前先分清定位、资金路径和权限边界。",
     "readingTime": "11 分钟"
-  },
-  {
-    "title": "入金路径怎么选：ACH、FPS、eDDA、电汇和 Wise 的区别",
-    "slug": "funding-paths-ach-fps-edda-wire-wise",
-    "url": "/blog/funding-paths-ach-fps-edda-wire-wise/",
-    "date": "2026-07-13",
-    "updated": "2026-07-14",
-    "category": "券商入金",
-    "series": "海外银行卡与资金流转",
-    "tags": [
-      "入金出金",
-      "海外银行卡",
-      "风险管理"
-    ],
-    "summary": "入金路径不是越快越好，而是要看资金从哪里出发、目标账户是否同名、币种是否匹配、费用和凭证是否清楚。",
-    "readingTime": "9 分钟"
   },
   {
     "title": "开户后第一天要设置什么：App、2FA、基础货币、交易权限和 W-8",
@@ -529,22 +279,6 @@
     "readingTime": "13 分钟"
   },
   {
-    "title": "美港股券商怎么选：先看安全、入金、功能，再看佣金",
-    "slug": "how-to-choose-hk-us-broker",
-    "url": "/blog/how-to-choose-hk-us-broker/",
-    "date": "2026-07-13",
-    "updated": "2026-07-14",
-    "category": "美股账户",
-    "series": "美股新手基础设施",
-    "tags": [
-      "账户管理",
-      "入金出金",
-      "风险管理"
-    ],
-    "summary": "选择美港股券商时，不先做佣金排名，而是依次核验签约实体与监管、入出金闭环、实际需要的交易功能，再比较全年总成本。",
-    "readingTime": "11 分钟"
-  },
-  {
     "title": "Charles Schwab 入金路径整理：电汇、ACH 与到账时间",
     "slug": "schwab-funding-routes",
     "url": "/blog/schwab-funding-routes/",
@@ -558,70 +292,6 @@
       "海外银行卡"
     ],
     "summary": "嘉信入金不要只看到账速度，要区分 ACH、wire、电汇凭证、可交易时间和可转出限制。",
-    "readingTime": "8 分钟"
-  },
-  {
-    "title": "Wise 与海外银行卡：资金流转路径和风控注意事项",
-    "slug": "wise-overseas-card-routes",
-    "url": "/blog/wise-overseas-card-routes/",
-    "date": "2026-07-13",
-    "updated": "2026-07-14",
-    "category": "海外银行卡",
-    "series": "海外银行卡与资金流转",
-    "tags": [
-      "海外银行卡",
-      "入金出金",
-      "风险管理"
-    ],
-    "summary": "Wise 和海外银行卡都能处理跨境资金，但角色不同。用之前要分清收款详情、换汇、转出、券商入金和风控审核。",
-    "readingTime": "8 分钟"
-  },
-  {
-    "title": "新手第一张图：从人民币到第一笔港美股资产，中间到底经过哪些账户",
-    "slug": "rmb-to-first-hk-us-asset-account-flow",
-    "url": "/blog/rmb-to-first-hk-us-asset-account-flow/",
-    "date": "2026-07-12",
-    "updated": "2026-07-13",
-    "category": "美股账户",
-    "series": "美股新手基础设施",
-    "tags": [
-      "入金出金",
-      "海外银行卡",
-      "风险管理"
-    ],
-    "summary": "从人民币余额到第一笔港美股资产，中间至少经过银行账户、换汇/跨境支付环节、境外银行或多币种账户、券商现金账和证券结算托管。",
-    "readingTime": "7 分钟"
-  },
-  {
-    "title": "从本地货币到第一笔海外资产：我会检查哪些环节",
-    "slug": "local-currency-to-first-overseas-asset",
-    "url": "/blog/local-currency-to-first-overseas-asset/",
-    "date": "2026-07-12",
-    "updated": "2026-07-13",
-    "category": "券商入金",
-    "series": "美股新手基础设施",
-    "tags": [
-      "账户管理",
-      "入金出金",
-      "风险管理"
-    ],
-    "summary": "第一次买海外资产，不要从代码开始，而要先把目标、账户、资金路径、换汇、下单、税务和记录串起来。",
-    "readingTime": "11 分钟"
-  },
-  {
-    "title": "大陆身份开嘉信理财 Charles Schwab 全流程",
-    "slug": "charles-schwab-mainland-account-guide",
-    "url": "/blog/charles-schwab-mainland-account-guide/",
-    "date": "2026-07-11",
-    "updated": "2026-07-11",
-    "category": "美股账户",
-    "series": "大陆用户海外券商开户",
-    "tags": [
-      "Charles Schwab",
-      "账户管理",
-      "税务合规"
-    ],
-    "summary": "准备材料、W-8BEN、地址证明、开户后设置和常见卡点，一篇走完。",
     "readingTime": "8 分钟"
   }
 ]

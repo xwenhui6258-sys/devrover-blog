@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /incoming/
 Disallow: /blog/*/source.md
+Disallow: /blog/content-status.json
 
 Sitemap: https://7hui.top/sitemap.xml

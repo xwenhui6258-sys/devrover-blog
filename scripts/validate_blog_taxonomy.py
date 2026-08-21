@@ -32,6 +32,22 @@ def source_tags(path: Path) -> list[str] | None:
     return tags
 
 
+def nonpublic_slugs(root: Path) -> set[str]:
+    status_path = root / "blog" / "content-status.json"
+    if not status_path.is_file():
+        return set()
+    status = json.loads(status_path.read_text(encoding="utf-8"))
+    if not isinstance(status, dict):
+        raise ValueError("content-status.json must be an object")
+    hidden = {str(slug) for slug in status.get("hiddenSlugs", [])}
+    redirects = {str(slug) for slug in dict(status.get("redirects", {}))}
+    retired = {str(slug) for slug in status.get("retiredSlugs", [])}
+    overlap = (hidden & redirects) | (hidden & retired) | (redirects & retired)
+    if overlap:
+        raise ValueError(f"content-status.json has overlapping slugs: {sorted(overlap)}")
+    return hidden | redirects | retired
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--site-root", type=Path, default=Path(__file__).resolve().parents[1])
@@ -44,7 +60,11 @@ def main() -> int:
     try:
         taxonomy = json.loads(taxonomy_path.read_text(encoding="utf-8"))
         posts = json.loads(posts_path.read_text(encoding="utf-8"))
+        nonpublic = nonpublic_slugs(root)
     except (OSError, json.JSONDecodeError) as exc:
+        print(f"FAIL {exc}", file=sys.stderr)
+        return 1
+    except ValueError as exc:
         print(f"FAIL {exc}", file=sys.stderr)
         return 1
 
@@ -73,6 +93,8 @@ def main() -> int:
         url = post.get("url")
         tags = post.get("tags")
         label = slug or f"post[{index}]"
+        if slug in nonpublic:
+            errors.append(f"{label}: non-public slug appears in posts.json")
         if not slug or slug in slugs:
             errors.append(f"missing or duplicate slug: {label}")
         else:
@@ -101,10 +123,11 @@ def main() -> int:
                 errors.append(f"{label}: source tags {actual!r} != posts tags {tags!r}")
 
     source_slugs = {path.parent.name for path in (root / "blog").glob("*/source.md")}
-    if source_slugs != slugs:
+    expected_source_slugs = slugs | nonpublic
+    if source_slugs != expected_source_slugs:
         errors.append(
-            f"source/post slug mismatch: only_source={sorted(source_slugs - slugs)}, "
-            f"only_posts={sorted(slugs - source_slugs)}"
+            f"source/post/status slug mismatch: only_source={sorted(source_slugs - expected_source_slugs)}, "
+            f"missing_source={sorted(expected_source_slugs - source_slugs)}"
         )
 
     index_html = (root / "blog" / "index.html").read_text(encoding="utf-8")
@@ -118,6 +141,13 @@ def main() -> int:
     static_count = static_match.group(1).count('<article class="post-card">') if static_match else -1
     if static_count != len(posts):
         errors.append("static post-card count does not match posts.json")
+    visibility = subprocess.run(
+        [sys.executable, str(root / "scripts" / "sync_blog_visibility.py"), "--site-root", str(root), "--check"],
+        text=True,
+        capture_output=True,
+    )
+    if visibility.returncode:
+        errors.append(visibility.stderr.strip() or visibility.stdout.strip() or "blog visibility sync check failed")
     sync = subprocess.run(
         [sys.executable, str(root / "scripts" / "sync_blog_index.py"), "--site-root", str(root), "--check"],
         text=True,

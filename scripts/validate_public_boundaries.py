@@ -22,6 +22,7 @@ FORBIDDEN_PUBLIC_MARKERS = (
 EXPECTED_ROBOTS_RULES = (
     "Disallow: /incoming/",
     "Disallow: /blog/*/source.md",
+    "Disallow: /blog/content-status.json",
 )
 
 
@@ -76,6 +77,7 @@ def check_http(root: Path, base_url: str, timeout: float, errors: list[str]) -> 
         for path in incoming_paths
     )
     targets.append(("incoming-root", "/incoming/"))
+    targets.append(("content-status", "/blog/content-status.json"))
 
     for kind, path in targets:
         url = urljoin(base, path.lstrip("/"))

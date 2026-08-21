@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "hiddenSlugs": [
+    "etf-index-sp500-nasdaq100-global",
+    "overseas-remittance-received-less",
+    "overseas-card-travel-spending-fees",
+    "mainland-tax-resident-hk-us-stock-records",
+    "investment-account-cash-position",
+    "ibkr-platforms-guide",
+    "hk-bank-account-fees",
+    "us-stock-trading-hours",
+    "ibkr-market-data-subscriptions",
+    "acats-account-transfer",
+    "brokerage-withdrawal-guide",
+    "inactive-account-maintenance",
+    "ibkr-paper-trading-first-trade",
+    "funding-paths-ach-fps-edda-wire-wise",
+    "how-to-choose-hk-us-broker",
+    "wise-overseas-card-routes",
+    "overseas-bank-card-hk-sg-us"
+  ],
+  "redirects": {
+    "etf-stock-bond-commodity-strategy-types": "/blog/what-is-etf-basket-in-one-ticker/",
+    "rmb-to-first-hk-us-asset-account-flow": "/blog/local-currency-to-first-overseas-asset/",
+    "personal-account-map-bank-broker-payment": "/blog/local-currency-to-first-overseas-asset/"
+  },
+  "retiredSlugs": [
+    "charles-schwab-mainland-account-guide"
+  ],
+  "publicAdditions": {
+    "what-is-etf-basket-in-one-ticker": {
+      "readingTime": "14 分钟"
+    }
+  },
+  "publicOverrides": {
+    "local-currency-to-first-overseas-asset": {
+      "updated": "2026-08-21",
+      "summary": "把本地货币到第一笔海外资产拆成目标、账户地图、资金路径、换汇、下单与记录六步，先验证系统可回退，再完成第一笔小额交易。"
+    }
+  }
+}
