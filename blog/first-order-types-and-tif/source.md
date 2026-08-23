@@ -2,10 +2,17 @@
 title: "第一次下单怎么选：市价单、限价单、止损单和有效期"
 summary: "从成交速度、价格保护和不成交风险出发，讲清市价单、限价单、止损单、止损限价单，以及 DAY、GTC 与盘前盘后设置。"
 date: 2026-07-13
-updated: 2026-07-14
+updated: 2026-08-23
 category: "美股账户"
 series: "美股新手基础设施"
 status: "published"
+content_type: "资料研究（订单机制与风险）"
+article_format: "机制拆解"
+evidence: "正文内链接的 SEC、FINRA 与 IBKR 订单规则；未展示作者真实订单、止损或成交结果。"
+scope: "说明市价、限价、止损、有效期和盘前盘后设置之间的风险取舍。"
+boundary: "不提供实时交易指令，也不保证止损价格或成交；具体触发和路由规则以券商与市场当时设置为准。"
+content_reviewed: "2026-08-21"
+source_reviewed: "2026-08-23"
 cover: "assets/order-type-map.png"
 tags:
   - IBKR
@@ -19,7 +26,7 @@ tags:
 
 把这三个问题想清楚，市价单、限价单和止损单就不再是一排陌生缩写。
 
-> 本文为个人经验记录和股票/ETF 基础订单教育，不构成投资、税务或法律建议，也不构成证券推荐、交易或止损建议。订单类型、触发方法、可用交易时段和有效期会因券商、市场、产品和路由而不同。界面入口以当前 Client Portal、App 或桌面端为准，提交前以订单预览和合约规则为准。资料核对日期：2026-07-14。
+> 本文为基于公开资料的股票/ETF 基础订单教育，不构成投资、税务或法律建议，也不构成证券推荐、交易或止损建议。订单类型、触发方法、可用交易时段和有效期会因券商、市场、产品和路由而不同；本文不展示作者真实订单、止损或成交结果。界面入口以当前 Client Portal、App 或桌面端为准，提交前以订单预览和合约规则为准。资料核对日期：2026-08-23。
 
 ![三种基础订单的选择逻辑](assets/order-type-map.png)
 
@@ -65,7 +72,7 @@ tags:
 1. 限价 100.10 的买单不是“必须按 100.10 买”，有更低报价时可以获得更优价格。
 2. 市价碰到 100.05 不等于你的订单必然成交。你前面可能已有排队订单，市场也可能只短暂成交很少数量。
 
-第一次买一只流动性好的股票或 ETF，如果目标是先熟悉流程，我更倾向于小额、常规时段、DAY 限价单。限价可参考实时 Ask 和自己能接受的最高价，而不是为了省几分钱把价格挂得很远，最后误以为系统坏了。
+第一次买一只流动性好的股票或 ETF，如果目标只是先熟悉流程，可把小额、常规时段和 DAY 限价单作为需要理解的保守示例。限价可参考实时 Ask 和自己能接受的最高价，而不是为了省几分钱把价格挂得很远，最后误以为系统坏了。
 
 ![限价单与止损单从触发到成交的路径](assets/limit-stop-example.png)
 
@@ -111,7 +118,7 @@ DAY 不自动等于盘前盘后也有效。是否允许 Outside Regular Trading 
 
 GTC 会跨交易日继续工作，直到成交或取消，但券商通常有最长保留期限和自动取消规则。
 
-IBKR 当前公开规则写得更细：股票 GTC 订单带有 Do Not Reduce（DNR）属性。普通股息不超过前一日收盘价 3% 时，订单通常不会被取消，订单价格也不会自动下调；股息超过 3%，或属于额外、特别股息时，GTC 通常会被取消。拆股、换股和股份分配等公司行动也会触发取消，但 IBKR 说明相关处理是 best efforts，不能把系统取消当作自己无需监控的保证。
+IBKR 的[当前 GTC 规则](https://www.interactivebrokers.com/en/trading/ordertypes.php?m=goodTilCancelModal)写得更细：股票 GTC 订单带有 Do Not Reduce（DNR）属性。普通股息不超过前一日收盘价 3% 时，订单通常不会被取消，订单价格也不会自动下调；股息超过 3%，或属于额外、特别股息时，GTC 通常会被取消。拆股、换股和股份分配等公司行动也会触发取消，但 IBKR 说明相关处理是 best efforts，不能把系统取消当作自己无需监控的保证。
 
 此外，账户 90 天未登录，或订单到达 Auto Expire 日期时也会取消。Auto Expire 通常设在订单所在季度之后的那个日历季度末；修改订单会重新分配到期日。
 
@@ -129,7 +136,7 @@ IBKR 当前公开规则写得更细：股票 GTC 订单带有 Do Not Reduce（DN
 
 IBKR 订单票据可能显示 Fill Outside RTH。开启后，符合条件的订单可以在常规交易时段之外触发或成交，但这会改变你的成交环境：参与者更少、价差更宽、价格更容易跳动，且并非所有订单和产品都支持。
 
-FINRA 提醒，扩展时段可能有更低流动性和更高波动。IBKR 也特别提示在盘前盘后谨慎使用市价单。对第一次真实下单，我会把范围收窄到常规交易时段，并使用实时 Bid/Ask 做判断。
+FINRA 提醒，扩展时段可能有更低流动性和更高波动。IBKR 也特别提示在盘前盘后谨慎使用市价单。第一次真实下单，建议把范围收窄到常规交易时段，并使用实时 Bid/Ask 做判断。
 
 ## 在 IBKR 完成第一张订单
 
@@ -189,5 +196,6 @@ Submitted 不是 Filled。到 Orders & Trades 检查是否已成交、部分成�
 - FINRA, [Trading Terms: Time Parameters and Qualifiers on Stock Orders](https://www.finra.org/investors/insights/time-parameters-qualifiers-stock-orders).
 - FINRA, [How Online Stock Trading Works](https://www.finra.org/investors/insights/online-trade-lifecycle).
 - Interactive Brokers, [Order Types and Algos](https://www.interactivebrokers.com/en/trading/ordertypes.php).
+- Interactive Brokers, [Good-Til-Canceled (GTC) Order](https://www.interactivebrokers.com/en/trading/ordertypes.php?m=goodTilCancelModal).
 - Interactive Brokers, [Client Portal – Enter a Trade](https://www.interactivebrokers.com/campus/trading-lessons/client-portal-order-entry/).
 - Interactive Brokers, [Outside Regular Trading Hours](https://www.interactivebrokers.com/campus/glossary-terms/outside-rth/).

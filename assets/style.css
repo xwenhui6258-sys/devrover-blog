@@ -248,6 +248,45 @@ h2 { margin-top: 0; letter-spacing: -.025em; }
   background: #f1edff;
   color: #6d48cf;
 }
+.article-evidence {
+  margin: 4px 0 30px;
+  padding: 16px 18px;
+  border: 1px solid rgba(52,120,246,.2);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(238,246,255,.9), rgba(255,255,255,.82));
+}
+.article-evidence-title {
+  margin-bottom: 10px;
+  color: #244e92;
+  font-size: 14px;
+  font-weight: 780;
+}
+.article-evidence dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+.article-evidence dl > div {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 8px;
+}
+.article-evidence dt {
+  color: #526079;
+  font-size: 13px;
+  font-weight: 760;
+}
+.article-evidence dd {
+  margin: 0;
+  color: #33415c;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.article-evidence-reviewed {
+  margin: 12px 0 0 !important;
+  color: #697386;
+  font-size: 12px !important;
+}
 .article-disclaimer {
   margin-top: 32px;
   padding: 14px 16px;
@@ -446,7 +485,7 @@ h2 { margin-top: 0; letter-spacing: -.025em; }
   font-weight: 560;
 }
 .blog-notice {
-  display: inline-flex;
+  display: block;
   margin: 28px 0 0;
   padding: 10px 18px;
   border-radius: 13px;
@@ -454,6 +493,7 @@ h2 { margin-top: 0; letter-spacing: -.025em; }
   color: var(--muted);
   font-size: 14px;
   font-weight: 620;
+  line-height: 1.65;
 }
 .blog-notice a {
   color: inherit;
@@ -656,6 +696,25 @@ h2 { margin-top: 0; letter-spacing: -.025em; }
   padding: 24px;
   border-radius: 18px;
 }
+.post-card-labels {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.article-format {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 5px 11px;
+  border: 1px solid rgba(36,78,146,.14);
+  border-radius: 999px;
+  background: #f7faff;
+  color: #526079;
+  font-size: 12px;
+  font-weight: 720;
+  line-height: 1;
+}
 .post-card:hover,
 .series-card:hover {
   transform: translateY(-1px);
@@ -666,7 +725,7 @@ h2 { margin-top: 0; letter-spacing: -.025em; }
   padding: 5px 14px;
 }
 .post-card h3 {
-  margin: 16px 0 10px;
+  margin: 14px 0 10px;
   font-size: 20px;
   letter-spacing: 0;
 }
@@ -1815,6 +1874,8 @@ footer { color: var(--muted); border-top: 1px solid var(--line); }
   .footer-links { justify-content: flex-start; }
   .footer-bottom { flex-direction: column; gap: 8px; }
   .article-disclaimer { padding: 14px; }
+  .article-evidence { padding: 14px; }
+  .article-evidence dl > div { grid-template-columns: 1fr; gap: 2px; }
 }
 
 @media (max-width: 900px) {

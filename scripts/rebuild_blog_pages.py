@@ -10,6 +10,7 @@ from pathlib import Path
 
 from publish_blog_post import (
     PostMeta,
+    apply_content_disclosure,
     make_public,
     markdown_to_html,
     optimize_article_images,
@@ -45,6 +46,7 @@ def expected_page(root: Path, post: dict, posts: list[dict]) -> tuple[Path, str]
     source_title = front_matter.get("title")
     if source_title:
         meta.title = source_title
+    apply_content_disclosure(meta, front_matter)
     body = remove_duplicate_title(body, meta.title)
     article_html = optimize_article_images(markdown_to_html(body), post_dir)
     return post_dir / "index.html", render_page(meta, article_html, posts)

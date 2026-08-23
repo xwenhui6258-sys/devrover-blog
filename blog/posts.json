@@ -1,5 +1,154 @@
 [
   {
+    "title": "第一次用 IBKR 买美国国债：期限、收益率和下单界面怎么看",
+    "slug": "ibkr-us-treasury-first-order",
+    "url": "/blog/ibkr-us-treasury-first-order/",
+    "date": "2026-07-16",
+    "updated": "2026-08-24",
+    "category": "跨境投资",
+    "series": "海外资产入门",
+    "articleFormat": "流程核对",
+    "tags": [
+      "IBKR",
+      "交易入门"
+    ],
+    "summary": "第一次在 IBKR 买美国国债，先用资金用途确定期限，再读懂票息、到期收益率、买卖价和订单预览；附 TWS 与 Client Portal 的下单核对清单。",
+    "readingTime": "12 分钟"
+  },
+  {
+    "title": "美股分红为什么少了一截：W-8BEN 与预扣税新手说明书",
+    "slug": "w8ben-dividend-withholding",
+    "url": "/blog/w8ben-dividend-withholding/",
+    "date": "2026-07-13",
+    "updated": "2026-08-24",
+    "category": "跨境投资",
+    "series": "海外资产入门",
+    "articleFormat": "资料核验",
+    "tags": [
+      "税务合规"
+    ],
+    "summary": "从收入来源、税务居民、税收协定和 W-8BEN 入手，解释美股股息为何被预扣、30% 为什么不是所有人的固定税率，以及如何在 IBKR 核对 1042-S。",
+    "readingTime": "10 分钟"
+  },
+  {
+    "title": "现金账户和保证金账户差在哪里：借款、交收与强平风险",
+    "slug": "cash-vs-margin-account",
+    "url": "/blog/cash-vs-margin-account/",
+    "date": "2026-07-13",
+    "updated": "2026-08-23",
+    "category": "跨境投资",
+    "series": "海外资产入门",
+    "articleFormat": "决策比较",
+    "tags": [
+      "IBKR",
+      "账户管理",
+      "风险管理"
+    ],
+    "summary": "从借款、交收、购买力、利息和强制平仓五个角度比较 IBKR 现金账户与保证金账户，说明两类账户的机制差异和核对重点。",
+    "readingTime": "8 分钟"
+  },
+  {
+    "title": "IBKR 定期投资怎么设置：先核对资格、现金与成交记录",
+    "slug": "ibkr-recurring-investments",
+    "url": "/blog/ibkr-recurring-investments/",
+    "date": "2026-07-13",
+    "updated": "2026-08-23",
+    "category": "跨境投资",
+    "series": "海外资产入门",
+    "articleFormat": "流程核对",
+    "tags": [
+      "IBKR",
+      "交易入门"
+    ],
+    "summary": "从碎股权限、可用现金和标的资格开始，核对 IBKR Recurring Investments 的创建、成交、复核和暂停流程。",
+    "readingTime": "9 分钟"
+  },
+  {
+    "title": "券商账户里的六个数字：现金、净资产、购买力与保证金怎么核对",
+    "slug": "brokerage-account-balances",
+    "url": "/blog/brokerage-account-balances/",
+    "date": "2026-07-13",
+    "updated": "2026-08-23",
+    "category": "美股账户",
+    "series": "美股新手基础设施",
+    "articleFormat": "机制拆解",
+    "tags": [
+      "IBKR",
+      "账户管理",
+      "风险管理"
+    ],
+    "summary": "券商 App 里同时出现现金、已结算现金、净清算价值、购买力、可用资金和超额流动性。本文用一套顺序解释这些数字各自回答什么问题。",
+    "readingTime": "11 分钟"
+  },
+  {
+    "title": "第一次下单怎么选：市价单、限价单、止损单和有效期",
+    "slug": "first-order-types-and-tif",
+    "url": "/blog/first-order-types-and-tif/",
+    "date": "2026-07-13",
+    "updated": "2026-08-23",
+    "category": "美股账户",
+    "series": "美股新手基础设施",
+    "articleFormat": "机制拆解",
+    "tags": [
+      "IBKR",
+      "交易入门",
+      "风险管理"
+    ],
+    "summary": "从成交速度、价格保护和不成交风险出发，讲清市价单、限价单、止损单、止损限价单，以及 DAY、GTC 与盘前盘后设置。",
+    "readingTime": "12 分钟"
+  },
+  {
+    "title": "嘉信理财开户前认知：和 IBKR 有什么不同，新手要准备什么",
+    "slug": "schwab-before-open",
+    "url": "/blog/schwab-before-open/",
+    "date": "2026-07-13",
+    "updated": "2026-08-23",
+    "category": "美股账户",
+    "series": "大陆用户海外券商开户",
+    "articleFormat": "决策比较",
+    "tags": [
+      "IBKR",
+      "Charles Schwab",
+      "账户管理"
+    ],
+    "summary": "嘉信理财更像美国本土券商和长期投资账户生态，IBKR 更像多市场、多币种交易系统。开户前先分清定位、资金路径和权限边界。",
+    "readingTime": "11 分钟"
+  },
+  {
+    "title": "赴港办银行卡前准备什么：材料、预约、面谈和手机漫游清单",
+    "slug": "hong-kong-bank-account-preparation",
+    "url": "/blog/hong-kong-bank-account-preparation/",
+    "date": "2026-07-13",
+    "updated": "2026-08-23",
+    "category": "海外银行卡",
+    "series": "海外银行卡与资金流转",
+    "articleFormat": "流程核对",
+    "tags": [
+      "海外银行卡",
+      "账户管理",
+      "风险管理"
+    ],
+    "summary": "面向内地访港申请人的行前准备框架：怎样核对开户材料、预约分行、面谈、手机漫游与账户验收。",
+    "readingTime": "13 分钟"
+  },
+  {
+    "title": "Charles Schwab 入金路径整理：电汇、ACH 与到账时间",
+    "slug": "schwab-funding-routes",
+    "url": "/blog/schwab-funding-routes/",
+    "date": "2026-07-13",
+    "updated": "2026-08-23",
+    "category": "券商入金",
+    "series": "大陆用户海外券商开户",
+    "articleFormat": "流程核对",
+    "tags": [
+      "Charles Schwab",
+      "入金出金",
+      "海外银行卡"
+    ],
+    "summary": "嘉信入金不要只看到账速度，要区分 ACH、wire、电汇凭证、可交易时间和可转出限制。",
+    "readingTime": "8 分钟"
+  },
+  {
     "title": "ETF 到底是什么：一篮子股票是怎么买进一个代码里的",
     "slug": "what-is-etf-basket-in-one-ticker",
     "url": "/blog/what-is-etf-basket-in-one-ticker/",
@@ -7,6 +156,7 @@
     "updated": "2026-08-21",
     "category": "跨境投资",
     "series": "海外资产入门",
+    "articleFormat": "机制拆解",
     "tags": [
       "交易入门",
       "风险管理"
@@ -15,19 +165,20 @@
     "readingTime": "14 分钟"
   },
   {
-    "title": "从本地货币到第一笔海外资产：我会检查哪些环节",
+    "title": "从本地货币到第一笔海外资产：一份合规核对框架",
     "slug": "local-currency-to-first-overseas-asset",
     "url": "/blog/local-currency-to-first-overseas-asset/",
     "date": "2026-07-12",
     "updated": "2026-08-21",
     "category": "券商入金",
     "series": "美股新手基础设施",
+    "articleFormat": "流程核对",
     "tags": [
       "账户管理",
       "入金出金",
       "风险管理"
     ],
-    "summary": "把本地货币到第一笔海外资产拆成目标、账户地图、资金路径、换汇、下单与记录六步，先验证系统可回退，再完成第一笔小额交易。",
+    "summary": "把本地货币到第一笔海外资产拆成目标、账户地图、资金路径、换汇、下单与记录六步，先核对风险与资料，再决定是否操作。",
     "readingTime": "11 分钟"
   },
   {
@@ -38,6 +189,7 @@
     "updated": "2026-08-09",
     "category": "跨境投资",
     "series": "海外资产入门",
+    "articleFormat": "流程核对",
     "tags": [
       "交易入门",
       "风险管理"
@@ -53,6 +205,7 @@
     "updated": "2026-08-09",
     "category": "跨境投资",
     "series": "海外资产入门",
+    "articleFormat": "异常排查",
     "tags": [
       "交易入门",
       "风险管理"
@@ -68,26 +221,12 @@
     "updated": "2026-07-18",
     "category": "跨境投资",
     "series": "海外资产入门",
+    "articleFormat": "异常排查",
     "tags": [
       "IBKR",
       "税务合规"
     ],
     "summary": "从股息总额、预扣税、净额、支付日、替代股息到 1042-S，拆解 IBKR 分红记录的核对顺序，避免把到账差额都误判成扣错税。",
-    "readingTime": "12 分钟"
-  },
-  {
-    "title": "第一次用 IBKR 买美国国债：期限、收益率和下单界面怎么看",
-    "slug": "ibkr-us-treasury-first-order",
-    "url": "/blog/ibkr-us-treasury-first-order/",
-    "date": "2026-07-16",
-    "updated": "2026-07-16",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "IBKR",
-      "交易入门"
-    ],
-    "summary": "第一次在 IBKR 买美国国债，先用资金用途确定期限，再读懂票息、到期收益率、买卖价和订单预览；附 TWS 与 Client Portal 的下单核对清单。",
     "readingTime": "12 分钟"
   },
   {
@@ -98,6 +237,7 @@
     "updated": "2026-07-16",
     "category": "跨境投资",
     "series": "海外资产入门",
+    "articleFormat": "决策比较",
     "tags": [
       "IBKR",
       "账户管理",
@@ -107,51 +247,6 @@
     "readingTime": "13 分钟"
   },
   {
-    "title": "现金账户还是保证金账户：新手开户时应该怎么选",
-    "slug": "cash-vs-margin-account",
-    "url": "/blog/cash-vs-margin-account/",
-    "date": "2026-07-13",
-    "updated": "2026-07-15",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "IBKR",
-      "账户管理",
-      "风险管理"
-    ],
-    "summary": "从借款、交收、购买力、利息和强制平仓五个角度比较 IBKR 现金账户与保证金账户，给第一次开户的新手一套可执行的选择方法。",
-    "readingTime": "8 分钟"
-  },
-  {
-    "title": "美股分红为什么少了一截：W-8BEN 与预扣税新手说明书",
-    "slug": "w8ben-dividend-withholding",
-    "url": "/blog/w8ben-dividend-withholding/",
-    "date": "2026-07-13",
-    "updated": "2026-07-15",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "税务合规"
-    ],
-    "summary": "从收入来源、税务居民、税收协定和 W-8BEN 入手，解释美股股息为何被预扣、30% 为什么不是所有人的固定税率，以及如何在 IBKR 核对 1042-S。",
-    "readingTime": "10 分钟"
-  },
-  {
-    "title": "小额定投怎么设置：IBKR 定期投资的完整操作路径",
-    "slug": "ibkr-recurring-investments",
-    "url": "/blog/ibkr-recurring-investments/",
-    "date": "2026-07-13",
-    "updated": "2026-07-15",
-    "category": "跨境投资",
-    "series": "海外资产入门",
-    "tags": [
-      "IBKR",
-      "交易入门"
-    ],
-    "summary": "从碎股权限、可用现金和标的资格开始，完整走一遍 IBKR Recurring Investments 的创建、成交、复核和暂停流程。",
-    "readingTime": "9 分钟"
-  },
-  {
     "title": "同样叫 IBKR，账户归属为什么不同：如何确认开户主体和监管地区",
     "slug": "ibkr-account-entity-and-regulation",
     "url": "/blog/ibkr-account-entity-and-regulation/",
@@ -159,6 +254,7 @@
     "updated": "2026-07-15",
     "category": "跨境投资",
     "series": "海外资产入门",
+    "articleFormat": "资料核验",
     "tags": [
       "IBKR",
       "账户管理",
@@ -168,22 +264,6 @@
     "readingTime": "12 分钟"
   },
   {
-    "title": "券商账户里的钱怎么看：现金、净资产、购买力和保证金一次讲清",
-    "slug": "brokerage-account-balances",
-    "url": "/blog/brokerage-account-balances/",
-    "date": "2026-07-13",
-    "updated": "2026-07-14",
-    "category": "美股账户",
-    "series": "美股新手基础设施",
-    "tags": [
-      "IBKR",
-      "账户管理",
-      "风险管理"
-    ],
-    "summary": "券商 App 里同时出现现金、已结算现金、净清算价值、购买力、可用资金和超额流动性。本文用一套顺序解释这些数字各自回答什么问题。",
-    "readingTime": "11 分钟"
-  },
-  {
     "title": "基础货币不是持仓货币：IBKR 换汇前必须懂的几个概念",
     "slug": "ibkr-base-currency-and-fx",
     "url": "/blog/ibkr-base-currency-and-fx/",
@@ -191,27 +271,12 @@
     "updated": "2026-07-14",
     "category": "美股账户",
     "series": "美股新手基础设施",
+    "articleFormat": "机制拆解",
     "tags": [
       "IBKR",
       "入金出金"
     ],
     "summary": "把 IBKR 的基础货币、分币种现金、交易货币、外汇货币对、自动换汇和负现金拆开讲清，再完成一次可核对的换汇。",
-    "readingTime": "12 分钟"
-  },
-  {
-    "title": "第一次下单怎么选：市价单、限价单、止损单和有效期",
-    "slug": "first-order-types-and-tif",
-    "url": "/blog/first-order-types-and-tif/",
-    "date": "2026-07-13",
-    "updated": "2026-07-14",
-    "category": "美股账户",
-    "series": "美股新手基础设施",
-    "tags": [
-      "IBKR",
-      "交易入门",
-      "风险管理"
-    ],
-    "summary": "从成交速度、价格保护和不成交风险出发，讲清市价单、限价单、止损单、止损限价单，以及 DAY、GTC 与盘前盘后设置。",
     "readingTime": "12 分钟"
   },
   {
@@ -222,6 +287,7 @@
     "updated": "2026-07-14",
     "category": "美股账户",
     "series": "大陆用户海外券商开户",
+    "articleFormat": "流程核对",
     "tags": [
       "IBKR",
       "账户管理",
@@ -231,22 +297,6 @@
     "readingTime": "10 分钟"
   },
   {
-    "title": "嘉信理财开户前认知：和 IBKR 有什么不同，新手要准备什么",
-    "slug": "schwab-before-open",
-    "url": "/blog/schwab-before-open/",
-    "date": "2026-07-13",
-    "updated": "2026-07-14",
-    "category": "美股账户",
-    "series": "大陆用户海外券商开户",
-    "tags": [
-      "IBKR",
-      "Charles Schwab",
-      "账户管理"
-    ],
-    "summary": "嘉信理财更像美国本土券商和长期投资账户生态，IBKR 更像多市场、多币种交易系统。开户前先分清定位、资金路径和权限边界。",
-    "readingTime": "11 分钟"
-  },
-  {
     "title": "开户后第一天要设置什么：App、2FA、基础货币、交易权限和 W-8",
     "slug": "first-day-after-brokerage-open",
     "url": "/blog/first-day-after-brokerage-open/",
@@ -254,44 +304,13 @@
     "updated": "2026-07-14",
     "category": "美股账户",
     "series": "美股新手基础设施",
+    "articleFormat": "流程核对",
     "tags": [
       "IBKR",
       "Charles Schwab",
       "账户管理"
     ],
     "summary": "账户通过审核后，第一天先别急着下单。先把官方 App、双重验证、基础货币、交易权限、W-8BEN、入金测试和报表保存设置好。",
-    "readingTime": "8 分钟"
-  },
-  {
-    "title": "赴港办银行卡前准备什么：材料、预约、面谈和手机漫游清单",
-    "slug": "hong-kong-bank-account-preparation",
-    "url": "/blog/hong-kong-bank-account-preparation/",
-    "date": "2026-07-13",
-    "updated": "2026-07-14",
-    "category": "海外银行卡",
-    "series": "海外银行卡与资金流转",
-    "tags": [
-      "海外银行卡",
-      "账户管理",
-      "风险管理"
-    ],
-    "summary": "面向内地访港申请人的实操清单：怎样整理开户材料、预约分行、准备面谈、配置手机漫游，并在离开香港前完成账户验收。",
-    "readingTime": "13 分钟"
-  },
-  {
-    "title": "Charles Schwab 入金路径整理：电汇、ACH 与到账时间",
-    "slug": "schwab-funding-routes",
-    "url": "/blog/schwab-funding-routes/",
-    "date": "2026-07-13",
-    "updated": "2026-07-14",
-    "category": "券商入金",
-    "series": "大陆用户海外券商开户",
-    "tags": [
-      "Charles Schwab",
-      "入金出金",
-      "海外银行卡"
-    ],
-    "summary": "嘉信入金不要只看到账速度，要区分 ACH、wire、电汇凭证、可交易时间和可转出限制。",
     "readingTime": "8 分钟"
   }
 ]

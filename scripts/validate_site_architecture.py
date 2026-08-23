@@ -4,11 +4,16 @@
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import re
 import sys
 import xml.etree.ElementTree as ET
+from datetime import date
 from pathlib import Path
+from urllib.parse import urlparse
+
+from publish_blog_post import parse_front_matter
 
 
 SITE_URL = "https://7hui.top"
@@ -35,6 +40,72 @@ REQUIRED_FOOTER_LINKS = (
 )
 ADSENSE_LOADER = "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
 ADSENSE_STATIC_PAGES = {"/", "/blog/"}
+REQUIRED_PUBLIC_DISCLOSURE_FIELDS = (
+    "content_type",
+    "article_format",
+    "evidence",
+    "scope",
+    "boundary",
+    "content_reviewed",
+    "source_reviewed",
+)
+SOURCE_REVIEW_MAX_AGE_DAYS = 180
+PUBLIC_ARTICLE_FORMATS = {
+    "机制拆解",
+    "决策比较",
+    "流程核对",
+    "异常排查",
+    "资料核验",
+}
+UNSUPPORTED_RESEARCH_CLAIM_PATTERNS = (
+    re.compile(
+        r"(?:我|本人|作者)(?:已经|已|曾|亲自|实际)[^。\n]{0,48}"
+        r"(?:开户|入金|出金|下单|交易|持仓|收益|到账|结单)"
+    ),
+    re.compile(
+        r"(?:我的|作者的)(?:真实)?(?:账户|订单|入金|出金|持仓|交易|收益|结单)"
+        r"(?:已|成功|记录|结果|显示|证明)"
+    ),
+)
+STRUCTURAL_UTILITY_HEADINGS = {
+    "参考资料",
+    "官方资料",
+    "官方资料与核对入口",
+}
+GENERIC_TEMPLATE_HEADINGS = {
+    "结论先行",
+    "先给结论",
+    "本次复核说明",
+}
+SOURCE_SECTION_PATTERN = re.compile(
+    r"(?m)^##\s+(?:参考资料|官方资料|官方资料与核对入口)\s*$"
+)
+PRIMARY_SOURCE_HOST_SUFFIXES = (
+    "gov",
+    "gov.hk",
+    "interactivebrokers.com",
+    "interactivebrokers.ie",
+    "interactivebrokers.com.sg",
+    "interactivebrokers.com.hk",
+    "interactivebrokers.co.uk",
+    "ibkrguides.com",
+    "schwab.com",
+    "finra.org",
+    "sipc.org",
+    "hkma.gov.hk",
+    "ofca.gov.hk",
+    "sfc.hk",
+    "ird.gov.hk",
+    "chinatax.gov.cn",
+    "mas.gov.sg",
+    "sse.com.cn",
+    "nacha.org",
+    "frbservices.org",
+    "centralbank.ie",
+    "fca.org.uk",
+    "hsbc.com.hk",
+    "bochk.com",
+)
 
 
 def canonical_from_html(text: str) -> str:
@@ -67,6 +138,18 @@ def graph_types(payloads: list[dict]) -> set[str]:
     return types
 
 
+def markdown_external_urls(text: str) -> list[str]:
+    return re.findall(r"\]\((https?://[^)\s]+)\)", text)
+
+
+def is_primary_source_host(host: str) -> bool:
+    normalized = host.lower().strip(".")
+    return any(
+        normalized == suffix or normalized.endswith("." + suffix)
+        for suffix in PRIMARY_SOURCE_HOST_SUFFIXES
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -78,6 +161,9 @@ def main() -> int:
     root = args.site_root.resolve()
     posts = json.loads((root / "blog" / "posts.json").read_text(encoding="utf-8"))
     errors: list[str] = []
+    article_format_counts: dict[str, int] = {}
+    heading_signatures: dict[tuple[str, ...], list[str]] = {}
+    generic_heading_slugs: dict[str, list[str]] = {}
 
     slugs = [str(post.get("slug") or "") for post in posts]
     urls = [str(post.get("url") or "") for post in posts]
@@ -139,9 +225,124 @@ def main() -> int:
         if marker not in blog_index:
             errors.append(f"blog/index.html: missing {marker}")
 
+    home = (root / "index.html").read_text(encoding="utf-8")
+    posts_by_url = {str(post.get("url") or ""): post for post in posts}
+    home_guide_cards = re.findall(
+        r'<article class="home-guide-card">(.*?)</article>',
+        home,
+        flags=re.DOTALL,
+    )
+    if len(home_guide_cards) != 3:
+        errors.append(f"index.html: expected 3 home guide cards, found {len(home_guide_cards)}")
+    for card in home_guide_cards:
+        title_match = re.search(
+            r'<h3><a href="([^"]+)">(.*?)</a></h3>',
+            card,
+            flags=re.DOTALL,
+        )
+        date_match = re.search(r'<time datetime="([^"]+)">', card)
+        if not title_match or not date_match:
+            errors.append("index.html: incomplete home guide card metadata")
+            continue
+        card_url = title_match.group(1)
+        post = posts_by_url.get(card_url)
+        if not post:
+            errors.append(f"index.html: home guide card is not public {card_url}")
+            continue
+        card_title = html.unescape(re.sub(r"<[^>]+>", "", title_match.group(2))).strip()
+        post_title = str(post.get("title") or "")
+        if card_title != post_title and not post_title.startswith(card_title):
+            errors.append(f"index.html: stale home guide title for {card_url}")
+        expected_updated = str(post.get("updated") or post.get("date") or "")
+        if date_match.group(1) != expected_updated:
+            errors.append(f"index.html: stale home guide date for {card_url}")
+
     for post in posts:
         slug = str(post["slug"])
         url = str(post["url"])
+        source = root / "blog" / slug / "source.md"
+        if not source.is_file():
+            errors.append(f"{slug}: missing source.md")
+            continue
+        front_matter, _, source_body = parse_front_matter(source.read_text(encoding="utf-8"))
+        if front_matter.get("status") != "published":
+            errors.append(f"{slug}: public post source status is not published")
+        missing_disclosure = [
+            field for field in REQUIRED_PUBLIC_DISCLOSURE_FIELDS if not front_matter.get(field)
+        ]
+        if missing_disclosure:
+            errors.append(
+                f"{slug}: missing content disclosure fields {missing_disclosure}"
+            )
+        parsed_review_dates: dict[str, date] = {}
+        for field in ("content_reviewed", "source_reviewed"):
+            raw_review_date = str(front_matter.get(field) or "")
+            if not raw_review_date:
+                continue
+            try:
+                parsed_review_dates[field] = date.fromisoformat(raw_review_date)
+            except ValueError:
+                errors.append(f"{slug}: invalid ISO date for {field}={raw_review_date}")
+        for field, reviewed_date in parsed_review_dates.items():
+            if reviewed_date > date.today():
+                errors.append(f"{slug}: future review date for {field}={reviewed_date}")
+        source_reviewed = parsed_review_dates.get("source_reviewed")
+        if source_reviewed and (date.today() - source_reviewed).days > SOURCE_REVIEW_MAX_AGE_DAYS:
+            errors.append(
+                f"{slug}: source review is older than {SOURCE_REVIEW_MAX_AGE_DAYS} days "
+                f"({source_reviewed})"
+            )
+        article_format = str(front_matter.get("article_format") or "")
+        if article_format and article_format not in PUBLIC_ARTICLE_FORMATS:
+            errors.append(f"{slug}: unsupported article_format={article_format}")
+        if article_format:
+            article_format_counts[article_format] = article_format_counts.get(article_format, 0) + 1
+        content_type = str(front_matter.get("content_type") or "")
+        if "个人经验" in content_type and not front_matter.get("experience_evidence"):
+            errors.append(
+                f"{slug}: personal-experience content is missing experience_evidence"
+            )
+        if "个人经验" not in content_type:
+            for pattern in UNSUPPORTED_RESEARCH_CLAIM_PATTERNS:
+                match = pattern.search(source_body)
+                if match:
+                    errors.append(
+                        f"{slug}: research article contains unsupported firsthand claim "
+                        f"{match.group(0)!r}"
+                    )
+        source_urls = sorted(set(markdown_external_urls(source_body)))
+        source_hosts = {
+            (urlparse(source_url).hostname or "").lower()
+            for source_url in source_urls
+        }
+        if len(source_urls) < 3:
+            errors.append(f"{slug}: fewer than 3 external source links")
+        if len(source_hosts) < 2:
+            errors.append(f"{slug}: source links do not span 2 domains")
+        if not any(is_primary_source_host(host) for host in source_hosts):
+            errors.append(f"{slug}: no primary or official source domain found")
+        source_section = SOURCE_SECTION_PATTERN.search(source_body)
+        if not source_section:
+            errors.append(f"{slug}: missing a labeled source section")
+        else:
+            reference_urls = set(markdown_external_urls(source_body[source_section.end() :]))
+            if len(reference_urls) < 2:
+                errors.append(f"{slug}: source section has fewer than 2 external links")
+        headings = [
+            heading.strip()
+            for heading in re.findall(r"(?m)^##\s+(.+?)\s*$", source_body)
+        ]
+        substantive_headings = [
+            heading for heading in headings if heading not in STRUCTURAL_UTILITY_HEADINGS
+        ]
+        if len(substantive_headings) < 3:
+            errors.append(f"{slug}: too few substantive H2 headings")
+        signature = tuple(substantive_headings[:3])
+        if signature:
+            heading_signatures.setdefault(signature, []).append(slug)
+        for heading in headings:
+            if heading in GENERIC_TEMPLATE_HEADINGS:
+                generic_heading_slugs.setdefault(heading, []).append(slug)
         page = root / "blog" / slug / "index.html"
         if not page.is_file():
             errors.append(f"{slug}: missing index.html")
@@ -166,7 +367,14 @@ def main() -> int:
             errors.append(f"{slug}: missing visible author byline")
         if 'class="article-disclaimer"' not in text:
             errors.append(f"{slug}: missing article disclaimer")
-        if "本文仅供信息与经验交流，不构成投资、税务或法律建议。" not in text:
+        if 'class="article-evidence"' not in text:
+            errors.append(f"{slug}: missing content evidence disclosure")
+        if article_format and article_format not in text:
+            errors.append(f"{slug}: article format is not visible to readers")
+        source_reviewed_raw = str(front_matter.get("source_reviewed") or "")
+        if source_reviewed_raw and f"官方资料复核：{source_reviewed_raw}" not in text:
+            errors.append(f"{slug}: source review date is not visible to readers")
+        if "本文仅供一般信息与资料研究使用，不构成投资、税务或法律建议。" not in text:
             errors.append(f"{slug}: missing concise advice disclaimer")
         for footer_path in REQUIRED_FOOTER_LINKS:
             if f'href="{footer_path}"' not in text:
@@ -186,6 +394,24 @@ def main() -> int:
             errors.append(f"{slug}: discovery section links to itself")
         if "/Users/" in text or "file://" in text:
             errors.append(f"{slug}: contains a local absolute path")
+
+    if len(article_format_counts) < 4:
+        errors.append(
+            "public articles do not use enough reader-facing formats: "
+            f"found={sorted(article_format_counts)}"
+        )
+    for heading, slugs_using_heading in generic_heading_slugs.items():
+        if len(slugs_using_heading) > 1:
+            errors.append(
+                f"generic H2 heading is repeated across public articles: "
+                f"{heading}={sorted(slugs_using_heading)}"
+            )
+    for signature, slugs_using_signature in heading_signatures.items():
+        if len(slugs_using_signature) > 1:
+            errors.append(
+                "public articles share the same opening structure: "
+                f"{signature}={sorted(slugs_using_signature)}"
+            )
 
     if errors:
         for error in errors:

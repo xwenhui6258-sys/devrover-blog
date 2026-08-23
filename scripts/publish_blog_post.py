@@ -21,7 +21,7 @@ IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif", ".svg"}
 TOC_HEADING_LEVEL = 2
 SITE_NAME = "DevRover的个人站"
 SITE_URL = "https://7hui.top"
-STYLE_VERSION = "20260809-trust-v1"
+STYLE_VERSION = "20260821-reading-v1"
 
 
 @dataclass
@@ -36,6 +36,13 @@ class PostMeta:
     tags: tuple[str, ...] = ()
     reading_time: str = ""
     url: str = ""
+    content_type: str = ""
+    article_format: str = ""
+    evidence: str = ""
+    scope: str = ""
+    boundary: str = ""
+    content_reviewed: str = ""
+    source_reviewed: str = ""
 
 
 def slugify(value: str) -> str:
@@ -72,6 +79,19 @@ def parse_front_matter_tags(raw: str) -> list[str]:
             break
         tags.append(item.group(1).strip("'\""))
     return tags
+
+
+def apply_content_disclosure(meta: PostMeta, front_matter: dict[str, str]) -> PostMeta:
+    """Attach an article's reader-facing evidence and scope disclosure."""
+
+    meta.content_type = front_matter.get("content_type", "")
+    meta.article_format = front_matter.get("article_format", "")
+    meta.evidence = front_matter.get("evidence", "")
+    meta.scope = front_matter.get("scope", "")
+    meta.boundary = front_matter.get("boundary", "")
+    meta.content_reviewed = front_matter.get("content_reviewed", "")
+    meta.source_reviewed = front_matter.get("source_reviewed", "")
+    return meta
 
 
 def validate_front_matter_tags(raw: str, site_root: Path) -> None:
@@ -579,8 +599,47 @@ def render_article_meta(meta: PostMeta) -> str:
 def render_article_disclaimer() -> str:
     return """
     <aside class="article-disclaimer" aria-label="风险提示">
-      <p>本文仅供信息与经验交流，不构成投资、税务或法律建议。请结合自身情况独立判断；查看<a href="/editorial-policy/">编辑与内容政策</a>，或通过<a href="/contact/">联系页面</a>提交纠错。</p>
+      <p>本文仅供一般信息与资料研究使用，不构成投资、税务或法律建议。请结合自身情况独立判断；查看<a href="/editorial-policy/">编辑与内容政策</a>，或通过<a href="/contact/">联系页面</a>提交纠错。</p>
     </aside>"""
+
+
+def render_article_evidence(meta: PostMeta) -> str:
+    """Render the disclosure that distinguishes research from firsthand evidence."""
+
+    rows = [
+        ("内容类型", meta.content_type),
+        ("阅读方式", meta.article_format),
+        ("核验依据", meta.evidence),
+        ("适用范围", meta.scope),
+        ("未覆盖内容", meta.boundary),
+    ]
+    details = "\n".join(
+        "        <div>"
+        f"<dt>{html.escape(label)}</dt>"
+        f"<dd>{html.escape(value)}</dd>"
+        "</div>"
+        for label, value in rows
+        if value
+    )
+    if not details:
+        return ""
+    review_dates = []
+    if meta.content_reviewed:
+        review_dates.append(f"内容边界审查：{html.escape(meta.content_reviewed)}")
+    if meta.source_reviewed:
+        review_dates.append(f"官方资料复核：{html.escape(meta.source_reviewed)}")
+    reviewed = (
+        f'<p class="article-evidence-reviewed">{" · ".join(review_dates)}</p>'
+        if review_dates
+        else ""
+    )
+    return f"""
+      <aside class="article-evidence" aria-label="内容依据与边界">
+        <div class="article-evidence-title">内容依据与边界</div>
+        <dl>
+{details}
+        </dl>{reviewed}
+      </aside>"""
 
 
 def render_site_footer() -> str:
@@ -588,7 +647,7 @@ def render_site_footer() -> str:
   <div class="container footer-grid">
     <div class="footer-brand">
       <a href="/">DevRover的个人站</a>
-      <p>记录跨境金融、海外投资与数字生活中的真实问题、核验过程和实用工具。</p>
+      <p>记录跨境金融中的具体问题、资料核验和实用工具。</p>
     </div>
     <nav class="footer-links" aria-label="站点信息">
       <a href="/about/">关于作者</a>
@@ -601,7 +660,7 @@ def render_site_footer() -> str:
   </div>
   <div class="container footer-bottom">
     <span>© 2026 DevRover的个人站</span>
-    <span>内容仅供信息与经验交流，不构成投资、税务或法律建议。</span>
+    <span>内容仅供一般信息与资料研究使用，不构成投资、税务或法律建议。</span>
   </div>
 </footer>"""
 
@@ -694,7 +753,7 @@ def article_structured_data(meta: PostMeta, image_url: str) -> str:
         "isPartOf": {
             "@type": "Blog",
             "@id": SITE_URL + "/blog/#blog",
-            "name": "DevRover 海外投资与数字生活笔记",
+            "name": "DevRover 跨境金融与海外投资笔记",
         },
     }
     if image_url:
@@ -812,7 +871,7 @@ def render_page(meta: PostMeta, article_html: str, posts: list[dict] | None = No
     <article class="article">
       {render_breadcrumbs(meta)}
       {title_html}
-      {render_article_meta(meta)}
+      {render_article_meta(meta)}{render_article_evidence(meta)}
       {article_html}{render_article_disclaimer()}{discovery_html}
     </article>
     {toc_html}
@@ -933,6 +992,7 @@ def main() -> int:
             reading_time=front_matter.get("readingtime") or "",
             url=f"/blog/{slug}/",
         )
+    apply_content_disclosure(meta, front_matter)
     article_html = optimize_article_images(markdown_to_html(rewritten_body), post_dir)
     (post_dir / "index.html").write_text(
         render_page(meta, article_html, posts),

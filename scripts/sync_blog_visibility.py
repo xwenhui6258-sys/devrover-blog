@@ -43,8 +43,9 @@ def record_from_source(root: Path, slug: str, override: dict) -> dict:
     post_date = str(front.get("date") or "").strip()
     category = str(front.get("category") or "").strip()
     series = str(front.get("series") or "").strip()
+    article_format = str(front.get("article_format") or "").strip()
     tags = parse_front_matter_tags(raw_front)
-    if not title or not post_date or not category or not series or not tags:
+    if not title or not post_date or not category or not series or not article_format or not tags:
         raise ValueError(f"public addition has incomplete front matter: {source}")
     summary = str(front.get("summary") or front.get("description") or plain_summary(body)).strip()
     reading_time = str(override.get("readingTime") or "").strip()
@@ -58,6 +59,7 @@ def record_from_source(root: Path, slug: str, override: dict) -> dict:
         "updated": str(front.get("updated") or post_date).strip(),
         "category": category,
         "series": series,
+        "articleFormat": article_format,
         "tags": tags,
         "summary": summary,
         "readingTime": reading_time,
@@ -84,7 +86,10 @@ def expected_posts(root: Path) -> list[dict]:
             continue
         if slug in result:
             raise ValueError(f"posts.json contains duplicate slug: {slug}")
-        result[slug] = post
+        source = root / "blog" / slug / "source.md"
+        if not source.is_file():
+            raise FileNotFoundError(f"public post is missing source.md: {source}")
+        result[slug] = record_from_source(root, slug, post)
 
     additions = status.get("publicAdditions", {})
     if not isinstance(additions, dict):
@@ -112,7 +117,7 @@ def expected_posts(root: Path) -> list[dict]:
     if not isinstance(overrides, dict):
         raise ValueError("publicOverrides must be an object")
     allowed_override_fields = {
-        "title", "date", "updated", "category", "series", "tags", "summary", "readingTime", "url",
+        "title", "date", "updated", "category", "series", "articleFormat", "tags", "summary", "readingTime", "url",
     }
     for slug, override in overrides.items():
         slug = str(slug)

@@ -2,11 +2,18 @@
 title: "Charles Schwab 入金路径整理：电汇、ACH 与到账时间"
 summary: "嘉信入金不要只看到账速度，要区分 ACH、wire、电汇凭证、可交易时间和可转出限制。"
 date: 2026-07-13
-updated: "2026-07-14"
+updated: "2026-08-23"
 slug: "schwab-funding-routes"
 category: "券商入金"
 series: "大陆用户海外券商开户"
 status: "published"
+content_type: "资料研究（入金路径与到账核对）"
+article_format: "流程核对"
+evidence: "正文内链接的 Charles Schwab 与付款网络公开说明；未展示作者电汇、ACH 或到账时长记录。"
+scope: "区分同名入金、ACH、电汇、可交易时间和后续对账的核对点。"
+boundary: "不保证到账时间、费用或资金可用性，也不提供第三方入金或规避审核的方法；以收款指引和账户条款为准。"
+content_reviewed: "2026-08-21"
+source_reviewed: "2026-08-23"
 cover: "assets/schwab-funding-map-site.svg"
 tags:
   - Charles Schwab
@@ -22,7 +29,7 @@ tags:
 
 如果你把它们混在一起，就会出现几个典型误会：页面显示钱到了，但暂时不能提现；电汇当天到达，但中转行扣了费用；ACH 看起来免费，但并不适合跨境美元入金；国际账户能不能用某个功能，还要看账户实体和居住地。
 
-> 本文为个人经验记录和嘉信入金路径认知框架，不构成投资、税务或法律建议，也不是开户、换汇或跨境汇款建议。Schwab International 与美国本土账户的可用功能可能不同，实际操作前请以账户内 Transfers & Payments 页面、客服和官方费用表为准。资料核对日期：2026-07-14。
+> 本文为基于公开资料的嘉信入金路径核对框架，不构成投资、税务或法律建议，也不是开户、换汇或跨境汇款建议。Schwab International 与美国本土账户的可用功能可能不同；本文不展示作者电汇、ACH 或到账时长记录。实际操作前请以账户内 Transfers & Payments 页面、客服和官方费用表为准。资料核对日期：2026-08-23。
 
 ![Charles Schwab 入金路径地图](assets/schwab-funding-map-site.svg)
 
@@ -92,18 +99,17 @@ Charles Schwab 官方 Pricing Guide for Individual Investors 写明：
 
 这几个数字解决的是“嘉信收费”问题，不等于你的全链路成本。跨境电汇时，汇出银行、中转行和收款路径都可能产生费用；如果涉及换汇，还要看汇率点差和用途申报。
 
-另外，嘉信主站普通 brokerage account 的定价页面写明标准账户没有开户费、维护费和最低开户资金，但国际客户和特定账户可能有不同适用规则。国际账户尤其不要只看美国本土账户页面。
+截至 2026 年 8 月 23 日，[Schwab International 当前账户页](https://international.schwab.com/us-investing-brokerage-account)也明确列出 Schwab One International 最低入金为 0 美元，开户和维护本身不收费。这个结论只针对当前通用账户口径；居住地资格、可用入金方式、产品功能和其他费用仍要按实际申请路径与账户文件核对，不能引用旧版申请 PDF 代替当前页面。
 
 ## 到账时间怎么理解
 
-我不会把到账时间写成一个绝对数字，因为它取决于账户类型、汇出银行、付款网络、币种、时间点、节假日和风控审核。但可以用这个框架判断：
+到账时间不宜写成一个绝对数字，因为它取决于账户类型、汇出银行、付款网络、币种、时间点、节假日和风控审核。可以用这个框架判断：
 
 | 路径 | 常见节奏 | 主要变量 |
 |---|---|---|
 | ACH pull / push | 工作日批量处理，可能同日或 1-2 个工作日，也可能有 hold | 银行 cutoff、ACH 规则、账户验证、退回风险。 |
 | 美国本地 wire | 通常适合当天处理的付款 | 银行 cutoff、收款信息是否正确、人工审核。 |
 | 国际电汇 / SWIFT | 常见为 1-5 个工作日 | 汇出行、中转行、收款行、合规审核、节假日。 |
-| 账户转仓 ACAT | Schwab 页面提到开户后选择 investment account transfer，账户通常在 5 个工作日内获批并可继续操作；实际转移时间看资产和对手方 | 原券商、资产类型、是否全仓、是否有不支持资产。 |
 
 更实用的做法是：第一次使用某条路径时，做一笔小额测试，把“提交时间、银行扣款时间、嘉信入账时间、可交易时间、可转出时间、费用”全部记下来。你的真实记录比网上任何人的截图都有用。
 
@@ -111,7 +117,7 @@ Charles Schwab 官方 Pricing Guide for Individual Investors 写明：
 
 ![嘉信电汇前检查清单](assets/schwab-wire-checklist-site.svg?v=20260714-textfit)
 
-电汇或 ACH 前，我会检查 9 件事：
+电汇或 ACH 前，建议检查 9 件事：
 
 1. 付款账户是否本人同名。
 2. 账户类型是否支持当前路径。
@@ -125,7 +131,7 @@ Charles Schwab 官方 Pricing Guide for Individual Investors 写明：
 
 如果是国际账户，还要额外确认：所在地区是否支持 ACH、wire instructions 是否与美国本土账户相同、是否有最低资金或账户维护要求、客服是否要求补充资金来源文件。
 
-## 我会怎么选
+## 如何判断入金路径
 
 **有美国银行账户、常规小额入出金：**  
 优先 ACH。成本低，长期维护方便，但不要把它当成跨境路径。
@@ -152,8 +158,7 @@ ACH 解决美国本地银行和券商之间的低成本转账；电汇解决跨�
 
 ## 参考资料
 
-- Charles Schwab, [Pricing](https://www.schwab.com/pricing).
+- Charles Schwab International, [U.S. Investing Brokerage Account](https://international.schwab.com/us-investing-brokerage-account).
 - Charles Schwab, [Charles Schwab Pricing Guide for Individual Investors](https://www.schwab.com/legal/schwab-pricing-guide-for-individual-investors).
-- Charles Schwab, [Transfers: Moving Accounts to Schwab](https://www.schwab.com/transfer-to-schwab).
-- Nacha, [The ABCs of ACH](https://www.nacha.org/content/ach-network).
+- Nacha, [ACH Payments Fact Sheet](https://www.nacha.org/content/ach-payments-fact-sheet).
 - Federal Reserve Financial Services, [Fedwire Funds Service](https://www.frbservices.org/financial-services/wires).

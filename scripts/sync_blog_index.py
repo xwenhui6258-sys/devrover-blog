@@ -21,11 +21,12 @@ CATEGORY_TONES = {
     "券商入金": "gold",
     "跨境投资": "purple",
 }
+ARTICLE_FORMAT_ORDER = ["机制拆解", "决策比较", "流程核对", "异常排查", "资料核验"]
 SERIES_INTRO = {
     "大陆用户海外券商开户": "嘉信、IBKR、W-8BEN、地址证明",
     "海外银行卡与资金流转": "Wise、实体卡、入金出金路径",
     "美股新手基础设施": "账户安全、数据源、税务基础",
-    "海外资产入门": "模拟交易、账户类型、基础流程",
+    "海外资产入门": "ETF 机制、账户类型、基础流程",
 }
 
 
@@ -45,6 +46,10 @@ def tag_url(tag: str) -> str:
     return "/blog/" if tag == "全部" else f"/blog/?tag={quote_plus(tag)}"
 
 
+def article_format_url(article_format: str) -> str:
+    return "/blog/" if article_format == "全部" else f"/blog/?format={quote_plus(article_format)}"
+
+
 def sorted_posts(posts: list[dict]) -> list[dict]:
     return sorted(posts, key=lambda post: str(post.get("updated") or post.get("date") or ""), reverse=True)
 
@@ -59,9 +64,18 @@ def render_post(post: dict) -> str:
     reading = html.escape(str(post.get("readingTime") or "5 分钟"))
     series = str(post.get("series") or "")
     series_suffix = f" · {html.escape(series)}" if series else ""
+    article_format = str(post.get("articleFormat") or "")
+    format_html = (
+        f'<span class="article-format">{html.escape(article_format)}</span>'
+        if article_format
+        else ""
+    )
     url = str(post.get("url") or f'/blog/{post["slug"]}/')
     return f'''<article class="post-card">
-      {link(category_url(category), category, "category", category, f"category-pill {tone}")}
+      <div class="post-card-labels">
+        {link(category_url(category), category, "category", category, f"category-pill {tone}")}
+        {format_html}
+      </div>
       <h3><a href="{html.escape(url, quote=True)}">{html.escape(str(post["title"]))}</a></h3>
       <p>{html.escape(str(post.get("summary") or ""))}</p>
       <div class="post-meta"><time datetime="{html.escape(str(post.get("updated") or post.get("date") or ""), quote=True)}">{updated}</time> · {reading}读完{series_suffix}</div>
@@ -106,6 +120,23 @@ def render_tag_filters(tags: list[str]) -> str:
     )
 
 
+def render_article_format_filters(posts: list[dict]) -> str:
+    counts = Counter(str(post.get("articleFormat") or "") for post in posts)
+    formats = [article_format for article_format in ARTICLE_FORMAT_ORDER if counts[article_format]]
+    formats.extend(sorted(value for value in counts if value and value not in formats))
+    values = ["全部", *formats]
+    return "".join(
+        link(
+            article_format_url(article_format),
+            article_format,
+            "format",
+            "" if article_format == "全部" else article_format,
+            "filter-chip" + (" active" if article_format == "全部" else ""),
+        )
+        for article_format in values
+    )
+
+
 def render_series(posts: list[dict]) -> str:
     counts = Counter(post.get("series") for post in posts if post.get("series"))
     order = list(dict.fromkeys(post.get("series") for post in posts if post.get("series")))
@@ -127,8 +158,8 @@ def render_blog_jsonld(posts: list[dict]) -> str:
         "@type": "CollectionPage",
         "@id": SITE_URL + "/blog/#collection",
         "url": SITE_URL + "/blog/",
-        "name": "海外投资与数字生活笔记",
-        "description": "美股账户、海外银行卡、跨境工具和真实踩坑经验。",
+        "name": "跨境金融与海外投资笔记",
+        "description": "券商账户、海外银行卡、资金路径与 ETF 入门的资料研究和核对框架。",
         "inLanguage": "zh-CN",
         "author": {
             "@type": "Person",
@@ -197,6 +228,12 @@ def synchronize(index_text: str, posts: list[dict], taxonomy: dict) -> str:
     )
     index_text = replace_one(
         index_text,
+        r'(<div class="filter-chips format-filter-chips" id="formatFilters">).*?(</div>)',
+        lambda match: match.group(1) + render_article_format_filters(posts) + match.group(2),
+        "article format filters",
+    )
+    index_text = replace_one(
+        index_text,
         r'(<div class="series-list" id="seriesList">).*?(</div>\n      <div class="meta-note">)',
         lambda match: match.group(1) + render_series(ordered) + match.group(2),
         "series list",
@@ -215,6 +252,13 @@ def synchronize(index_text: str, posts: list[dict], taxonomy: dict) -> str:
         r'const canonicalTags = \[.*?\];\nconst tagAliases = \{.*?\};',
         f"const canonicalTags = {canonical};\nconst tagAliases = {aliases};",
         "taxonomy constants",
+    )
+    series_intro = json.dumps(SERIES_INTRO, ensure_ascii=False, indent=2)
+    index_text = replace_one(
+        index_text,
+        r'const seriesIntro = \{.*?\};',
+        f"const seriesIntro = {series_intro};",
+        "series intro constants",
     )
     index_text = replace_one(
         index_text,
