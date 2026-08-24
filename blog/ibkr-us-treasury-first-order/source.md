@@ -87,6 +87,8 @@ IBKR 的界面会随 TWS、Client Portal、账户权限和版本变化。下面�
 
 在 Client Portal 中，先确认账户已具备相应的交易权限；其订单票可从交易入口选择 Bonds。Bond Scanner 可用于按 CUSIP、到期日、Yield to Worst 或票息等条件缩小范围。[IBKR Campus：Client Portal 研究工具](https://www.interactivebrokers.com/campus/trading-lessons/client-portal-research-tools/?retakeFinal=1) [IBKR Campus：Client Portal 订单票](https://www.interactivebrokers.com/campus/trading-lessons/client-portal-order-entry/?retakeFinal=1)
 
+如果市价、限价和有效期的区别还没有完全分清，先阅读[第一次下单时市价单、限价单与有效期怎么选](/blog/first-order-types-and-tif/)，再回到债券订单票核对价格边界。
+
 无论用哪一个界面，第一次下单都先确认这一行是不是你要的合约：
 
 - 类型：Bill、Note 或 Bond；
@@ -110,6 +112,8 @@ IBKR 的 Bond Scanner 教学也显示，选中债券后会把类型、票息、�
 IBKR 的 TWS 教学说明，债券通常以 1,000 美元面值为常见基数；但具体合约的最小交易单位、可用数量和碎额规则仍要以当时订单票为准。[IBKR Campus：美国国债订单输入](https://www.interactivebrokers.com/campus/trading-lessons/enter-us-treasury-orders-in-tws/?ibban=1&src=lin399op)
 
 因此，填写 `Quantity` 后，不要只用“数量 × 1000”心算账户会扣多少钱。订单预览里的预计成本才是核对现金是否足够的依据。
+
+预览页里的现金、净资产和购买力不是同一个数字；需要时可对照[券商账户六个余额字段的核对顺序](/blog/brokerage-account-balances/)，避免把购买力误当成可直接支付的现金。
 
 ### 3. 新手优先理解 Limit，而不是假定 Market 一定可用
 

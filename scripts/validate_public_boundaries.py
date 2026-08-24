@@ -24,6 +24,16 @@ EXPECTED_ROBOTS_RULES = (
     "Disallow: /blog/*/source.md",
     "Disallow: /blog/content-status.json",
 )
+PRIVATE_ROOT_FILES = (
+    "ADSENSE_CONTENT_REVIEW_2026-08-23.md",
+    "ADSENSE_REAPPLICATION_GATE.md",
+    "BLOG_PUBLISHING.md",
+    "README.txt",
+)
+PRIVATE_SITE_FILES = (
+    "blog/content-status.json",
+    "blog/tag-taxonomy.json",
+)
 
 
 def fetch_status(url: str, timeout: float) -> int:
@@ -63,6 +73,18 @@ def check_static(root: Path, errors: list[str]) -> None:
             if marker in source_text:
                 errors.append(f"{source_path.relative_to(root)} contains {marker!r}")
 
+    private_hrefs = tuple(
+        "/" + path
+        for path in (*PRIVATE_ROOT_FILES, *PRIVATE_SITE_FILES)
+    ) + ("/scripts/",)
+    for html_path in sorted(root.glob("**/*.html")):
+        html_text = html_path.read_text(encoding="utf-8")
+        for href in private_hrefs:
+            if re.search(rf"href=[\"']{re.escape(href)}", html_text):
+                errors.append(
+                    f"{html_path.relative_to(root)} links to private resource {href}"
+                )
+
 
 def check_http(root: Path, base_url: str, timeout: float, errors: list[str]) -> None:
     base = base_url.rstrip("/") + "/"
@@ -77,7 +99,12 @@ def check_http(root: Path, base_url: str, timeout: float, errors: list[str]) -> 
         for path in incoming_paths
     )
     targets.append(("incoming-root", "/incoming/"))
-    targets.append(("content-status", "/blog/content-status.json"))
+    targets.extend(("root-private", "/" + path) for path in PRIVATE_ROOT_FILES)
+    targets.extend(("site-private", "/" + path) for path in PRIVATE_SITE_FILES)
+    targets.extend(
+        ("script", "/" + path.relative_to(root).as_posix())
+        for path in sorted((root / "scripts").glob("*.py"))
+    )
 
     for kind, path in targets:
         url = urljoin(base, path.lstrip("/"))

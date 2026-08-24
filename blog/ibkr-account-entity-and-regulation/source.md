@@ -2,7 +2,7 @@
 title: "同样叫 IBKR，账户归属为什么不同：如何确认开户主体和监管地区"
 summary: "同一个 IBKR App 背后可能是不同法律实体、监管机构和客户保护安排。本文用客户协议、结单、监管登记和安全消息确认自己的账户归属。"
 date: 2026-07-15
-updated: 2026-07-15
+updated: 2026-08-23
 slug: "ibkr-account-entity-and-regulation"
 category: "跨境投资"
 series: "海外资产入门"
@@ -56,6 +56,8 @@ IBKR 当前的官方关联公司披露列出了美国、加拿大、英国、爱
 四层可能出现不同公司名称。某个地区实体与客户签约，同时由集团内另一实体清算或托管部分证券，并不矛盾；这只是合同层和资产层不同。
 
 如果你通过第三方券商、顾问或介绍经纪商开立账户，还要再问一层：前台品牌、介绍方、签约券商、执行方和清算托管方分别是谁。能够登录 IBKR 软件，只能证明存在技术或账户连接，不能单独证明你是 Interactive Brokers LLC 的直接零售客户。
+
+涉及绑定、介绍经纪商或第三方交易前端时，可继续对照[IBKR 直营、介绍经纪商与软件授权的结构差异](/blog/ibkr-direct-vs-introducing-broker/)，把技术连接和客户关系分开。
 
 ## 为什么同样开户，实体仍可能不同
 
@@ -145,6 +147,8 @@ IBUK 的官方披露说明，账户由 IBLLC 清算和承载，某些有限产�
 IBKR 当前 Client Portal 指南提供了 Account Confirmation Letter with Customer Agreement。路径是 Performance & Reports > Other Reports > Supplemental > Account Confirmation Letter with Customer Agreement；选择账户和语言后运行报告。
 
 优先看这份与你账户绑定的确认函、你实际接受的协议，以及后续迁移或修订通知，不要只打开官网通用模板。有多个 linked accounts 时应逐一生成；同一个登录入口不证明所有账户都归属同一实体。
+
+如果账户尚未开立，[IBKR 开户前的资料、账户类型和权限清单](/blog/ibkr-before-open/)可以帮助提前保存会影响后续实体核验的申请信息，但最终结论仍以开户后的正式文件为准。
 
 记录这些字段：
 

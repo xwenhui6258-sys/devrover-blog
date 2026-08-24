@@ -142,6 +142,13 @@ def markdown_external_urls(text: str) -> list[str]:
     return re.findall(r"\]\((https?://[^)\s]+)\)", text)
 
 
+def markdown_internal_blog_slugs(text: str) -> list[str]:
+    return re.findall(
+        r"\]\((?:https://7hui\.top)?/blog/([^/)]+)/?(?:[?#][^)]*)?\)",
+        text,
+    )
+
+
 def is_primary_source_host(host: str) -> bool:
     normalized = host.lower().strip(".")
     return any(
@@ -164,6 +171,7 @@ def main() -> int:
     article_format_counts: dict[str, int] = {}
     heading_signatures: dict[tuple[str, ...], list[str]] = {}
     generic_heading_slugs: dict[str, list[str]] = {}
+    contextual_incoming_links: dict[str, int] = {}
 
     slugs = [str(post.get("slug") or "") for post in posts]
     urls = [str(post.get("url") or "") for post in posts]
@@ -286,6 +294,18 @@ def main() -> int:
         for field, reviewed_date in parsed_review_dates.items():
             if reviewed_date > date.today():
                 errors.append(f"{slug}: future review date for {field}={reviewed_date}")
+        raw_updated = str(front_matter.get("updated") or front_matter.get("date") or "")
+        try:
+            modified_date = date.fromisoformat(raw_updated)
+        except ValueError:
+            errors.append(f"{slug}: invalid ISO date for updated/date={raw_updated}")
+            modified_date = None
+        content_reviewed = parsed_review_dates.get("content_reviewed")
+        if modified_date and content_reviewed and modified_date < content_reviewed:
+            errors.append(
+                f"{slug}: dateModified {modified_date} predates content review "
+                f"{content_reviewed}"
+            )
         source_reviewed = parsed_review_dates.get("source_reviewed")
         if source_reviewed and (date.today() - source_reviewed).days > SOURCE_REVIEW_MAX_AGE_DAYS:
             errors.append(
@@ -321,6 +341,20 @@ def main() -> int:
             errors.append(f"{slug}: source links do not span 2 domains")
         if not any(is_primary_source_host(host) for host in source_hosts):
             errors.append(f"{slug}: no primary or official source domain found")
+        internal_slugs = markdown_internal_blog_slugs(source_body)
+        if not internal_slugs:
+            errors.append(f"{slug}: no contextual internal blog link in source body")
+        for target_slug in internal_slugs:
+            if target_slug == slug:
+                errors.append(f"{slug}: contextual link points to itself")
+            elif target_slug not in slugs:
+                errors.append(
+                    f"{slug}: contextual link targets non-public article {target_slug}"
+                )
+            else:
+                contextual_incoming_links[target_slug] = (
+                    contextual_incoming_links.get(target_slug, 0) + 1
+                )
         source_section = SOURCE_SECTION_PATTERN.search(source_body)
         if not source_section:
             errors.append(f"{slug}: missing a labeled source section")
@@ -412,6 +446,9 @@ def main() -> int:
                 "public articles share the same opening structure: "
                 f"{signature}={sorted(slugs_using_signature)}"
             )
+    for slug in slugs:
+        if contextual_incoming_links.get(slug, 0) < 1:
+            errors.append(f"{slug}: no contextual incoming link from another public article")
 
     if errors:
         for error in errors:

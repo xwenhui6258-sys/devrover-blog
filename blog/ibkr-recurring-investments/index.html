@@ -107,6 +107,7 @@
 <h3 id="section-6">4. 账户里有足够现金</h3>
 <p>IBKR Campus 当前说明，定期投资要求账户有足够资金，且不能在借用保证金的状态下使用。也就是说，保证金账户里出现很高的 Buying Power，不代表这笔计划会靠借款完成。</p>
 <p>最好在执行日前留出“计划金额 + 预估佣金 + 少量汇率缓冲”。如果证券以美元交易，而账户只有其他货币，不要依据 Base Currency 猜测付款方式。不同账户实体和类型的 AutoFX 规则不同：有的现金账户可能自动换汇，有的场景需要先换汇。预览页没有把换汇成本和资金来源说清楚时，先手动准备交易币种。</p>
+<p>判断计划是否真的有可用现金时，可按<a href="/blog/brokerage-account-balances/">现金、已结算现金和购买力的核对顺序</a>查看账户，而不是只看首页的 Buying Power。</p>
 <h3 id="section-7">5. 小额也要考虑最低佣金</h3>
 <p>IBKR 官方课程当前把多数币种的定投最低金额描述为 10 个货币单位，SEK 为 100；具体输入框会给出你账户的有效下限。标准股票佣金仍可能适用。若每次只投很小金额，最低佣金占比可能很高，因此“拆得越细”不一定“成本越低”。</p>
 <figure><img src="assets/recurring-cash-cycle.png" alt="定期投资执行日的资金与成交路径" loading="lazy" decoding="async" width="1400" height="900"><figcaption>定期投资执行日的资金与成交路径</figcaption></figure>
@@ -137,6 +138,7 @@
 <li>碎股数量由实际投入金额和成交结果计算，通常不会是整数。</li>
 </ul>
 <p>“按时生成订单”和“当天必定成交”是两件事。不要把定投当成对成交时间和价格的承诺。</p>
+<p>定投虽然自动生成指令，成交仍受订单规则和市场报价影响；可结合<a href="/blog/first-order-types-and-tif/">市价单、限价单与有效期的基础说明</a>理解“生成订单”和“完成成交”的区别。</p>
 <h2 id="section-11">创建后去哪里查看</h2>
 <p>保存成功后，回到 Recurring Investments 页面，逐项确认：</p>
 <p>1. 状态是否为 Active； 2. 下一次执行日期是否正确； 3. 金额和币种是否正确； 4. 是否设置了结束日期； 5. 有没有重复创建同一证券。</p>
@@ -193,10 +195,10 @@
           <h3>现金账户和保证金账户差在哪里：借款、交收与强平风险</h3>
           <p>2026-08-23 · 8 分钟读完</p>
         </a>
-        <a class="related-card" href="/blog/what-is-etf-basket-in-one-ticker/">
+        <a class="related-card" href="/blog/etf-hidden-costs/">
           <span>海外资产入门</span>
-          <h3>ETF 到底是什么：一篮子股票是怎么买进一个代码里的</h3>
-          <p>2026-08-21 · 14 分钟读完</p>
+          <h3>券商免佣不等于没有成本：ETF 费用到底藏在哪里</h3>
+          <p>2026-08-23 · 12 分钟读完</p>
         </a>
       </div>
       <nav class="article-pagination" aria-label="上一篇和下一篇">

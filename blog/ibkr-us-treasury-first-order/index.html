@@ -119,6 +119,7 @@
 <p>IBKR 的界面会随 TWS、Client Portal、账户权限和版本变化。下面写的是阅读顺序，不把旧截图里的某个菜单位置当作永久规则。</p>
 <p>在 TWS 中，IBKR 当前教学示例使用 <code>US-T</code> 搜索美国国债，再在合约选择器中筛选 <code>Government Bonds</code>、<code>Tradable</code>、<code>Type</code>、到期日、发行日和票息。选中具体债券后，可以把 Bond 专用的 Bid Yield / Ask Yield 等列加入报价窗口。<a href="https://www.interactivebrokers.com/campus/trading-lessons/enter-us-treasury-orders-in-tws/?ibban=1&amp;src=lin399op">IBKR Campus：在 TWS 输入美国国债订单</a></p>
 <p>在 Client Portal 中，先确认账户已具备相应的交易权限；其订单票可从交易入口选择 Bonds。Bond Scanner 可用于按 CUSIP、到期日、Yield to Worst 或票息等条件缩小范围。<a href="https://www.interactivebrokers.com/campus/trading-lessons/client-portal-research-tools/?retakeFinal=1">IBKR Campus：Client Portal 研究工具</a> <a href="https://www.interactivebrokers.com/campus/trading-lessons/client-portal-order-entry/?retakeFinal=1">IBKR Campus：Client Portal 订单票</a></p>
+<p>如果市价、限价和有效期的区别还没有完全分清，先阅读<a href="/blog/first-order-types-and-tif/">第一次下单时市价单、限价单与有效期怎么选</a>，再回到债券订单票核对价格边界。</p>
 <p>无论用哪一个界面，第一次下单都先确认这一行是不是你要的合约：</p>
 <ul>
 <li>类型：Bill、Note 或 Bond；</li>
@@ -135,6 +136,7 @@
 <h3 id="section-9">2. 以面值填写数量，并核对最小单位</h3>
 <p>IBKR 的 TWS 教学说明，债券通常以 1,000 美元面值为常见基数；但具体合约的最小交易单位、可用数量和碎额规则仍要以当时订单票为准。<a href="https://www.interactivebrokers.com/campus/trading-lessons/enter-us-treasury-orders-in-tws/?ibban=1&amp;src=lin399op">IBKR Campus：美国国债订单输入</a></p>
 <p>因此，填写 <code>Quantity</code> 后，不要只用“数量 × 1000”心算账户会扣多少钱。订单预览里的预计成本才是核对现金是否足够的依据。</p>
+<p>预览页里的现金、净资产和购买力不是同一个数字；需要时可对照<a href="/blog/brokerage-account-balances/">券商账户六个余额字段的核对顺序</a>，避免把购买力误当成可直接支付的现金。</p>
 <h3 id="section-10">3. 新手优先理解 Limit，而不是假定 Market 一定可用</h3>
 <p>IBKR 的教学提示，部分交易场所不接受市价单，并建议为债券输入限价及可接受的最高价格。限价单并不保证成交；它的作用是为可接受的价格设上限或下限。<a href="https://www.interactivebrokers.com/campus/trading-lessons/enter-us-treasury-orders-in-tws/?ibban=1&amp;src=lin399op">IBKR Campus：美国国债订单输入</a></p>
 <p>对买入而言，限价应当是你愿意支付的最高价格。不要把屏幕上的 Ask、Mid、Yield 或 Coupon 直接当成限价栏必填值；先看订单票当前接受的是价格还是收益率输入，再看预览如何解释该订单。</p>
@@ -195,10 +197,10 @@
           <h3>现金账户和保证金账户差在哪里：借款、交收与强平风险</h3>
           <p>2026-08-23 · 8 分钟读完</p>
         </a>
-        <a class="related-card" href="/blog/what-is-etf-basket-in-one-ticker/">
+        <a class="related-card" href="/blog/etf-hidden-costs/">
           <span>海外资产入门</span>
-          <h3>ETF 到底是什么：一篮子股票是怎么买进一个代码里的</h3>
-          <p>2026-08-21 · 14 分钟读完</p>
+          <h3>券商免佣不等于没有成本：ETF 费用到底藏在哪里</h3>
+          <p>2026-08-23 · 12 分钟读完</p>
         </a>
       </div>
       <nav class="article-pagination" aria-label="上一篇和下一篇">

@@ -130,11 +130,13 @@
 <p>当前 Client Portal 指南给出的入口是：</p>
 <p><code>右上角用户菜单 → Settings → Account Profile → Profile → 对账户实体点铅笔图标 → Tax Forms</code></p>
 <p>进入后按顺序完成资料更新、税表填写、信息复核和确认。若没有使用 Secure Login System，页面可能通过邮件发送确认码。</p>
+<p>如果自己的菜单、表格签发主体或税务文件入口与示例不同，应先按<a href="/blog/ibkr-account-entity-and-regulation/">IBKR 账户实体与监管地区的确认方法</a>核对签约实体和正式结单，而不是只按 App 名称判断。</p>
 <p>提交后做三件事：保存完成页面，记录提交日期，检查税务居民国家和永久地址。不要等到收到第一笔股息才发现表格过期；IBKR 通常会发续期邮件，但维护身份资料最终仍是账户持有人的责任。</p>
 <h2 id="section-9">分红到账后怎么核对</h2>
 <p>先打开 Activity Statement，找到 Dividends 与 Withholding Tax 两部分，按证券和支付日配对：</p>
 <p>1. 记录代码、ISIN、支付日、毛股息和币种。 2. 找到同日或相关日期的预扣税金额。 3. 用 <code>预扣税 ÷ 毛股息</code> 计算实际税率。 4. 核对该证券的发行地、分配性质和你的 W-8 状态。 5. 年后进入 <code>Performance &amp; Reports → Tax Documents</code> 下载 Form 1042-S 和 Dividend Report。</p>
 <p>IBKR 指南说明，非美国、非加拿大个人通常会收到 1042-S；该表报告美国来源收入和预扣，包括利息、股息及 payment in lieu 等。发行人可能在年末重新分类分配，券商也可能出 corrected form，所以不要只凭某一天的现金流水完成年度申报。</p>
+<p>若问题已经从“W-8 是否有效”进入“某笔股息总额、预扣税和净额为什么对不上”，可继续使用<a href="/blog/ibkr-dividend-withholding-records/">IBKR 股息与预扣税记录的逐项对账方法</a>。</p>
 <figure><img src="assets/dividend-tax-records.png" alt="股息、预扣税与 1042-S 对账清单" loading="lazy" decoding="async" width="1400" height="900"><figcaption>股息、预扣税与 1042-S 对账清单</figcaption></figure>
 <h2 id="section-10">税率看起来不对时，按这个顺序排查</h2>
 <p>1. W-8BEN 在<strong>支付日</strong>是否有效，而不是只看除息日。 2. 税务居民国家、地址和外国税号是否一致。 3. 你是否真的符合所主张协定，而不只是拥有该国国籍。 4. 这笔钱是普通股息、payment in lieu、REIT / QIE 分配、PTP 分配，还是资本返还。 5. 实际付款人是否为美国公司，产品是否有特殊税务结构。 6. 1042-S 的收入代码、毛额和预扣额是否与报表匹配。</p>
@@ -175,7 +177,7 @@
         <a class="related-card" href="/blog/ibkr-dividend-withholding-records/">
           <span>海外资产入门</span>
           <h3>分红到账后金额为什么不对：读懂 IBKR 股息和预扣税记录</h3>
-          <p>2026-07-18 · 12 分钟读完</p>
+          <p>2026-08-23 · 12 分钟读完</p>
         </a>
         <a class="related-card" href="/blog/ibkr-us-treasury-first-order/">
           <span>海外资产入门</span>

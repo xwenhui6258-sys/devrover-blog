@@ -2,7 +2,7 @@
 title: "基础货币不是持仓货币：IBKR 换汇前必须懂的几个概念"
 summary: "把 IBKR 的基础货币、分币种现金、交易货币、外汇货币对、自动换汇和负现金拆开讲清，再完成一次可核对的换汇。"
 date: 2026-07-13
-updated: 2026-07-14
+updated: 2026-08-23
 category: "美股账户"
 series: "美股新手基础设施"
 status: "published"
@@ -42,6 +42,8 @@ tags:
 
 这里还有一个术语陷阱：外汇货币对也有“基准货币”和“报价货币”。例如 EUR/USD 中，EUR 是货币对前面的币，USD 是报价币。这和“账户基础货币设为 USD”没有直接关系。
 
+实际账户里 Cash、Settled Cash、Net Liquidation Value 和 Buying Power 还会同时出现；可先按[券商账户六个数字的核对顺序](/blog/brokerage-account-balances/)确认每一行回答什么问题。
+
 ## 基础货币到底影响什么
 
 IBKR 当前 Client Portal 指南说明，Base Currency 用于报表换算、保证金要求的计量，以及部分研究、行情和外汇佣金的收费口径；现金账户可交易产品的货币规则也会受账户设置和实体规则影响。
@@ -55,6 +57,8 @@ IBKR 当前 Client Portal 指南说明，Base Currency 用于报表换算、保�
 基础货币为 USD 时，账户首页会用当时汇率把港元和欧元折成美元，给出一个美元口径的总值。基础货币改成 HKD 后，同一批资产会换成港币口径展示，但那 5,000 美元和 2,000 欧元资产并没有被卖掉或换走。
 
 当前官方路径是 Client Portal 右上角用户菜单 > Settings > Account Reporting > Base Currency。官方指南注明，变更通常到下一交易日生效。界面可能改版，但无论入口在哪，**修改基础货币都不是换汇指令**。
+
+开户后第一次检查基础货币时，可以把它放入[券商账户启用首日的安全、权限、税表与报表清单](/blog/first-day-after-brokerage-open/)，避免只改显示币种却漏掉现金和文件设置。
 
 ## 买入前真正要核对的是交易货币与资金处理方式
 
