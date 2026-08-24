@@ -40,6 +40,7 @@ REQUIRED_FOOTER_LINKS = (
 )
 ADSENSE_LOADER = "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
 ADSENSE_STATIC_PAGES = {"/", "/blog/"}
+DISALLOWED_PUBLIC_HOSTS = ("innomad.io",)
 REQUIRED_PUBLIC_DISCLOSURE_FIELDS = (
     "content_type",
     "article_format",
@@ -205,6 +206,9 @@ def main() -> int:
     for path, relative_file in STATIC_PAGES.items():
         page = root / relative_file
         text = page.read_text(encoding="utf-8")
+        for host in DISALLOWED_PUBLIC_HOSTS:
+            if host in text.lower():
+                errors.append(f"{relative_file}: contains disallowed legacy host {host}")
         expected_canonical = SITE_URL + path
         if canonical_from_html(text) != expected_canonical:
             errors.append(f"{relative_file}: canonical mismatch")
@@ -272,7 +276,11 @@ def main() -> int:
         if not source.is_file():
             errors.append(f"{slug}: missing source.md")
             continue
-        front_matter, _, source_body = parse_front_matter(source.read_text(encoding="utf-8"))
+        source_text = source.read_text(encoding="utf-8")
+        for host in DISALLOWED_PUBLIC_HOSTS:
+            if host in source_text.lower():
+                errors.append(f"{slug}: source contains disallowed legacy host {host}")
+        front_matter, _, source_body = parse_front_matter(source_text)
         if front_matter.get("status") != "published":
             errors.append(f"{slug}: public post source status is not published")
         missing_disclosure = [
@@ -382,6 +390,9 @@ def main() -> int:
             errors.append(f"{slug}: missing index.html")
             continue
         text = page.read_text(encoding="utf-8")
+        for host in DISALLOWED_PUBLIC_HOSTS:
+            if host in text.lower():
+                errors.append(f"{slug}: page contains disallowed legacy host {host}")
         if canonical_from_html(text) != SITE_URL + url:
             errors.append(f"{slug}: canonical mismatch")
         try:
