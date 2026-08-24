@@ -32,6 +32,10 @@ textarea:focus-visible {
   outline-offset: 3px;
 }
 .container { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+.nav,
+.site-footer .container {
+  width: min(1240px, calc(100% - 48px));
+}
 header {
   position: sticky; top: 0; z-index: 10;
   backdrop-filter: blur(18px);
@@ -1736,6 +1740,10 @@ footer { color: var(--muted); border-top: 1px solid var(--line); }
   .contact-handle,
   .contact-handle a { font-size: 18px; }
   .contact-button { font-size: 16px; }
+  .nav,
+  .site-footer .container {
+    width: min(100% - 32px, 1240px);
+  }
   .nav { min-height: 68px; }
   .brand { gap: 10px; font-size: 18px; }
   .brand-icon {

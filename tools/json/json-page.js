@@ -36,6 +36,7 @@
     operation: 'format',
     operationTouched: false,
     view: 'edit',
+    outputView: 'tree',
     activeTab: 'single',
     autoDetect: true,
     preserveChinese: true,
@@ -184,6 +185,8 @@
     el('outputEmpty').classList.toggle('hidden', hasOutput);
     if (outputBox) outputBox.classList.toggle('is-empty', !hasOutput);
     syncOutputScroll();
+    refreshTreeForCurrentInput();
+    renderOutputView();
   }
 
   function statsText(stats) {
@@ -429,17 +432,12 @@
   }
 
   function renderPanels() {
-    const editing = state.view === 'edit';
-    queryAll('[data-view]').forEach(function (button) {
-      button.classList.toggle('active', button.dataset.view === state.view);
-    });
-    el('singlePanel').classList.toggle('hidden', !editing || state.activeTab !== 'single');
-    el('advancedPanel').classList.toggle('hidden', !editing || state.activeTab !== 'advanced');
-    el('treePanel').classList.toggle('hidden', editing);
+    el('singlePanel').classList.toggle('hidden', state.activeTab !== 'single');
+    el('advancedPanel').classList.toggle('hidden', state.activeTab !== 'advanced');
     queryAll('[data-main-tab]').forEach(function (button) {
       button.classList.toggle('active', button.dataset.mainTab === state.activeTab);
     });
-    if (!editing) renderTree();
+    renderOutputView();
   }
 
   function valueType(value) {
@@ -483,14 +481,15 @@
   }
 
   function refreshTreeForCurrentInput() {
-    const signature = el('jsonInput').value;
+    const signature = state.output || el('jsonInput').value;
     if (state.treeInputSignature === signature) return;
     state.treeInputSignature = signature;
     state.expanded = new Set();
-    if (state.parsedValue != null) {
-      collectDefaultExpanded(state.parsedValue, '$', 0, state.expanded);
+    const treeValue = currentTreeValue();
+    if (treeValue != null) {
+      collectDefaultExpanded(treeValue, '$', 0, state.expanded);
     }
-    if (state.view === 'tree') renderTree();
+    if (state.outputView === 'tree') renderTree();
   }
 
   function renderTreeNode(value, key, path, depth, isIndex) {
@@ -523,11 +522,35 @@
   function renderTree() {
     const treeRoot = el('treeRoot');
     state.treeValues = {};
-    if (!state.parsedValue || (valueType(state.parsedValue) !== 'object' && valueType(state.parsedValue) !== 'array')) {
-      treeRoot.innerHTML = '<div class="json-tree-empty">当前内容不是有效的 JSON 对象或数组，无法进入树形视图。</div>';
+    const treeValue = currentTreeValue();
+    if (!treeValue || (valueType(treeValue) !== 'object' && valueType(treeValue) !== 'array')) {
+      treeRoot.innerHTML = '<div class="json-tree-empty">当前结果不是有效的 JSON 对象或数组，暂无可折叠树形结果。</div>';
       return;
     }
-    treeRoot.innerHTML = renderTreeNode(state.parsedValue, null, '$', 0, false);
+    treeRoot.innerHTML = renderTreeNode(treeValue, null, '$', 0, false);
+  }
+
+  function currentTreeValue() {
+    const output = state.output || '';
+    if (output.trim()) {
+      const validation = utils.validateJson(output);
+      if (validation.valid) return validation.value;
+    }
+    return state.parsedValue;
+  }
+
+  function renderOutputView() {
+    queryAll('[data-output-view]').forEach(function (button) {
+      button.classList.toggle('active', button.dataset.outputView === state.outputView);
+    });
+    const treePanel = el('outputTreePanel');
+    const textPanel = el('outputTextPanel');
+    if (treePanel) treePanel.classList.toggle('hidden', state.outputView !== 'tree');
+    if (textPanel) textPanel.classList.toggle('hidden', state.outputView !== 'text');
+    queryAll('.json-tree-actions .json-tree-button').forEach(function (button) {
+      button.disabled = state.outputView !== 'tree';
+    });
+    if (state.outputView === 'tree') renderTree();
   }
 
   function treeCopyValue(path) {
@@ -584,13 +607,13 @@
     el('themeToggle').addEventListener('click', function () {
       setTheme(document.body.classList.contains('json-dark') ? 'light' : 'dark');
     });
-    queryAll('[data-view]').forEach(function (button) {
+    queryAll('[data-output-view]').forEach(function (button) {
       button.addEventListener('click', function () {
-        state.view = button.dataset.view;
-        if (state.view === 'tree' && (!state.parsedValue || (valueType(state.parsedValue) !== 'object' && valueType(state.parsedValue) !== 'array'))) {
-          showToast('当前 JSON 不合法或不是对象/数组');
+        state.outputView = button.dataset.outputView;
+        if (state.outputView === 'tree' && (!currentTreeValue() || (valueType(currentTreeValue()) !== 'object' && valueType(currentTreeValue()) !== 'array'))) {
+          showToast('当前结果暂无可折叠树形视图');
         }
-        renderPanels();
+        renderOutputView();
       });
     });
     queryAll('[data-main-tab]').forEach(function (button) {
@@ -627,9 +650,10 @@
       copyText(state.output);
     });
     el('expandTree').addEventListener('click', function () {
-      if (state.parsedValue != null) {
+      const treeValue = currentTreeValue();
+      if (treeValue != null) {
         state.expanded = new Set();
-        collectAllExpanded(state.parsedValue, '$', state.expanded);
+        collectAllExpanded(treeValue, '$', state.expanded);
         renderTree();
       }
     });

@@ -4,7 +4,7 @@
     radial-gradient(circle at 88% 4%, rgba(238,229,255,.72), transparent 28rem),
     #f7f8fc;
 }
-.tools-page .container { width: min(1120px, calc(100% - 40px)); }
+.tools-page main .container { width: min(1120px, calc(100% - 40px)); }
 .tools-main { min-height: calc(100vh - 76px); }
 .tools-hero { padding: 58px 0 34px; }
 .tools-hero-inner {
@@ -340,7 +340,7 @@
 }
 
 @media (max-width: 760px) {
-  .tools-page .container { width: calc(100% - 32px); }
+  .tools-page main .container { width: calc(100% - 32px); }
   .tools-hero { padding: 28px 0 20px; }
   .tools-hero-inner {
     display: block;

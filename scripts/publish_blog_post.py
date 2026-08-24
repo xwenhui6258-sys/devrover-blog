@@ -16,12 +16,12 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import quote, quote_plus, unquote
 
+from site_layout import SITE_NAME, STYLE_VERSION, render_site_footer, render_site_header
+
 
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif", ".svg"}
 TOC_HEADING_LEVEL = 2
-SITE_NAME = "DevRover的个人站"
 SITE_URL = "https://7hui.top"
-STYLE_VERSION = "20260821-reading-v1"
 
 
 @dataclass
@@ -642,29 +642,6 @@ def render_article_evidence(meta: PostMeta) -> str:
       </aside>"""
 
 
-def render_site_footer() -> str:
-    return """<footer class="site-footer">
-  <div class="container footer-grid">
-    <div class="footer-brand">
-      <a href="/">DevRover的个人站</a>
-      <p>记录跨境金融中的具体问题、资料核验和实用工具。</p>
-    </div>
-    <nav class="footer-links" aria-label="站点信息">
-      <a href="/about/">关于作者</a>
-      <a href="/contact/">联系与纠错</a>
-      <a href="/editorial-policy/">编辑与内容政策</a>
-      <a href="/privacy/">隐私与 Cookie</a>
-      <a href="/disclaimer/">免责声明</a>
-      <a href="/terms/">使用条款</a>
-    </nav>
-  </div>
-  <div class="container footer-bottom">
-    <span>© 2026 DevRover的个人站</span>
-    <span>内容仅供一般信息与资料研究使用，不构成投资、税务或法律建议。</span>
-  </div>
-</footer>"""
-
-
 def render_breadcrumbs(meta: PostMeta) -> str:
     category_item = ""
     if meta.category:
@@ -855,16 +832,7 @@ def render_page(meta: PostMeta, article_html: str, posts: list[dict] | None = No
   <script type="application/ld+json">{structured_data}</script>
 </head>
 <body>
-<header>
-  <div class="container nav">
-    <a class="brand" href="/"><img class="brand-icon" src="/assets/devrover-icon.png" alt="" aria-hidden="true">DevRover的个人站</a>
-    <nav>
-      <a href="/blog/">博客</a>
-      <a href="/tools/">工具</a>
-      <a href="/about/">关于</a>
-    </nav>
-  </div>
-</header>
+{render_site_header("blog")}
 
 <main class="article-page">
   <div class="article-layout">

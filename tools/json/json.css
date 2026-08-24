@@ -53,9 +53,9 @@ body.json-dark .brand {
 }
 
 .json-shell {
-  width: min(1180px, calc(100% - 32px));
+  width: min(1088px, calc(100% - 32px));
   margin: 0 auto;
-  padding-top: 28px;
+  padding-top: 26px;
 }
 
 .json-page button,
@@ -73,8 +73,9 @@ body.json-dark .brand {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 24px;
+  margin-bottom: 22px;
+  padding: 22px 24px;
 }
 
 .json-title {
@@ -109,10 +110,16 @@ body.json-dark .brand {
   font-size: 14px;
 }
 
+.json-status-compact {
+  flex: 1 1 auto;
+  max-width: 430px;
+}
+
 .json-controls {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: 0 0 auto;
 }
 
 .json-select,
@@ -181,7 +188,7 @@ body.json-dark .json-input {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   color: var(--json-muted);
   font-size: 14px;
   font-weight: 650;
@@ -215,8 +222,8 @@ body.json-dark .json-input {
 .json-state-title {
   margin: 0 0 6px;
   color: var(--json-text);
-  font-size: clamp(30px, 4vw, 42px);
-  line-height: 1.08;
+  font-size: 20px;
+  line-height: 1.2;
   letter-spacing: 0;
 }
 
@@ -241,7 +248,7 @@ body.json-dark .json-input {
 }
 
 .json-stats-line {
-  margin-top: 12px;
+  margin-top: 6px;
   overflow-wrap: anywhere;
 }
 
@@ -324,6 +331,15 @@ body.json-dark .json-operation-tabs button.active {
   box-shadow: 0 12px 24px rgba(91,91,214,.18);
 }
 
+.json-btn:disabled,
+.json-icon-btn:disabled,
+.json-tree-button:disabled {
+  cursor: not-allowed;
+  opacity: .52;
+  transform: none;
+  box-shadow: none;
+}
+
 .json-btn.secondary,
 .json-icon-btn,
 .json-tree-button.secondary {
@@ -365,6 +381,20 @@ body.json-dark .json-tree-button.secondary {
   white-space: nowrap;
 }
 
+.json-action-btn {
+  width: auto;
+  min-width: 74px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.json-action-btn span {
+  display: block;
+  font-size: 13px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .json-icon-btn svg,
 .json-btn svg,
 .json-tree-button svg {
@@ -396,10 +426,23 @@ body.json-dark .json-tree-button.secondary {
   padding: 20px;
 }
 
+.json-workbench-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.json-workbench-actions {
+  justify-content: flex-end;
+  flex: 0 0 auto;
+}
+
 .json-tabs {
   min-width: min(420px, 100%);
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .json-panel-note {
@@ -795,7 +838,8 @@ body.json-dark .json-token-null { color: #f9a8d4; }
 .json-inline-options.hidden,
 .json-panel.hidden,
 .json-tree-panel.hidden,
-.json-advanced.hidden {
+.json-advanced.hidden,
+.json-output-panel.hidden {
   display: none;
 }
 
@@ -810,6 +854,63 @@ body.json-dark .json-token-null { color: #f9a8d4; }
 .json-output-tool .json-output-wrap {
   flex: 1 1 376px;
   height: auto;
+  min-height: 376px;
+  max-height: none;
+}
+
+.json-output-viewbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.json-output-mode-tabs {
+  min-width: 190px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.json-output-mode-tabs button {
+  min-width: 0;
+}
+
+.json-tree-actions {
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.json-tree-actions .json-tree-button {
+  min-height: 34px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.json-output-panels {
+  flex: 1 1 376px;
+  min-height: 376px;
+  display: flex;
+  min-width: 0;
+}
+
+.json-output-panel {
+  width: 100%;
+  min-width: 0;
+}
+
+.json-output-panels .json-codebox.output {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 376px;
+}
+
+.json-output-tree-panel {
+  display: flex;
+}
+
+.json-output-tree {
+  width: 100%;
   min-height: 376px;
   max-height: none;
 }
@@ -894,6 +995,10 @@ body.json-dark .json-token-null { color: #f9a8d4; }
   background: var(--json-code-bg);
   padding: 10px;
   font: 13px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.json-tree.json-output-tree {
+  max-height: none;
 }
 
 .json-tree-empty {
@@ -1023,7 +1128,8 @@ body.json-dark .json-token-null { color: #f9a8d4; }
     flex-direction: column;
   }
   .json-status-actions,
-  .json-controls {
+  .json-controls,
+  .json-workbench-actions {
     align-items: stretch;
     justify-items: stretch;
     width: 100%;
@@ -1032,6 +1138,11 @@ body.json-dark .json-token-null { color: #f9a8d4; }
   .json-controls .json-theme-btn {
     width: 100%;
   }
+  .json-workbench-head,
+  .json-output-viewbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
   .json-grid,
   .json-advanced-grid {
     grid-template-columns: 1fr;
@@ -1039,8 +1150,16 @@ body.json-dark .json-token-null { color: #f9a8d4; }
   .json-segment,
   .json-tabs,
   .json-operation-tabs,
+  .json-output-mode-tabs,
   .json-row {
     width: 100%;
+  }
+  .json-action-btn {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .json-tree-actions .json-tree-button {
+    flex: 1 1 0;
   }
   .json-status-actions .json-icon-btn {
     flex: 1 1 0;
@@ -1050,10 +1169,14 @@ body.json-dark .json-token-null { color: #f9a8d4; }
 
 @media (max-width: 620px) {
   .json-shell {
-    width: min(100% - 24px, 1180px);
+    width: min(100% - 24px, 1088px);
     padding-top: 20px;
   }
+  .json-topbar {
+    padding: 16px;
+  }
   .json-status,
+  .json-topbar,
   .json-tool,
   .json-workbench,
   .json-tree-card,
@@ -1061,7 +1184,7 @@ body.json-dark .json-token-null { color: #f9a8d4; }
     padding: 16px;
   }
   .json-state-title {
-    font-size: 30px;
+    font-size: 20px;
   }
   .json-codebox {
     grid-template-columns: 42px minmax(0, 1fr);
@@ -1074,6 +1197,11 @@ body.json-dark .json-token-null { color: #f9a8d4; }
   .json-output-tool .json-output-wrap {
     min-height: 330px;
     flex-basis: 330px;
+  }
+  .json-output-panels,
+  .json-output-tree,
+  .json-output-panels .json-codebox.output {
+    min-height: 330px;
   }
   .json-input {
     min-height: 300px;

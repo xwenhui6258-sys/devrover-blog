@@ -10,10 +10,10 @@ import re
 import sys
 from pathlib import Path
 
+from site_layout import SITE_NAME, STYLE_VERSION, render_site_footer, render_site_header
+
 
 SITE_URL = "https://7hui.top"
-SITE_NAME = "DevRover的个人站"
-STYLE_VERSION = "20260809-trust-v1"
 ADSENSE_LOADER = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3874391842550034"
 ADSENSE_LOADER_PATTERN = re.compile(
     r'\s*<script\b[^>]*\bsrc=["\']'
@@ -43,26 +43,6 @@ def read_status(root: Path) -> tuple[set[str], dict[str, str], set[str]]:
     return hidden, redirects, retired
 
 
-def header() -> str:
-    return f'''<header>
-  <div class="container nav">
-    <a class="brand" href="/"><img class="brand-icon" src="/assets/devrover-icon.png" width="36" height="36" alt="" aria-hidden="true">{SITE_NAME}</a>
-    <nav>
-      <a href="/blog/">博客</a>
-      <a href="/tools/">工具</a>
-      <a href="/about/">关于</a>
-    </nav>
-  </div>
-</header>'''
-
-
-def footer() -> str:
-    return '''<footer class="site-footer">
-  <div class="container footer-grid"><div class="footer-brand"><a href="/">DevRover的个人站</a><p>记录跨境金融中的具体问题、资料核验和实用工具。</p></div><nav class="footer-links" aria-label="站点信息"><a href="/about/">关于作者</a><a href="/contact/">联系与纠错</a><a href="/editorial-policy/">编辑与内容政策</a><a href="/privacy/">隐私与 Cookie</a><a href="/disclaimer/">免责声明</a><a href="/terms/">使用条款</a></nav></div>
-  <div class="container footer-bottom"><span>© 2026 DevRover的个人站</span><span>内容仅供一般信息与资料研究使用，不构成投资、税务或法律建议。</span></div>
-</footer>'''
-
-
 def simple_page(title: str, description: str, body: str, canonical: str = "", refresh_target: str = "") -> str:
     canonical_tag = f'\n  <link rel="canonical" href="{html.escape(SITE_URL + canonical, quote=True)}">' if canonical else ""
     refresh = f'\n  <meta http-equiv="refresh" content="0;url={html.escape(refresh_target, quote=True)}">' if refresh_target else ""
@@ -85,9 +65,9 @@ def simple_page(title: str, description: str, body: str, canonical: str = "", re
   <link rel="stylesheet" href="/assets/style.css?v={STYLE_VERSION}">{script}
 </head>
 <body>
-{header()}
+{render_site_header("blog")}
 <main class="page"><div class="container">{body}</div></main>
-{footer()}
+{render_site_footer()}
 </body>
 </html>
 '''
