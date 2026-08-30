@@ -117,7 +117,7 @@ def expected_posts(root: Path) -> list[dict]:
     if not isinstance(overrides, dict):
         raise ValueError("publicOverrides must be an object")
     allowed_override_fields = {
-        "title", "date", "updated", "category", "series", "articleFormat", "tags", "summary", "readingTime", "url",
+        "title", "date", "category", "series", "articleFormat", "tags", "summary", "readingTime", "url",
     }
     for slug, override in overrides.items():
         slug = str(slug)

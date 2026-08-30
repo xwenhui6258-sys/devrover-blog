@@ -125,17 +125,24 @@ def json_ld_payloads(text: str) -> list[dict]:
     return payloads
 
 
+def json_ld_nodes(payloads: list[dict]) -> list[dict]:
+    nodes: list[dict] = []
+    for payload in payloads:
+        payload_nodes = payload.get("@graph") if isinstance(payload, dict) else None
+        if not isinstance(payload_nodes, list):
+            payload_nodes = [payload]
+        for node in payload_nodes:
+            if isinstance(node, dict):
+                nodes.append(node)
+    return nodes
+
+
 def graph_types(payloads: list[dict]) -> set[str]:
     types: set[str] = set()
-    for payload in payloads:
-        nodes = payload.get("@graph") if isinstance(payload, dict) else None
-        if not isinstance(nodes, list):
-            nodes = [payload]
-        for node in nodes:
-            if isinstance(node, dict):
-                node_type = node.get("@type")
-                if isinstance(node_type, str):
-                    types.add(node_type)
+    for node in json_ld_nodes(payloads):
+        node_type = node.get("@type")
+        if isinstance(node_type, str):
+            types.add(node_type)
     return types
 
 
@@ -183,13 +190,19 @@ def main() -> int:
 
     expected_urls = {SITE_URL + path for path in STATIC_PAGES}
     expected_urls.update(SITE_URL + url for url in urls)
+    sitemap_lastmods: dict[str, str] = {}
     try:
         sitemap_root = ET.parse(root / "sitemap.xml").getroot()
         namespace = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
-        sitemap_urls = {
-            str(node.text or "")
-            for node in sitemap_root.findall("sm:url/sm:loc", namespace)
-        }
+        sitemap_urls: set[str] = set()
+        for node in sitemap_root.findall("sm:url", namespace):
+            location = str(node.findtext("sm:loc", default="", namespaces=namespace))
+            if not location:
+                continue
+            sitemap_urls.add(location)
+            sitemap_lastmods[location] = str(
+                node.findtext("sm:lastmod", default="", namespaces=namespace)
+            )
         if sitemap_urls != expected_urls:
             errors.append(
                 "sitemap URL mismatch: "
@@ -303,6 +316,11 @@ def main() -> int:
             if reviewed_date > date.today():
                 errors.append(f"{slug}: future review date for {field}={reviewed_date}")
         raw_updated = str(front_matter.get("updated") or front_matter.get("date") or "")
+        post_updated = str(post.get("updated") or post.get("date") or "")
+        if post_updated != raw_updated:
+            errors.append(
+                f"{slug}: posts.json updated={post_updated} does not match source={raw_updated}"
+            )
         try:
             modified_date = date.fromisoformat(raw_updated)
         except ValueError:
@@ -396,12 +414,44 @@ def main() -> int:
         if canonical_from_html(text) != SITE_URL + url:
             errors.append(f"{slug}: canonical mismatch")
         try:
-            types = graph_types(json_ld_payloads(text))
+            payloads = json_ld_payloads(text)
+            types = graph_types(payloads)
         except json.JSONDecodeError as exc:
             errors.append(f"{slug}: invalid JSON-LD: {exc}")
+            payloads = []
             types = set()
         if not {"BlogPosting", "BreadcrumbList"}.issubset(types):
             errors.append(f"{slug}: incomplete article JSON-LD types={sorted(types)}")
+        json_ld_modified = [
+            str(node.get("dateModified") or "")
+            for node in json_ld_nodes(payloads)
+            if node.get("@type") == "BlogPosting"
+        ]
+        if json_ld_modified != [raw_updated]:
+            errors.append(
+                f"{slug}: JSON-LD dateModified={json_ld_modified} does not match source={raw_updated}"
+            )
+        meta_modified = re.findall(
+            r'<meta\s+property="article:modified_time"\s+content="([^"]+)">',
+            text,
+        )
+        if meta_modified != [raw_updated]:
+            errors.append(
+                f"{slug}: article:modified_time={meta_modified} does not match source={raw_updated}"
+            )
+        visible_modified = re.findall(
+            r'<time\s+datetime="([^"]+)">\s*更新于[^<]*</time>',
+            text,
+        )
+        if visible_modified != [raw_updated]:
+            errors.append(
+                f"{slug}: visible updated date={visible_modified} does not match source={raw_updated}"
+            )
+        sitemap_modified = sitemap_lastmods.get(SITE_URL + url, "")
+        if sitemap_modified != raw_updated:
+            errors.append(
+                f"{slug}: sitemap lastmod={sitemap_modified} does not match source={raw_updated}"
+            )
         if 'class="breadcrumbs"' not in text:
             errors.append(f"{slug}: missing breadcrumbs")
         if 'class="article-taxonomy"' not in text:

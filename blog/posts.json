@@ -31,6 +31,23 @@
     "readingTime": "10 分钟"
   },
   {
+    "title": "从本地货币到第一笔海外资产：一份合规核对框架",
+    "slug": "local-currency-to-first-overseas-asset",
+    "url": "/blog/local-currency-to-first-overseas-asset/",
+    "date": "2026-07-12",
+    "updated": "2026-08-25",
+    "category": "券商入金",
+    "series": "美股新手基础设施",
+    "articleFormat": "流程核对",
+    "tags": [
+      "账户管理",
+      "入金出金",
+      "风险管理"
+    ],
+    "summary": "把本地货币到第一笔海外资产拆成目标、账户地图、资金路径、换汇、下单与记录六步，先核对风险与资料，再决定是否操作。",
+    "readingTime": "11 分钟"
+  },
+  {
     "title": "现金账户和保证金账户差在哪里：借款、交收与强平风险",
     "slug": "cash-vs-margin-account",
     "url": "/blog/cash-vs-margin-account/",
@@ -295,22 +312,5 @@
     ],
     "summary": "账户通过审核后，第一天先别急着下单。先把官方 App、双重验证、基础货币、交易权限、W-8BEN、入金测试和报表保存设置好。",
     "readingTime": "8 分钟"
-  },
-  {
-    "title": "从本地货币到第一笔海外资产：一份合规核对框架",
-    "slug": "local-currency-to-first-overseas-asset",
-    "url": "/blog/local-currency-to-first-overseas-asset/",
-    "date": "2026-07-12",
-    "updated": "2026-08-21",
-    "category": "券商入金",
-    "series": "美股新手基础设施",
-    "articleFormat": "流程核对",
-    "tags": [
-      "账户管理",
-      "入金出金",
-      "风险管理"
-    ],
-    "summary": "把本地货币到第一笔海外资产拆成目标、账户地图、资金路径、换汇、下单与记录六步，先核对风险与资料，再决定是否操作。",
-    "readingTime": "11 分钟"
   }
 ]
