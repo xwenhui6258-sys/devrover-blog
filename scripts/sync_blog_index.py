@@ -51,7 +51,18 @@ def article_format_url(article_format: str) -> str:
 
 
 def sorted_posts(posts: list[dict]) -> list[dict]:
-    return sorted(posts, key=lambda post: str(post.get("updated") or post.get("date") or ""), reverse=True)
+    """Order the public archive by its truthful first-publication chronology.
+
+    Article pages keep their separate substantive-update and source-review dates.
+    Keeping this archive order independent from a shared review batch prevents a
+    source-review pass from being presented as if it were a new publication run.
+    """
+
+    return sorted(
+        posts,
+        key=lambda post: (str(post.get("date") or ""), str(post.get("slug") or "")),
+        reverse=True,
+    )
 
 
 def render_post(post: dict) -> str:
@@ -60,7 +71,8 @@ def render_post(post: dict) -> str:
     tags = "".join(
         link(tag_url(tag), tag, "tag", tag, "") for tag in post.get("tags", [])
     )
-    updated = str(post.get("updated") or post.get("date") or "").replace("-", ".")
+    published_date = str(post.get("date") or "")
+    published = published_date.replace("-", ".")
     reading = html.escape(str(post.get("readingTime") or "5 分钟"))
     series = str(post.get("series") or "")
     series_suffix = f" · {html.escape(series)}" if series else ""
@@ -78,7 +90,7 @@ def render_post(post: dict) -> str:
       </div>
       <h3><a href="{html.escape(url, quote=True)}">{html.escape(str(post["title"]))}</a></h3>
       <p>{html.escape(str(post.get("summary") or ""))}</p>
-      <div class="post-meta"><time datetime="{html.escape(str(post.get("updated") or post.get("date") or ""), quote=True)}">{updated}</time> · {reading}读完{series_suffix}</div>
+      <div class="post-meta">发布于 <time datetime="{html.escape(published_date, quote=True)}">{published}</time> · {reading}读完{series_suffix}</div>
       <div class="post-tags">{tags}</div>
     </article>'''
 
@@ -235,7 +247,7 @@ def synchronize(index_text: str, posts: list[dict], taxonomy: dict) -> str:
     index_text = replace_one(
         index_text,
         r'(<div class="series-list" id="seriesList">).*?(</div>\n      <div class="meta-note">)',
-        lambda match: match.group(1) + render_series(ordered) + match.group(2),
+        lambda match: match.group(1) + render_series(posts) + match.group(2),
         "series list",
     )
     fallback = json.dumps(posts, ensure_ascii=False, indent=2)

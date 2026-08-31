@@ -250,6 +250,14 @@ def main() -> int:
         if marker not in blog_index:
             errors.append(f"blog/index.html: missing {marker}")
 
+    static_blog_cards: dict[str, str] = {}
+    for card in re.findall(
+        r'<article class="post-card">(.*?)</article>', blog_index, flags=re.DOTALL
+    ):
+        card_url = re.search(r'<h3><a href="([^"]+)">', card)
+        if card_url:
+            static_blog_cards[card_url.group(1)] = card
+
     home = (root / "index.html").read_text(encoding="utf-8")
     posts_by_url = {str(post.get("url") or ""): post for post in posts}
     home_guide_cards = re.findall(
@@ -285,6 +293,19 @@ def main() -> int:
     for post in posts:
         slug = str(post["slug"])
         url = str(post["url"])
+        static_card = static_blog_cards.get(url)
+        if not static_card:
+            errors.append(f"{slug}: missing static blog index card")
+        else:
+            published_match = re.search(
+                r'发布于\s*<time\s+datetime="([^"]+)">', static_card
+            )
+            expected_published = str(post.get("date") or "")
+            if not published_match or published_match.group(1) != expected_published:
+                errors.append(
+                    f"{slug}: blog index must display first publication date "
+                    f"{expected_published}"
+                )
         source = root / "blog" / slug / "source.md"
         if not source.is_file():
             errors.append(f"{slug}: missing source.md")
