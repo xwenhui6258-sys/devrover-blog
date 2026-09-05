@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Apply noindex, redirect fallback, and retirement pages from content-status.json."""
+"""Apply visibility fallbacks and render server-side rules from content-status.json."""
 
 from __future__ import annotations
 
@@ -21,6 +21,7 @@ ADSENSE_LOADER_PATTERN = re.compile(
     + r'["\'][^>]*>\s*</script>',
     flags=re.IGNORECASE,
 )
+SLUG_PATTERN = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
 
 
 def read_status(root: Path) -> tuple[set[str], dict[str, str], set[str]]:
@@ -37,10 +38,29 @@ def read_status(root: Path) -> tuple[set[str], dict[str, str], set[str]]:
     overlap = (hidden & set(redirects)) | (hidden & retired) | (set(redirects) & retired)
     if overlap:
         raise ValueError(f"content status has overlapping slugs: {sorted(overlap)}")
+    for slug in hidden | set(redirects) | retired:
+        if not SLUG_PATTERN.fullmatch(slug):
+            raise ValueError(f"invalid blog slug in content status: {slug!r}")
     for slug, target in redirects.items():
         if not slug or not target.startswith("/blog/") or not target.endswith("/"):
             raise ValueError(f"invalid redirect: {slug!r} -> {target!r}")
     return hidden, redirects, retired
+
+
+def render_hidden_gone_location(hidden: set[str]) -> str:
+    """Render the exact Nginx block that removes hidden article URLs from production."""
+    if not hidden:
+        return ""
+    # read_status already permits only lowercase URL slugs, so hyphens are safe
+    # literals here and keeping them unescaped makes the deployed rule auditable.
+    slugs = "|".join(sorted(hidden))
+    return (
+        "# Hidden legacy articles are retained locally as source material only.\n"
+        "# Keep bare, slash, and direct index.html forms out of the public review surface.\n"
+        f"location ~ ^/blog/(?:{slugs})(?:/index\\.html)?/?$ {{\n"
+        "    return 410;\n"
+        "}\n"
+    )
 
 
 def simple_page(title: str, description: str, body: str, canonical: str = "", refresh_target: str = "") -> str:
@@ -170,10 +190,18 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--site-root", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--check", action="store_true")
+    parser.add_argument(
+        "--print-nginx-hidden-gone",
+        action="store_true",
+        help="Print the server-side 410 location for hiddenSlugs without changing site files.",
+    )
     args = parser.parse_args()
     root = args.site_root.resolve()
     try:
         hidden, redirects, retired = expected_nonpublic(root)
+        if args.print_nginx_hidden_gone:
+            print(render_hidden_gone_location(hidden), end="")
+            return 0
         if not args.check:
             for slug in hidden:
                 path = root / "blog" / slug / "index.html"

@@ -167,7 +167,7 @@ python3 scripts/validate_blog_taxonomy.py
 ## 内容可见性与合并规则
 
 - `blog/content-status.json` 是旧文治理清单。它可以把旧文标记为暂不索引（`hiddenSlugs`）、合并跳转（`redirects`）或退役（`retiredSlugs`）。
-- `hiddenSlugs` 的原始文章和素材会保留，方便后续重写；但页面必须带 `noindex`，不得包含 AdSense loader，也不能出现在首页、博客列表、公开文章的相关推荐或 Sitemap。
+- `hiddenSlugs` 的原始文章和素材会保留，方便后续重写；静态兜底页必须带 `noindex`、不得包含 AdSense loader，也不能出现在首页、博客列表、公开文章的相关推荐或 Sitemap。生产环境还必须让裸路径、尾斜杠和 `index.html` 三种形式均返回 HTTP 410；`noindex` 不是可替代服务器访问边界的做法。可用 `python3 scripts/apply_blog_visibility.py --print-nginx-hidden-gone` 生成规则，并在配置测试与 reload 后运行线上门禁检查。
 - 已合并文章以目标文章为唯一公开入口；生产环境须配置 HTTP 301，静态页面只作为无脚本场景下的跳转兜底。
 - 已退役文章生产环境须返回 HTTP 410；静态页面只显示简短下线说明，不保留旧内容或广告代码。
 - 恢复一篇隐藏文章时，从 `hiddenSlugs` 删除该 slug，并在 `publicAdditions` 为它补充 `readingTime`；同步脚本会从该文的 `source.md` 重建公开记录。脚本会拒绝任何既不公开、也未被标记为隐藏/合并/退役的源文目录，避免内容被意外遗漏。

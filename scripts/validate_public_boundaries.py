@@ -11,6 +11,8 @@ import urllib.request
 from pathlib import Path
 from urllib.parse import urljoin
 
+from apply_blog_visibility import read_status
+
 
 FORBIDDEN_PUBLIC_MARKERS = (
     "innomad-archive",
@@ -36,16 +38,61 @@ PRIVATE_SITE_FILES = (
 )
 
 
-def fetch_status(url: str, timeout: float) -> int:
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    """Expose the first response so redirects can be asserted rather than followed."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):  # type: ignore[override]
+        return None
+
+
+def fetch_response(url: str, timeout: float) -> tuple[int, str]:
     request = urllib.request.Request(
         url,
         headers={"User-Agent": "devrover-public-boundary-check/1.0"},
     )
+    opener = urllib.request.build_opener(NoRedirect())
     try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            return int(response.status)
+        with opener.open(request, timeout=timeout) as response:
+            return int(response.status), str(response.headers.get("Location") or "")
     except urllib.error.HTTPError as exc:
-        return int(exc.code)
+        return int(exc.code), str(exc.headers.get("Location") or "")
+
+
+def article_url_forms(slug: str) -> tuple[str, str, str]:
+    base = f"/blog/{slug}"
+    return base, base + "/", base + "/index.html"
+
+
+def check_nonpublic_article_http(root: Path, base_url: str, timeout: float, errors: list[str]) -> None:
+    hidden, redirects, retired = read_status(root)
+    base = base_url.rstrip("/") + "/"
+
+    for slug in sorted(hidden | retired):
+        for path in article_url_forms(slug):
+            url = urljoin(base, path.lstrip("/"))
+            try:
+                status, _ = fetch_response(url, timeout)
+            except (OSError, urllib.error.URLError) as exc:
+                errors.append(f"nonpublic {url}: request failed: {exc}")
+                continue
+            if status != 410:
+                errors.append(f"nonpublic {url}: expected 410, got {status}")
+
+    for slug, target in sorted(redirects.items()):
+        expected_locations = {target, base.rstrip("/") + target}
+        for path in article_url_forms(slug):
+            url = urljoin(base, path.lstrip("/"))
+            try:
+                status, location = fetch_response(url, timeout)
+            except (OSError, urllib.error.URLError) as exc:
+                errors.append(f"redirect {url}: request failed: {exc}")
+                continue
+            if status != 301:
+                errors.append(f"redirect {url}: expected 301, got {status}")
+            elif location not in expected_locations:
+                errors.append(
+                    f"redirect {url}: expected Location {sorted(expected_locations)}, got {location!r}"
+                )
 
 
 def check_static(root: Path, errors: list[str]) -> None:
@@ -109,12 +156,14 @@ def check_http(root: Path, base_url: str, timeout: float, errors: list[str]) -> 
     for kind, path in targets:
         url = urljoin(base, path.lstrip("/"))
         try:
-            status = fetch_status(url, timeout)
+            status, _ = fetch_response(url, timeout)
         except (OSError, urllib.error.URLError) as exc:
             errors.append(f"{kind} {url}: request failed: {exc}")
             continue
         if status not in (403, 404):
             errors.append(f"{kind} {url}: expected 403/404, got {status}")
+
+    check_nonpublic_article_http(root, base_url, timeout, errors)
 
 
 def main() -> int:
@@ -141,10 +190,12 @@ def main() -> int:
         for error in errors:
             print(f"FAIL {error}")
         return 1
+    hidden, redirects, retired = read_status(root)
     print(
         "PASS public-boundaries "
         f"sources={len(list((root / 'blog').glob('*/source.md')))} "
         f"incoming={len(list((root / 'incoming').glob('**/*.md')))} "
+        f"hidden={len(hidden)} redirects={len(redirects)} retired={len(retired)} "
         f"http={'checked' if args.base_url else 'skipped'}"
     )
     return 0
