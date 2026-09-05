@@ -273,8 +273,10 @@ def main() -> int:
             card,
             flags=re.DOTALL,
         )
-        date_match = re.search(r'<time datetime="([^"]+)">', card)
-        if not title_match or not date_match:
+        published_match = re.search(
+            r'发布于\s*<time\s+datetime="([^"]+)">([^<]+)</time>', card
+        )
+        if not title_match or not published_match:
             errors.append("index.html: incomplete home guide card metadata")
             continue
         card_url = title_match.group(1)
@@ -286,9 +288,14 @@ def main() -> int:
         post_title = str(post.get("title") or "")
         if card_title != post_title and not post_title.startswith(card_title):
             errors.append(f"index.html: stale home guide title for {card_url}")
-        expected_updated = str(post.get("updated") or post.get("date") or "")
-        if date_match.group(1) != expected_updated:
-            errors.append(f"index.html: stale home guide date for {card_url}")
+        expected_published = str(post.get("date") or "")
+        if (
+            published_match.group(1) != expected_published
+            or published_match.group(2).strip() != expected_published
+        ):
+            errors.append(
+                f"index.html: stale home guide publication date for {card_url}"
+            )
 
     for post in posts:
         slug = str(post["slug"])
@@ -485,6 +492,22 @@ def main() -> int:
             errors.append(f"{slug}: missing article disclaimer")
         if 'class="article-evidence"' not in text:
             errors.append(f"{slug}: missing content evidence disclosure")
+        lead_matches = list(
+            re.finditer(
+                r'<p class="article-lead">(.*?)</p>',
+                text,
+                flags=re.DOTALL,
+            )
+        )
+        evidence_position = text.find('<aside class="article-evidence"')
+        if len(lead_matches) != 1:
+            errors.append(f"{slug}: expected one visible article lead paragraph")
+        elif evidence_position < 0 or lead_matches[0].start() > evidence_position:
+            errors.append(
+                f"{slug}: article lead must appear before the evidence disclosure"
+            )
+        elif not re.sub(r"<[^>]+>", "", lead_matches[0].group(1)).strip():
+            errors.append(f"{slug}: article lead paragraph is empty")
         if article_format and article_format not in text:
             errors.append(f"{slug}: article format is not visible to readers")
         source_reviewed_raw = str(front_matter.get("source_reviewed") or "")

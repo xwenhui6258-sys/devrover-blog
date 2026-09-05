@@ -485,6 +485,15 @@ def add_heading_ids_and_toc(article_html: str) -> tuple[str, str]:
     return article_html, toc_html
 
 
+def split_article_lead(article_html: str) -> tuple[str, str]:
+    """Move the article's own opening paragraph ahead of shared disclosures."""
+    match = re.match(r"\A\s*(<p>.*?</p>)(.*)\Z", article_html, flags=re.DOTALL)
+    if not match:
+        raise ValueError("article body must begin with a substantive paragraph")
+    lead = match.group(1).replace("<p>", '<p class="article-lead">', 1)
+    return lead, match.group(2).lstrip()
+
+
 def post_url(meta: PostMeta) -> str:
     return meta.url or f"/blog/{quote(meta.slug)}/"
 
@@ -782,6 +791,7 @@ def article_structured_data(meta: PostMeta, image_url: str) -> str:
 
 def render_page(meta: PostMeta, article_html: str, posts: list[dict] | None = None) -> str:
     article_html, toc_html = add_heading_ids_and_toc(article_html)
+    article_lead, article_html = split_article_lead(article_html)
     posts = posts or []
     title_main = meta.title
     title_subtitle = ""
@@ -793,7 +803,7 @@ def render_page(meta: PostMeta, article_html: str, posts: list[dict] | None = No
     if title_subtitle:
         title_html += f'\n      <p class="article-subtitle">{html.escape(title_subtitle)}</p>'
     canonical = absolute_url(post_url(meta))
-    image_url = first_article_image(article_html, meta)
+    image_url = first_article_image(article_lead + article_html, meta)
     image_meta = (
         f'\n  <meta property="og:image" content="{html.escape(image_url, quote=True)}">'
         f'\n  <meta name="twitter:image" content="{html.escape(image_url, quote=True)}">'
@@ -839,7 +849,8 @@ def render_page(meta: PostMeta, article_html: str, posts: list[dict] | None = No
     <article class="article">
       {render_breadcrumbs(meta)}
       {title_html}
-      {render_article_meta(meta)}{render_article_evidence(meta)}
+      {render_article_meta(meta)}
+      {article_lead}{render_article_evidence(meta)}
       {article_html}{render_article_disclaimer()}{discovery_html}
     </article>
     {toc_html}
