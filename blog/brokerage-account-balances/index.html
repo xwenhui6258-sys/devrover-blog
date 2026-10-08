@@ -13,7 +13,7 @@
   <meta property="og:description" content="券商 App 里同时出现现金、已结算现金、净清算价值、购买力、可用资金和超额流动性。本文用一套顺序解释这些数字各自回答什么问题。">
   <meta property="og:url" content="https://7hui.top/blog/brokerage-account-balances/">
   <meta property="article:published_time" content="2026-07-13">
-  <meta property="article:modified_time" content="2026-08-23">
+  <meta property="article:modified_time" content="2026-09-25">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="券商账户里的六个数字：现金、净资产、购买力与保证金怎么核对">
   <meta name="twitter:description" content="券商 App 里同时出现现金、已结算现金、净清算价值、购买力、可用资金和超额流动性。本文用一套顺序解释这些数字各自回答什么问题。">
@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="/assets/style.css?v=20260824-layout-v1">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3874391842550034"
      crossorigin="anonymous"></script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://7hui.top/blog/brokerage-account-balances/#article","mainEntityOfPage":"https://7hui.top/blog/brokerage-account-balances/","headline":"券商账户里的六个数字：现金、净资产、购买力与保证金怎么核对","description":"券商 App 里同时出现现金、已结算现金、净清算价值、购买力、可用资金和超额流动性。本文用一套顺序解释这些数字各自回答什么问题。","datePublished":"2026-07-13","dateModified":"2026-08-23","inLanguage":"zh-CN","author":{"@type":"Person","name":"Seven Wayne","url":"https://7hui.top/about/"},"publisher":{"@type":"Person","name":"Seven Wayne","url":"https://7hui.top/about/"},"isPartOf":{"@type":"Blog","@id":"https://7hui.top/blog/#blog","name":"DevRover 跨境金融与海外投资笔记"},"image":["https://7hui.top/blog/brokerage-account-balances/assets/account-money-map.png"],"keywords":["IBKR","账户管理","风险管理"]},{"@type":"BreadcrumbList","@id":"https://7hui.top/blog/brokerage-account-balances/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://7hui.top/"},{"@type":"ListItem","position":2,"name":"博客","item":"https://7hui.top/blog/"},{"@type":"ListItem","position":3,"name":"美股账户","item":"https://7hui.top/blog/?category=%E7%BE%8E%E8%82%A1%E8%B4%A6%E6%88%B7"},{"@type":"ListItem","position":4,"name":"券商账户里的六个数字：现金、净资产、购买力与保证金怎么核对","item":"https://7hui.top/blog/brokerage-account-balances/"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://7hui.top/blog/brokerage-account-balances/#article","mainEntityOfPage":"https://7hui.top/blog/brokerage-account-balances/","headline":"券商账户里的六个数字：现金、净资产、购买力与保证金怎么核对","description":"券商 App 里同时出现现金、已结算现金、净清算价值、购买力、可用资金和超额流动性。本文用一套顺序解释这些数字各自回答什么问题。","datePublished":"2026-07-13","dateModified":"2026-09-25","inLanguage":"zh-CN","author":{"@type":"Person","name":"Seven Wayne","url":"https://7hui.top/about/"},"publisher":{"@type":"Person","name":"Seven Wayne","url":"https://7hui.top/about/"},"isPartOf":{"@type":"Blog","@id":"https://7hui.top/blog/#blog","name":"DevRover 跨境金融与海外投资笔记"},"image":["https://7hui.top/blog/brokerage-account-balances/assets/account-money-map.png"],"keywords":["IBKR","账户管理","风险管理"]},{"@type":"BreadcrumbList","@id":"https://7hui.top/blog/brokerage-account-balances/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://7hui.top/"},{"@type":"ListItem","position":2,"name":"博客","item":"https://7hui.top/blog/"},{"@type":"ListItem","position":3,"name":"美股账户","item":"https://7hui.top/blog/?category=%E7%BE%8E%E8%82%A1%E8%B4%A6%E6%88%B7"},{"@type":"ListItem","position":4,"name":"券商账户里的六个数字：现金、净资产、购买力与保证金怎么核对","item":"https://7hui.top/blog/brokerage-account-balances/"}]}]}</script>
 </head>
 <body>
 <header>
@@ -61,7 +61,7 @@
       </div>
       <div class="article-meta">
         <time datetime="2026-07-13">发布于 2026-07-13</time>
-        <time datetime="2026-08-23">更新于 2026-08-23</time>
+        <time datetime="2026-09-25">更新于 2026-09-25</time>
         <span>11 分钟读完</span>
       </div>
       <div class="article-taxonomy"><a class="article-category" href="/blog/?category=%E7%BE%8E%E8%82%A1%E8%B4%A6%E6%88%B7">美股账户</a><a href="/blog/?series=%E7%BE%8E%E8%82%A1%E6%96%B0%E6%89%8B%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD">系列：美股新手基础设施</a><a href="/blog/?tag=IBKR">#IBKR</a><a href="/blog/?tag=%E8%B4%A6%E6%88%B7%E7%AE%A1%E7%90%86">#账户管理</a><a href="/blog/?tag=%E9%A3%8E%E9%99%A9%E7%AE%A1%E7%90%86">#风险管理</a></div>
@@ -80,15 +80,17 @@
 <blockquote>
 <p>本文为基于公开资料的券商账户字段说明，不构成投资、融资、税务或法律建议。不同账户实体、账户类型、产品和市场的计算方法会不同，券商也可能随时提高自家保证金要求；本文不展示作者账户余额、结单或融资记录。界面入口以你当前使用的 Client Portal、App 或桌面端为准。资料核对日期：2026-08-23。</p>
 </blockquote>
-<figure><img src="assets/account-money-map.png" alt="现金、净资产、购买力和保证金的关系" loading="lazy" decoding="async" width="1400" height="900"><figcaption>现金、净资产、购买力和保证金的关系</figcaption></figure>
-<h2 id="section-1">先记住：四个数字回答四个问题</h2>
+<figure><picture><source srcset="assets/account-money-map.webp" type="image/webp"><img src="assets/account-money-map.png" alt="现金、净资产、购买力和保证金的关系" loading="lazy" decoding="async" width="1400" height="900"></picture><figcaption>现金、净资产、购买力和保证金的关系<br><a class="article-image-original" href="assets/account-money-map.png" target="_blank" rel="noopener noreferrer" aria-label="查看原图：现金、净资产、购买力和保证金的关系（新窗口打开）">查看原图（新窗口，可缩放）</a></figcaption></figure>
+<h2 id="section-1">先记住：六个数字回答六个问题</h2>
 <div class="table-wrap"><table>
 <thead><tr><th>字段</th><th>它回答的问题</th><th>新手最容易误解的地方</th></tr></thead>
 <tbody>
 <tr><td>现金 / Cash</td><td>账户当前按币种记了多少现金</td><td>总现金不一定都已交收，也不一定立刻可提取</td></tr>
+<tr><td>已结算现金 / Settled Cash</td><td>按该界面的交收与扣款口径，目前记录多少现金</td><td>不是任意币种订单都能使用的预算，也不等于可提款金额</td></tr>
 <tr><td>净清算价值 / Net Liquidation Value</td><td>现金加持仓按当前价格估值后，账户净值约多少</td><td>这是估值，不是保证能按该金额立刻变现</td></tr>
 <tr><td>购买力 / Buying Power</td><td>不追加资产时，系统最多允许建立多大证券头寸</td><td>保证金账户的购买力可能包含借款，不是你的本金</td></tr>
-<tr><td>保证金 / Margin</td><td>开仓、持仓分别需要多少权益</td><td>“还有购买力”不等于离强平很远</td></tr>
+<tr><td>可用资金 / Available Funds</td><td>满足初始保证金要求后还有多少余量</td><td>不等于可取走的自有现金</td></tr>
+<tr><td>超额流动性 / Excess Liquidity</td><td>按当前维持保证金要求还剩多少缓冲</td><td>不是允许再亏损的固定额度，也不保证未来安全</td></tr>
 </tbody></table></div>
 <p>如果只想快速看懂账户，可按这个顺序：先看账户类型，再看分币种现金，然后看净清算价值；只要账户涉及融资、卖出期权、期货等保证金要求，就继续看可用资金、超额流动性和前瞻值。现金账户若只全额买入普通股票或 ETF，这些字段通常不是第一优先级。</p>
 <h2 id="section-2">现金要分“币种”和“是否交收”</h2>
@@ -98,12 +100,13 @@
 <li><strong>Total Cash / Cash</strong>：IBKR 的余额说明中，它可包含已结算现金、交易发生时确认的卖出款以及期货盈亏。它适合看账户当前现金账面，但不等于全部都已完成交收。</li>
 <li><strong>Settled Cash / 已结算现金</strong>：已经完成交收的现金。现金账户下单、换汇或出金时，这一项往往比“总现金”更接近需要核对的数字，但仍可能受入金冻结期、出金路径和其他限制影响。</li>
 </ul>
-<p>例如，你原有 9,000 美元已结算现金，今天卖出 3,000 美元股票。总现金可能已反映卖出款，但已结算现金要等适用的交收流程完成后才变化。所以“卖掉了”不等于“现在就能把钱提走”。</p>
+<p>以下数字均为教学模拟，不是作者账户记录。假设原有 9,000 美元已结算现金，今天卖出 3,000 美元股票，且暂不计费用、其他交易和现金活动：总现金可增加至 12,000 美元，而这笔卖出款是否已交收需要另看结算日。所以“卖掉了”不等于“现在就能把钱提走”。</p>
+<p>如果目的是转回银行，应另查 <a href="https://www.interactivebrokers.com/campus/glossary-terms/cash-available-for-withdrawal/">Cash Available for Withdrawal</a>。即使交易已经交收，仍可能有入金提取限制或保证金占用；保证金账户还应确认提款是否会增加借款。不要直接把 Cash、Settled Cash 或 Available Funds 其中任何一项当作可无成本提走的金额。</p>
 <p>还有一个更危险的信号：<strong>某币种现金为负数</strong>。在保证金账户里，负的 USD 通常意味着你借了美元；正的 HKD 不会因为同在一个账户里就自动把美元借款抹掉。只看合计现金，可能漏掉正在计息的外币负余额。</p>
 <p>如果负余额来自跨币种交易，先用<a href="/blog/ibkr-base-currency-and-fx/">基础货币、交易货币和分币种现金的区别</a>确认它是换汇结果、待处理差额还是融资借款。</p>
 <h2 id="section-3">净清算价值，才更接近“账户净资产”</h2>
 <p>IBKR 对证券账户净清算价值的概括是：总现金价值，加上股票、证券期权、债券和基金等持仓价值。可把它理解为当前时点的账户净资产估算。</p>
-<p>一个简化例子：</p>
+<p>一个仅含美元现金与普通股票的模拟例子（不计其他负债、应计项目和交易费用）：</p>
 <div class="table-wrap"><table>
 <thead><tr><th>项目</th><th>金额</th></tr></thead>
 <tbody>
@@ -112,7 +115,7 @@
 <tr><td>净清算价值</td><td>约 30,000 美元</td></tr>
 </tbody></table></div>
 <p>如果是保证金账户，你用 20,000 美元本金加 10,000 美元借款买了 30,000 美元股票，账户可能显示股票市值 30,000、现金 -10,000，净清算价值仍约为 20,000 美元。30,000 是头寸规模，不是你的净资产。</p>
-<figure><img src="assets/buying-power-bridge.png" alt="一笔钱变成可下单额度的路径" loading="lazy" decoding="async" width="1400" height="900"><figcaption>一笔钱变成可下单额度的路径</figcaption></figure>
+<p>购买力不是在订单检查后才“形成”；具体订单还要按标的、账户规则及实时资金重新检查，不能把余额核对项目当作购买力的计算公式。</p>
 <p>净清算价值也不是“按一下按钮必定拿回的钱”。行情在变，买卖价差、流动性、汇率、佣金和税费都会影响实际变现金额；盘后价格不足时，平台还可能显示净清算价值不确定性。</p>
 <p>另外，若账户持有多种货币或外币资产，平台会把它们按汇率折算成基础货币。即使你一天没有交易，汇率变化也可能让基础货币口径的净值变化。这不是现金被自动兑换了。</p>
 <h2 id="section-4">购买力不是余额，而是交易额度</h2>
@@ -120,14 +123,14 @@
 <p>现金账户的购买力受到已结算资金、待处理订单和产品规则约束，通常不会凭空创造借款。标准保证金账户的购买力可能把你自己的权益和券商允许的融资一起计算，因此数字可能远高于净清算价值。</p>
 <p>这正是购买力最容易误导人的地方：</p>
 <ul>
-<li>净清算价值 20,000 美元、购买力 60,000 美元，不代表你有 60,000 美元；</li>
-<li>订单预览显示“可以下单”，只代表当下通过风控，不代表持仓下跌后仍安全；</li>
+<li>假设页面显示净清算价值 20,000 美元、购买力 60,000 美元，也不代表你有 60,000 美元；这里不是通用三倍购买力公式；</li>
+<li>订单预览只是按当时条件估算，不代表已获最终接受、一定成交或持仓下跌后仍安全；</li>
 <li>不同股票的可融资比例不同，集中、低价、波动大或流动性差的证券可能需要更高保证金；</li>
 <li>券商可以采用高于监管最低要求的 house margin，并可能调整。</li>
 </ul>
 <p>所以我不会拿“购买力”做资产配置预算。长期投资者更实用的预算是：计划投入的自有现金、预留费用，以及自己明确愿意承担的融资上限。</p>
 <h2 id="section-5">保证金页面真正要看哪几个值</h2>
-<p>保证金字段很多，新手先掌握四个就够了。</p>
+<p>保证金字段很多，以下四个是理解界面的起点，不是适用于所有策略的完整风控清单。</p>
 <div class="table-wrap"><table>
 <thead><tr><th>字段</th><th>简化理解</th><th>用途</th></tr></thead>
 <tbody>
@@ -137,10 +140,11 @@
 <tr><td>Excess Liquidity / 超额流动性</td><td>证券账户通常为可贷款权益减维持保证金</td><td>判断距离被处置还有多少缓冲</td></tr>
 </tbody></table></div>
 <p>“可用资金”偏向开新仓，“超额流动性”偏向保住现有仓位。IBKR 官方说明，当超额流动性为负，账户已不满足维持保证金要求，券商可能开始平仓以恢复合规。</p>
+<p>上表公式指 IBKR 证券分部；商品分部的对应计算使用 Net Liquidation Value 减初始或维持保证金。Equity with Loan Value 与 Net Liquidation Value 也不是可随意互换的字段。检查 Reg T 保证金账户时，还需留意 SMA 等适用约束，不能因 Excess Liquidity 为正就认定已满足全部要求。</p>
 <p>这些字段只有放回具体账户类型才有意义；<a href="/blog/cash-vs-margin-account/">现金账户与保证金账户的借款和强平差异</a>解释了为什么同一个负数在两类账户中的后果不同。</p>
 <p>不要把这理解成“跌到零才危险”。价格下跌会让账户权益下降，波动上升或券商提高保证金比例又会让要求上升，两边可以同时挤压缓冲。FINRA 也提醒，券商可强制卖出证券，且投资者不应假设券商必须先通知或给出延期。</p>
 <p>如果页面还有 Look Ahead / 前瞻、Overnight / 隔夜字段，含义是按下一次保证金变化或隔夜要求预估。持有期权、期货、临近到期产品或高波动头寸时，当前值尚可而前瞻值骤降，同样需要处理。</p>
-<figure><img src="assets/margin-warning-signals.png" alt="保证金账户应关注的风险信号" loading="lazy" decoding="async" width="1400" height="900"><figcaption>保证金账户应关注的风险信号</figcaption></figure>
+<figure><picture><source srcset="assets/margin-warning-signals.webp" type="image/webp"><img src="assets/margin-warning-signals.png" alt="保证金账户应关注的风险信号" loading="lazy" decoding="async" width="1400" height="900"></picture><figcaption>保证金账户应关注的风险信号<br><a class="article-image-original" href="assets/margin-warning-signals.png" target="_blank" rel="noopener noreferrer" aria-label="查看原图：保证金账户应关注的风险信号（新窗口打开）">查看原图（新窗口，可缩放）</a></figcaption></figure>
 <h2 id="section-6">一套不会看乱的核对路径</h2>
 <p>以当前 IBKR Client Portal 指南为例，Portfolio 页面可以看持仓、按币种汇总的现金，以及包含保证金要求和交易限制的 Balances。App 和 IBKR Desktop 的名称可能略有不同，找英文原名通常更可靠。</p>
 <h3 id="section-7">第一步：确认账户类型</h3>
@@ -152,16 +156,11 @@
 <h3 id="section-10">第四步：涉及保证金要求时再看三道线</h3>
 <p>依次看 Current Available Funds、Current Excess Liquidity、Look Ahead Excess Liquidity。负外币现金还要单独检查借款利率和累计利息。</p>
 <h3 id="section-11">第五步：下单前使用 Preview</h3>
-<p>当前 Client Portal 的订单票据支持 Preview，可查看交易后的账户余额预测。重点比较交易前后初始保证金、维持保证金和超额流动性，不要只确认“订单金额没输错”。</p>
+<p>在所用客户端查找订单预览或保证金影响功能；例如 <a href="https://www.ibkrguides.com/traderworkstation/check-margin-pre-order.htm">TWS 的 Check Margin Pre-Order</a>可在提交前查看订单、佣金及保证金影响。具体字段随客户端和产品而变，查看可用的交易前后预测值，不要只确认“订单金额没输错”。预测值不锁定之后的行情、保证金要求或成交结果。</p>
 <h3 id="section-12">第六步：用 Activity Statement 对账</h3>
 <p>App 是实时视图，正式复盘要看活动报表。把期初现金、入出金、买卖、佣金、利息、股息、汇兑和期末现金逐项串起来，才能判断数字变化来自投资盈亏还是资金流动。</p>
-<h2 id="section-13">五个常见误区</h2>
-<p><strong>误区一：现金就是可出金金额。</strong> 现金可能未交收，入金也可能有提取限制。</p>
-<p><strong>误区二：持仓市值就是我的资产。</strong> 有融资时必须减去负现金和其他负债，净清算价值才更接近净资产。</p>
-<p><strong>误区三：购买力很高，所以仓位很安全。</strong> 购买力偏向开仓能力，超额流动性才更接近持仓缓冲。</p>
-<p><strong>误区四：券商会先打电话，再给我补钱时间。</strong> 不要依赖通知；保证金不足时可能被直接处置。</p>
-<p><strong>误区五：BASE 行显示美元，所以账户里全是美元。</strong> BASE 是折算口径，真实现金仍要逐币种查看。</p>
-<h2 id="section-14">账户余额检查清单</h2>
+<p>核对时先选同一账户、期间和币种，并区分 Ending Cash 与 Ending Settled Cash。现金流水按报表正负号求和；证券未实现涨跌不是现金收入，应计但尚未支付的股息或利息也不能再次当作现金到账。相关字段见 <a href="https://www.ibkrguides.com/reportingreference/reportguide/cash-and-collateral-report.htm">Cash &amp; Collateral Report</a>。</p>
+<h2 id="section-13">账户余额检查清单</h2>
 <ul>
 <li>已确认账户类型和开户实体。</li>
 <li>已逐币种检查现金，没有忽略负余额。</li>
@@ -172,8 +171,7 @@
 <li>下单前看过交易后的保证金影响。</li>
 <li>能在活动报表中解释本期现金变化。</li>
 </ul>
-<p>如果只记一句话：<strong>现金看币种，资产看净清算价值，开仓看可用资金，风控看超额流动性。</strong></p>
-<h2 id="section-15">参考资料</h2>
+<h2 id="section-14">参考资料</h2>
 <ul>
 <li>Interactive Brokers, <a href="https://www.ibkrguides.com/ibkrdesktop/account-balances-portfolio.htm">Account Balances</a>.</li>
 <li>Interactive Brokers, <a href="https://www.ibkrguides.com/traderworkstation/available-for-trading.htm">Available for Trading Values</a>.</li>
@@ -191,17 +189,17 @@
         <a class="related-card" href="/blog/first-day-after-brokerage-open/">
           <span>美股新手基础设施</span>
           <h3>开户后第一天要设置什么：App、2FA、基础货币、交易权限和 W-8</h3>
-          <p>2026-08-23 · 8 分钟读完</p>
+          <p>2026-09-25 · 8 分钟读完</p>
         </a>
         <a class="related-card" href="/blog/first-order-types-and-tif/">
           <span>美股新手基础设施</span>
           <h3>第一次下单怎么选：市价单、限价单、止损单和有效期</h3>
-          <p>2026-08-23 · 12 分钟读完</p>
+          <p>2026-09-25 · 12 分钟读完</p>
         </a>
         <a class="related-card" href="/blog/local-currency-to-first-overseas-asset/">
           <span>美股新手基础设施</span>
           <h3>从本地货币到第一笔海外资产：一份合规核对框架</h3>
-          <p>2026-08-25 · 11 分钟读完</p>
+          <p>2026-09-25 · 11 分钟读完</p>
         </a>
       </div>
       <nav class="article-pagination" aria-label="上一篇和下一篇">
@@ -219,15 +217,14 @@
     <aside class="article-toc" aria-label="文章目录">
     <div class="toc-title">目录</div>
     <nav>
-      <a class="toc-level-2" href="#section-1">先记住：四个数字回答四个问题</a>
+      <a class="toc-level-2" href="#section-1">先记住：六个数字回答六个问题</a>
       <a class="toc-level-2" href="#section-2">现金要分“币种”和“是否交收”</a>
       <a class="toc-level-2" href="#section-3">净清算价值，才更接近“账户净资产”</a>
       <a class="toc-level-2" href="#section-4">购买力不是余额，而是交易额度</a>
       <a class="toc-level-2" href="#section-5">保证金页面真正要看哪几个值</a>
       <a class="toc-level-2" href="#section-6">一套不会看乱的核对路径</a>
-      <a class="toc-level-2" href="#section-13">五个常见误区</a>
-      <a class="toc-level-2" href="#section-14">账户余额检查清单</a>
-      <a class="toc-level-2" href="#section-15">参考资料</a>
+      <a class="toc-level-2" href="#section-13">账户余额检查清单</a>
+      <a class="toc-level-2" href="#section-14">参考资料</a>
     </nav>
   </aside>
   </div>

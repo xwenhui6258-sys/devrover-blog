@@ -1,15 +1,15 @@
 ---
 title: "IBKR 定期投资怎么设置：先核对资格、现金与成交记录"
-description: "从碎股权限、可用现金和标的资格开始，核对 IBKR Recurring Investments 的创建、成交、复核和暂停流程。"
+description: "从碎股权限、可用现金和标的资格开始，核对 IBKR Recurring Investments 的创建、成交、复核和取消流程。"
 date: 2026-07-13
-updated: 2026-08-23
+updated: 2026-09-25
 category: "跨境投资"
 series: "海外资产入门"
 status: "published"
 content_type: "资料研究（平台功能与复核流程）"
 article_format: "流程核对"
 evidence: "正文内链接的 IBKR 功能说明和产品资料；未展示作者的定投计划、成交记录或长期回报。"
-scope: "说明定期投资前的资格、现金、订单状态、暂停和复核事项。"
+scope: "说明定期投资前的资格、现金、订单状态、修改、取消和复核事项。"
 boundary: "不主张定投优于其他策略，也不保证按计划成交；功能可用性和规则以账户实体与当前页面为准。"
 content_reviewed: "2026-08-21"
 source_reviewed: "2026-08-23"
@@ -62,7 +62,7 @@ IBKR 当前将功能用于符合碎股资格的美国、加拿大和欧洲股票
 
 ### 4. 账户里有足够现金
 
-IBKR Campus 当前说明，定期投资要求账户有足够资金，且不能在借用保证金的状态下使用。也就是说，保证金账户里出现很高的 Buying Power，不代表这笔计划会靠借款完成。
+IBKR Campus 的 DCA 词条要求有足够资金，并写有正在借用保证金时不能使用的限制。但同站课程下的官方答复也曾说明：保证金账户持有其他币种、定投美元证券时可能产生美元借款。两处说明不能直接合并为“定投绝不会融资”的保证。高 Buying Power 不是可用现金证明；跨币种执行是否换汇、是否形成负余额，应向本人签约实体确认，并核对实际现金与利息记录。
 
 最好在执行日前留出“计划金额 + 预估佣金 + 少量汇率缓冲”。如果证券以美元交易，而账户只有其他货币，不要依据 Base Currency 猜测付款方式。不同账户实体和类型的 AutoFX 规则不同：有的现金账户可能自动换汇，有的场景需要先换汇。预览页没有把换汇成本和资金来源说清楚时，先手动准备交易币种。
 
@@ -70,9 +70,11 @@ IBKR Campus 当前说明，定期投资要求账户有足够资金，且不能�
 
 ### 5. 小额也要考虑最低佣金
 
-IBKR 官方课程当前把多数币种的定投最低金额描述为 10 个货币单位，SEK 为 100；具体输入框会给出你账户的有效下限。标准股票佣金仍可能适用。若每次只投很小金额，最低佣金占比可能很高，因此“拆得越细”不一定“成本越低”。
+IBKR 的 [DCA 词条](https://www.interactivebrokers.com/campus/glossary-terms/dollar-cost-averaging-dca/)把多数币种的定投最低金额描述为 10 个货币单位，SEK 为 100。这不是所有证券统一“10 美元起投”，也不是含全部费用的预算；以本人账户输入框和确认页的有效下限为准。
 
-![定期投资执行日的资金与成交路径](assets/recurring-cash-cycle.png)
+该词条说明标准佣金适用，但不能由此直接断定所有市场都按同一个最低佣金收费。官方课程下的旧答复曾使用 Fixed 定价口径，不宜将旧答复中的金额直接当作今天所有账户的收费表。核对时记录标的市场、交易币种、适用定价、最低收费及可能的上限，再用实际成交报表核对。费用占比可用“本笔佣金 ÷ 本笔成交金额”计算；换汇和其他费用另列，不能仅凭每次投入金额小就认为成本低。
+
+不能保证定投绝不会形成外币借款，相关官方说明差异见上文。资金不足或仍在冻结期可能使指令被拒绝；这与休市后顺延不是同一种状态，不能假定补足现金后当天必定补买。
 
 ## Client Portal 完整操作路径
 
@@ -87,11 +89,11 @@ IBKR 官方课程当前把多数币种的定投最低金额描述为 10 个货�
 7. 选择 Start Date、Frequency，并按需要设置 End Date。
 8. 点击 Continue，进入预览页。
 9. 再次核对账户、证券、金额、周期、下一次日期和预计费用。
-10. 点击 Save Investment，并完成身份确认。
+10. 点击 Save Investment；如系统提示，再完成身份确认。
 
 当前官方课程展示的周期可能包括 Daily、Weekly、Biweekly、Monthly、Quarterly 和 Yearly；官方产品页则以 daily、weekly、monthly 为例。你能选择的项目以当前账户页面为准，不必为了复制某篇教程而强求一个没有显示的频率。
 
-IBKR Mobile 或 GlobalTrader 也可能提供 Recurring 入口，但菜单会随版本移动。新手第一次建议用网页端创建，因为字段和复核信息更完整。以后再用 App 查看、编辑或取消。
+官方产品页另列有 IBKR Mobile 的使用指南，菜单会随版本移动。本文按 Client Portal 说明操作，不据此断言网页端字段一定比 App 完整；换客户端时重新核对相应指南。
 
 ## 日期和频率怎么填
 
@@ -108,7 +110,7 @@ IBKR Mobile 或 GlobalTrader 也可能提供 Recurring 入口，但菜单会随�
 
 ## 它是怎样成交的
 
-Recurring Investments 不是你手动挂的一张限价单。IBKR 当前课程说明，这类订单可能与其他客户指令聚合，在开盘附近以 best-effort VWAP 方式执行，同日参与者获得相同的加权平均价。
+Recurring Investments 不是你手动挂的一张限价单。IBKR 当前课程说明，这类订单可能与其他客户指令聚合，在开盘附近以 best-effort VWAP 方式执行。同一证券相应聚合执行的参与者分配加权平均价，不是所有证券共用一个价格，也不是保证等于交易所开盘价。
 
 这意味着：
 
@@ -140,44 +142,39 @@ IBKR 当前课程还提醒，开放的定投指令未必出现在 TWS 或 IBKR M
 
 | 要核对的项目 | 正常时应看到什么 | 异常时先查什么 |
 |---|---|---|
-| 计划状态 | Active，下一日期已向后滚动。 | 是否被暂停、到期或手动取消。 |
+| 计划状态 | 计划有效，下一日期符合预期；这本身不证明已成交。 | 是否到期、被取消，或本期执行失败；查看历史记录。 |
 | 资金 | 有足够可用现金且币种处理符合预期。 | 入金是否仍在 hold、是否发生 AutoFX、是否有其他订单占用现金。 |
 | 成交 | Orders & Trades 或成交确认里有记录。 | 当天是否休市、订单是否顺延或未成交。 |
 | 费用 | 佣金、换汇和其他费用能在报表中解释。 | 当前定价计划和最低佣金。 |
 | 持仓 | 增加的整股或碎股与实际净投入大致对应。 | 证券代码、成交均价和费用。 |
 
-如果计划没有执行，不要立刻重复新建。先确认旧计划状态，否则下一周期可能出现两笔买入。
+如果计划没有执行，不要立刻重复新建。先查看计划历史、订单状态及失败提示，区分休市、资金限制和标的资格问题；不能把“计划仍有效”当作自动补买的承诺。若提示不清，向客服确认本期是否还会重试，再决定是否手动下单，以免两笔指令重叠。
 
-## 修改、暂停和取消
+## 修改或取消：不要假定有暂停按钮
+
+官方课程说明可修改金额和结束日期，也可取消计划；其 2025 年 8 月 25 日官方答复明确表示当时不支持暂停。本文不把“停几个月后自动恢复”写成现成能力。若当前界面没有暂停选项，可先取消，再在决定恢复时重新创建并检查重复计划；不要假定取消后会自行重启。
 
 收入变化、标的失去资格、交易权限关闭或现金用途变化时，应主动编辑或取消计划。操作前先看“下一次执行日期”和是否已经生成当日订单；临近开盘才修改，不能假定一定来得及阻止当次成交。
 
 取消自动计划只会停止未来指令，不会自动卖出已经买到的持仓。关闭碎股权限后，已有碎股的处置和后续计划也可能改变，应先阅读页面提示，再决定是否修改权限。
 
-## 6 个常见误区
-
-1. **“定投一定比一次性买入好。”** 不一定。它主要解决执行纪律和入场时点分散，不保证更高回报。
-2. **“基础货币是人民币，就会用人民币扣款。”** 基础货币主要影响汇总显示；证券交易币种和 AutoFX 规则要另看。
-3. **“有购买力就有现金。”** 购买力可能包含保证金融资，定投要求足够资金，不能靠借款维持。
-4. **“自动买入没有佣金。”** 定期功能本身不等于免除交易、换汇和第三方费用。
-5. **“计划日一定按昨收成交。”** 实际是开盘附近的 best-effort VWAP 机制，不锁价。
-6. **“设置一次就不用再看。”** 资金、资格、费用、税务和资产配置都会变化，至少每季度复核一次。
+资金、资格和费用会变化。本文建议每期查看执行结果，另按季度复核计划；这是维护建议，不是平台规定。自动执行也不代表定投比一次性买入有更高回报。
 
 ## 保存前检查清单
 
 - [ ] 账户能看到 Recurring Investments，碎股权限已启用。
 - [ ] 核对了证券全名、交易所、币种和碎股资格。
-- [ ] 金额高于页面最低要求，并计算了最低佣金占比。
+- [ ] 金额满足页面最低要求，并核对了适用佣金规则和费用占比。
 - [ ] 执行日前有足够可用现金，没有依赖保证金购买力。
 - [ ] 已确认是否会发生 AutoFX 及其成本。
 - [ ] 周期与入金节奏匹配，休市顺延也不会造成资金短缺。
 - [ ] 保存后核对了 Active 状态和下一执行日期。
-- [ ] 设置了季度复盘提醒，并知道如何暂停或取消。
+- [ ] 设置了复盘提醒，并知道如何修改、取消及检查生效状态，不假定支持暂停后自动恢复。
 
 ## 参考资料
 
 - Interactive Brokers, [Recurring Investments](https://www.interactivebrokers.com/en/trading/recurring-investments.php).
 - IBKR Client Portal User Guide, [Create a Recurring Investment](https://www.ibkrguides.com/clientportal/trade/recurringinvestments.htm).
-- IBKR Campus, [IBKR’s Recurring Investments Feature](https://www.interactivebrokers.com/campus/trading-course/ibkrs-recurring-investments-feature/).
+- IBKR Campus, [Using IBKR’s Recurring Investments Feature（含官方答复）](https://www.interactivebrokers.com/campus/trading-lessons/using-ibkrs-recurring-investments-feature/).
 - IBKR Campus, [Dollar Cost Averaging and Current Recurring-Investment Parameters](https://www.interactivebrokers.com/campus/glossary-terms/dollar-cost-averaging-dca/).
 - IBKR Campus, [Fractional Shares](https://www.interactivebrokers.com/campus/glossary-terms/fractional-shares/).

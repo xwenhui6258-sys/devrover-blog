@@ -14,7 +14,7 @@ import unicodedata
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
-from urllib.parse import quote, quote_plus, unquote
+from urllib.parse import quote, quote_plus, unquote, urljoin, urlsplit
 
 from site_layout import SITE_NAME, STYLE_VERSION, render_site_footer, render_site_header
 
@@ -43,6 +43,7 @@ class PostMeta:
     boundary: str = ""
     content_reviewed: str = ""
     source_reviewed: str = ""
+    cover: str = ""
 
 
 def slugify(value: str) -> str:
@@ -91,6 +92,7 @@ def apply_content_disclosure(meta: PostMeta, front_matter: dict[str, str]) -> Po
     meta.boundary = front_matter.get("boundary", "")
     meta.content_reviewed = front_matter.get("content_reviewed", "")
     meta.source_reviewed = front_matter.get("source_reviewed", "")
+    meta.cover = front_matter.get("cover", "").strip()
     return meta
 
 
@@ -399,7 +401,19 @@ def markdown_to_html(markdown: str) -> str:
             close_paragraph()
             close_list()
             close_quote()
-            output.append(f'<figure><img src="{html.escape(image.group(2))}" alt="{html.escape(image.group(1))}"><figcaption>{html.escape(image.group(1))}</figcaption></figure>')
+            image_src = image.group(2)
+            caption = html.escape(image.group(1))
+            # Native links remain usable without JavaScript and let readers zoom
+            # the full-resolution image using their browser's own controls.
+            original_link = ""
+            if urlsplit(image_src).scheme in ("", "http", "https"):
+                original_link = (
+                    f'<br><a class="article-image-original" href="{html.escape(image_src, quote=True)}"'
+                    f' target="_blank" rel="noopener noreferrer"'
+                    f' aria-label="查看原图：{html.escape(image.group(1), quote=True)}（新窗口打开）">'
+                    '查看原图（新窗口，可缩放）</a>'
+                )
+            output.append(f'<figure><img src="{html.escape(image_src)}" alt="{caption}"><figcaption>{caption}{original_link}</figcaption></figure>')
             continue
 
         bullet = re.match(r"^[-*]\s+(.+)$", line)
@@ -509,9 +523,14 @@ def first_article_image(article_html: str, meta: PostMeta) -> str:
     if not match:
         return ""
     src = html.unescape(match.group(1))
-    if re.match(r"^https?://", src):
-        return src
-    return absolute_url(f"{post_url(meta)}{src}")
+    return article_image_url(src, meta)
+
+
+def article_image_url(src: str, meta: PostMeta) -> str:
+    """Resolve article-relative or site-root images without allowing unsafe schemes."""
+    url = urljoin(absolute_url(post_url(meta)), src.strip())
+    parsed = urlsplit(url)
+    return url if parsed.scheme in {"http", "https"} and parsed.netloc else ""
 
 
 def post_record_url(post: dict) -> str:
@@ -803,7 +822,8 @@ def render_page(meta: PostMeta, article_html: str, posts: list[dict] | None = No
     if title_subtitle:
         title_html += f'\n      <p class="article-subtitle">{html.escape(title_subtitle)}</p>'
     canonical = absolute_url(post_url(meta))
-    image_url = first_article_image(article_lead + article_html, meta)
+    image_url = article_image_url(meta.cover, meta) if meta.cover else ""
+    image_url = image_url or first_article_image(article_lead + article_html, meta)
     image_meta = (
         f'\n  <meta property="og:image" content="{html.escape(image_url, quote=True)}">'
         f'\n  <meta name="twitter:image" content="{html.escape(image_url, quote=True)}">'
@@ -971,7 +991,11 @@ def main() -> int:
             reading_time=front_matter.get("readingtime") or "",
             url=f"/blog/{slug}/",
         )
-    apply_content_disclosure(meta, front_matter)
+    # Use the persisted metadata after local image paths have been rewritten.
+    published_front_matter, _, _ = parse_front_matter(
+        "---\n" + source_front_matter + "\n---\n"
+    )
+    apply_content_disclosure(meta, published_front_matter)
     article_html = optimize_article_images(markdown_to_html(rewritten_body), post_dir)
     (post_dir / "index.html").write_text(
         render_page(meta, article_html, posts),
